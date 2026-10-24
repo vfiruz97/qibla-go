@@ -1,13 +1,55 @@
-# Flutter & Serverpod project
+# Qibla Go — repository guide
 
-This project is a Flutter app (frontend) backed by a Serverpod server (backend). Always build the app's backend with Serverpod.
-Build for multiple users, use Serverpod's built-in authentication, which is already set up in `lib/server.dart`.
+A free, ad-free Qibla compass and (soon) prayer-times app. Flutter frontend,
+Serverpod backend, pub workspace. Read `docs/PLAN.md` for the roadmap and the
+accuracy charter, `qibla_go_flutter/AGENTS.md` for frontend rules and
+`qibla_go_server/AGENTS.md` for backend rules. All three are binding.
 
-The user starts the server and Flutter app with `serverpod start`. There is no need to check if the server is running: make the changes and call the `serverpod` MCP tools as needed. If the server is not running, an informative error message will be received from the MCP server. Then STOP and ask the user to start it. NEVER start the server yourself. The Flutter app is started along with it, or can be launched from the MCP tool `spawn_flutter_app`.
+## What matters most
 
-While running, `serverpod start` watches for file changes to run incremental code generation and hot reload both the server and the Flutter app.
+- **The direction must be right.** The qibla bearing and the true-north
+  heading are computed on the device from audited, pinned code
+  (`qibla_math`, vendored `compass_max`). Changes there need the tests in
+  `qibla_go_flutter/test/core/geo` and `packages/compass_max/test` green, and
+  a note in the PR on how the numbers were re-verified.
+- **Be honest on screen.** When the sensor cannot be trusted, hide the needle
+  and say why. Never invent a heading; the simulated source is debug-only.
+- **No accounts, no tracking, no ads.** The server has no authentication and
+  never receives a user's precise location. Do not add auth, analytics SDKs
+  or ad SDKs.
+- **Offline first.** Fonts and models are bundled; the last location is
+  persisted; the server is optional at runtime.
 
-Calling `serverpod generate` directly is not needed, but might be useful to troubleshoot when an incremental generation fails.
+## Layout
+
+```
+qibla_go_flutter/   Flutter app — see its AGENTS.md
+qibla_go_server/    Serverpod server — see its AGENTS.md
+qibla_go_client/    generated client; NEVER edit
+packages/compass_max/  vendored sensor plugin (MIT); NOTICE.md lists local changes
+docs/PLAN.md        roadmap, architecture, verification protocol
+```
+
+## Flutter & Serverpod workflow
+
+This project is a Flutter app (frontend) backed by a Serverpod server
+(backend). Always build the app's backend with Serverpod. There is no user
+authentication by design; every endpoint is public and read-mostly.
+
+The user starts the server and Flutter app with `serverpod start`. There is
+no need to check if the server is running: make the changes and call the
+`serverpod` MCP tools as needed. If the server is not running, an informative
+error message will be received from the MCP server. Then STOP and ask the user
+to start it. NEVER start the server yourself. The Flutter app is started along
+with it, or can be launched from the MCP tool `spawn_flutter_app`.
+
+While running, `serverpod start` watches for file changes to run incremental
+code generation and hot reload both the server and the Flutter app.
+
+Calling `serverpod generate` directly is not needed, but might be useful to
+troubleshoot when an incremental generation fails. If the generator reports
+"up to date" while the generated code is visibly stale (e.g. after removing a
+module dependency), run `serverpod generate --force`.
 
 ALWAYS use the MCP server instead of the command line. Use the MCP server to:
 
@@ -19,32 +61,51 @@ ALWAYS use the MCP server instead of the command line. Use the MCP server to:
 - `spawn_flutter_app` to start a Flutter app declared under `serverpod: flutter_apps:` in the server `pubspec.yaml`.
 - `get_flutter_app_dtd` (Dart tooling daemon) for connecting to the app through the `dart` MCP.
 
-NEVER edit generated code. The server's `lib/src/generated/` directory and the whole `qibla_go_client` package are rewritten by the code generator. Change the `.spy.yaml` models, the endpoints, or `lib/server.dart` instead.
+NEVER edit generated code. The server's `lib/src/generated/` directory and the
+whole `qibla_go_client` package are rewritten by the code generator. Change the
+`.spy.yaml` models, the endpoints, or `lib/server.dart` instead. The generated
+`lib/l10n/app_localizations*.dart` files in the Flutter app are likewise
+regenerated from the ARB files.
 
-Migrations are a narrow exception: the `migration.sql` of a generated migration MAY be edited by hand when the generated SQL would lose data — to add a data transformation, or to reach a destructive change through non-destructive steps. Never touch the other files in the migration directory, and keep the schema the SQL ends up with identical to `definition.sql` — new databases are created from that file and never run `migration.sql`.
+Migrations are a narrow exception: the `migration.sql` of a generated
+migration MAY be edited by hand when the generated SQL would lose data — to
+add a data transformation, or to reach a destructive change through
+non-destructive steps. Never touch the other files in the migration directory,
+and keep the schema the SQL ends up with identical to `definition.sql` — new
+databases are created from that file and never run `migration.sql`.
 
-Only when the server cannot be started at all, fall back to the CLI in the server package:
+Only when the server cannot be started at all, fall back to the CLI in the
+server package:
 
 - `serverpod generate` to regenerate the client and the generated server code.
 - `serverpod create-migration` after changing a model with a `table` (add `--force` for destructive changes). It only writes the migration; `serverpod start` applies pending migrations when it boots the server.
 
-Tests need no Docker. `config/test.yaml` sets `database.dataPath`, so Serverpod starts and manages the test database (an embedded PostgreSQL) itself, and the project's `docker-compose.yaml` is not used for it. Just run `dart test` in the server package.
+Tests need no Docker. `config/test.yaml` sets `database.dataPath`, so
+Serverpod starts and manages the test database (an embedded PostgreSQL)
+itself, and the project's `docker-compose.yaml` is not used for it. Just run
+`dart test` in the server package.
 
-Checklist after doing changes, in this order:
+## Checklist after doing changes, in this order
 
-- `dart analyze` (CLI)
+- `dart analyze` (CLI) in every package you touched
 - `dart format` (CLI)
 - `create_migration` and `apply_migrations` (MCP - only if necessary)
 - Do `serverpod` MCP `hot_restart` if required (hot reload is done automatically). Will also hot restart Flutter app
-- Run tests, if applicable (`dart test` in the server package)
+- Run tests, if applicable: `flutter test` in `qibla_go_flutter`, `dart test` in the server package, `flutter test` in `packages/compass_max` when it changed
 - Check `serverpod` MCP `tail_server_logs` and `tail_flutter_logs` for any issues.
+- If you touched geometry, declination, sensor handling or the trust policy: re-read the accuracy charter in `docs/PLAN.md` and run the device verification protocol before release.
 
-If the user asks you to test the app:
+## Testing the app
 
 1. Use `get_flutter_app_dtd` (`serverpod` MCP) to get the Flutter app's DTD
 2. Pass the DTD to `connect_dart_tooling_daemon` (`dart` MCP) to connect to the app
 3. Use `flutter_driver` (`dart` MCP) to navigate through the app
 
-The app is launched from `qibla_go_flutter/lib/driver.dart`, which starts the Flutter driver extension with text entry emulation turned off so the app stays usable by hand. To let the driver type, set `enableTextEntryEmulation: true` there and `hot_restart` the app.
+The app is launched from `qibla_go_flutter/lib/driver.dart`, which starts the
+Flutter driver extension with text entry emulation turned off so the app stays
+usable by hand. To let the driver type, set `enableTextEntryEmulation: true`
+there and `hot_restart` the app.
 
-IMPORTANT: After building the first version of the app, update this AGENTS.md file with information about the app we're building. KEEP the info about the MCP server and the checklist. Remove this paragraph.
+On a desk there is no compass: open **Details → Simulate compass** (debug
+builds only) to drive a heading, or run with
+`--dart-define=QIBLA_SIMULATE_COMPASS=true`.
