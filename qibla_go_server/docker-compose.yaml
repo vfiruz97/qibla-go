@@ -1,0 +1,44 @@
+services:
+  # Development services
+  postgres:
+    image: ghcr.io/serverpod/postgres:16
+    ports:
+      - "8090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: qibla_go
+      POSTGRES_PASSWORD: "34_6UAoRRmGIT6M7EOdxORNCMxj1UtqZ"
+    volumes:
+      - qibla_go_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "8091:6379"
+    command: redis-server --requirepass "44vQaZTFFxcwvNrdJ0dhyYeJG8D7GAjk"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # Test services
+  postgres_test:
+    image: ghcr.io/serverpod/postgres:16
+    ports:
+      - "9090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: qibla_go_test
+      POSTGRES_PASSWORD: "qYiuWbgqMEoEdB3Y-7wP2J-5HLoyNM8T"
+    volumes:
+      - qibla_go_test_data:/var/lib/postgresql/data
+
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - "9091:6379"
+    command: redis-server --requirepass "-0xIs3QMcqjLob33Q5Q2DmW5ko3hNnHj"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  qibla_go_data:
+  qibla_go_test_data:
