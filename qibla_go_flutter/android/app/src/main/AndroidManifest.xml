@@ -1,6 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Qibla direction depends on where the user stands. Coarse is enough
+         for the bearing; fine lets the OS return a fix quickly outdoors. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- Haptic tick when the user faces the Qibla. -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- A compass is useful only with a magnetometer; keep the app off
+         devices that cannot have one. -->
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="false"/>
+    <uses-feature android:name="android.hardware.location" android:required="false"/>
     <application
-        android:label="qibla_go_flutter"
+        android:label="Qibla Go"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
