@@ -1,0 +1,8 @@
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    # Pigeon input file; the pigeon dev dependency is not installed in this workspace.
+    - pigeons/**
+include: package:flutter_lints/flutter.yaml
