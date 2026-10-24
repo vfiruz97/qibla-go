@@ -11,13 +11,7 @@
 // ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
-    as _iacc;
-import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _iaic;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
-import 'greetings/greeting.dart' as _izw8z7ou;
-export 'greetings/greeting.dart';
 export 'client.dart';
 
 class Protocol extends _isc.SerializationManager {
@@ -25,7 +19,7 @@ class Protocol extends _isc.SerializationManager {
 
   factory Protocol() => _instance;
 
-  static final Protocol _instance = Protocol._().._registerHostProtocols();
+  static final Protocol _instance = Protocol._();
 
   static String? getClassNameFromObjectJson(dynamic data) {
     if (data is! Map) return null;
@@ -54,24 +48,11 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
-    if (t == _izw8z7ou.Greeting) {
-      return _izw8z7ou.Greeting.fromJson(data) as T;
-    }
-    if (t == _isc.getType<_izw8z7ou.Greeting?>()) {
-      return (data != null ? _izw8z7ou.Greeting.fromJson(data) : null) as T;
-    }
-    try {
-      return _iaic.Protocol().deserialize<T>(data, t);
-    } on _isc.DeserializationTypeNotFoundException catch (_) {}
-    try {
-      return _iacc.Protocol().deserialize<T>(data, t);
-    } on _isc.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
-      _izw8z7ou.Greeting => 'Greeting',
       _ => null,
     };
   }
@@ -85,22 +66,6 @@ class Protocol extends _isc.SerializationManager {
       return (data['__className__'] as String).replaceFirst('qibla_go.', '');
     }
 
-    switch (data) {
-      case _izw8z7ou.Greeting():
-        return 'Greeting';
-    }
-    className = _iaic.Protocol().getClassNameForObject(data);
-    if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'serverpod_auth_idp.$className';
-    }
-    className = _iacc.Protocol().getClassNameForObject(data);
-    if (className != null) {
-      return className.contains('.')
-          ? className
-          : 'serverpod_auth_core.$className';
-    }
     return null;
   }
 
@@ -110,23 +75,7 @@ class Protocol extends _isc.SerializationManager {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
-    if (dataClassName == 'Greeting') {
-      return deserialize<_izw8z7ou.Greeting>(data['data']);
-    }
-    if (dataClassName.startsWith('serverpod_auth_idp.')) {
-      data['className'] = dataClassName.substring(19);
-      return _iaic.Protocol().deserializeByClassName(data);
-    }
-    if (dataClassName.startsWith('serverpod_auth_core.')) {
-      data['className'] = dataClassName.substring(20);
-      return _iacc.Protocol().deserializeByClassName(data);
-    }
     return super.deserializeByClassName(data);
-  }
-
-  void _registerHostProtocols() {
-    _iaic.Protocol().registerHostProtocol('qibla_go', this);
-    _iacc.Protocol().registerHostProtocol('qibla_go', this);
   }
 
   @override
@@ -141,12 +90,6 @@ class Protocol extends _isc.SerializationManager {
     if (record == null) {
       return null;
     }
-    try {
-      return _iaic.Protocol().mapRecordToJson(record);
-    } catch (_) {}
-    try {
-      return _iacc.Protocol().mapRecordToJson(record);
-    } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }
 }
