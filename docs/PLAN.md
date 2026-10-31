@@ -65,7 +65,7 @@ CompassController ──reading──► QiblaSnapshot ──► CompassDial / R
 | Moving vehicle | useless | Flagged when speed is known (future: feed speed from the location stream). |
 | Location error | 1 km ≈ 0.01° | Medium accuracy is enough; cached and manual positions allowed and labelled. Inside 100 m of the Kaaba the bearing is replaced by "you are here". |
 | Great-circle vs. ellipsoid | ≤ 0.3° | Great-circle is the convention used by qibla authorities; documented in Details. |
-| Browser sensors | unknown accuracy | Labelled "Browser compass", trust = degraded, numeric bearing emphasised; desktop browsers are steered to the map. |
+| Browser sensors | unknown accuracy | Not used: the web version has no compass screen and opens on the map. The browser source stays in the code, unreachable, pending a decision. |
 | Sun/moon azimuth | ≤ 0.5° sun, ≤ 2° moon | Only used as an orientation aid in words; the line itself never depends on them. Minute-level clock refresh. |
 
 Any change to `core/geo` or the trust policy must keep `flutter test` green;
@@ -90,7 +90,7 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
   device (Meeus/suncalc algorithms, tested against reference values), with
   "the qibla is N° to the right of the sun" guidance. Moon shown only when
   it is up and the sun is low.
-- Intro animation on launch; desktop browsers open the map with a one-time explanation card over it.
+- Intro animation on launch; the web version has no compass screen, opens on the map, and shows a one-time explanation card over it.
 - Vendored `compass_max`; `qibla_math` pinned; unit tests for geometry.
 - Server stripped to a public `health.ping`; auth removed.
 

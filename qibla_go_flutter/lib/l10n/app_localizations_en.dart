@@ -384,11 +384,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSkip => 'Skip';
 
   @override
-  String get desktopPromptTitle => 'Best experience on a phone';
+  String get desktopPromptTitle => 'On the web, the map';
 
   @override
   String get desktopPromptBody =>
-      'The live compass needs a phone\'s motion sensors. On this computer, Qibla Go shows the direction on a map instead, with the sun and the moon to help you orient yourself.';
+      'The live compass is in the phone app, where it can use the motion sensors. On the web, Qibla Go shows the direction on a map instead, with the sun and the moon to help you orient yourself.';
 
   @override
   String get desktopPromptContinue => 'Continue to the map';

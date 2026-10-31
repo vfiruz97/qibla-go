@@ -9,9 +9,10 @@ is a promise to the user; keep it true.
 
 ## What the app does
 
-- **Compass.** A dial that points to the Kaaba using the phone's sensors,
-  corrected for magnetic declination on the device. When the sensor cannot
-  be trusted, the direction is hidden and the reason is shown.
+- **Compass** (phone app). A dial that points to the Kaaba using the
+  phone's sensors, corrected for magnetic declination on the device. When
+  the sensor cannot be trusted, the direction is hidden and the reason is
+  shown. The web version has no compass screen at all; it opens on the map.
 - **Map.** The Qibla as a gold line from where you stand, along the great
   circle, to the Kaaba, over a street map with buildings. Find a road or a
   building the line crosses and face it. The sun and the moon are drawn
@@ -36,7 +37,7 @@ in the same pull request (see `AGENTS.md`, "Accuracy change protocol").
 | Magnetic declination | World Magnetic Model 2025 (NOAA/NCEI), computed on the device for the user's position and today's date. Valid 2025.0 to 2030.0; outside that range the value is extrapolated and the app says the model needs an update. | `qibla_math`, `QiblaGeometry.declinationIsExtrapolated` |
 | True heading | Platform **magnetic** heading plus the declination above. The platform's own "true heading" is never used for the needle, only shown in diagnostics. | `QiblaGeometry.trueHeadingFrom` |
 | Android heading source | Vendored `compass_max` (MIT). Sensor chain in order of preference: `TYPE_HEADING`, rotation vector, geomagnetic rotation vector, accelerometer plus magnetometer. Interference is detected by comparing field strength with the WMM-predicted value, debounced. | `packages/compass_max` |
-| Web heading source | `deviceorientationabsolute` (or `webkitCompassHeading` on iOS Safari after the permission tap). Always labelled "Browser compass" and treated as degraded. Desktop browsers have no sensors and are sent to the map. | `core/compass/web_compass_source_web.dart` |
+| Web | No compass screen. Browsers give a rough heading at best and desktop browsers none, so the web version shows the map only (`webRedirect`). A browser heading source exists in the code but is not reachable from any screen. | `core/compass/web_compass_source_web.dart` |
 | Trust policy | `trusted`: direction shown. `degraded` (uncalibrated, tilted, browser): shown with a warning. `blocked` (interference, moving vehicle): direction hidden, reason shown. No reading for 3 s: stale, hidden. | `features/qibla/domain/qibla_state.dart`, `CompassController.staleAfter` |
 | Facing the Qibla | Counts as aligned within 3° and stays aligned until 6°, with one haptic pulse on entry. | `AlignmentTracker` |
 | Location | Medium accuracy is enough (1 km of error is about 0.01° of bearing). The last fix is reused when the user has not moved more than 250 m and it is younger than 7 days. Manual coordinates are allowed and labelled. Within 100 m of the Kaaba the bearing is replaced by "you are here". | `core/location`, `QiblaGeometry.isFreshFor`, `isAtKaaba` |

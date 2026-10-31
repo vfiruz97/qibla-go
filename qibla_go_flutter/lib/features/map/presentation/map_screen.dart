@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -273,12 +274,15 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 top: MediaQuery.paddingOf(context).top + 12,
                 child: Row(
                   children: [
-                    _RoundButton(
-                      icon: Icons.explore_outlined,
-                      tooltip: l10n.navCompass,
-                      onTap: () => context.go(AppRoutes.qibla),
-                    ),
-                    const SizedBox(width: 10),
+                    // The compass screen does not exist on the web.
+                    if (!kIsWeb) ...[
+                      _RoundButton(
+                        icon: Icons.explore_outlined,
+                        tooltip: l10n.navCompass,
+                        onTap: () => context.go(AppRoutes.qibla),
+                      ),
+                      const SizedBox(width: 10),
+                    ],
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.symmetric(

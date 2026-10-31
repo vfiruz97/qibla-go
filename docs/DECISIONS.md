@@ -88,3 +88,14 @@ that reads the page. The caller address is used in memory only. Contact is
 optional and only for replying. Message content is never logged. Reading
 messages happens in the database or Insights; an email forwarder can come
 later.
+
+## 2026-10-31 No compass screen on the web
+
+Supersedes "Desktop browsers go straight to the map" (2026-10-24). Phone
+browsers were still offered the browser compass, which is rough, needs a
+permission tap on iOS Safari, and cannot detect interference; it risked
+showing a confident wrong needle. The web version now has no compass screen
+at all: `/` redirects to `/map`, the map has no compass button, and a card
+explains once that the live compass is in the phone app. The browser heading
+source stays in the code, unreachable, in case a clearly labelled
+phone-browser mode is wanted later.

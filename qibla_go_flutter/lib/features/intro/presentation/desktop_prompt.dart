@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../app/theme/qibla_palette.dart';
 import '../../../l10n/app_localizations.dart';
 
-/// Shown once on desktop browsers after the intro, over the map that is
-/// already open behind it: the compass needs a phone, the map works
+/// Shown once on the web after the intro, over the map that is already open
+/// behind it: the live compass is the phone app's job, the map works
 /// everywhere. Drawn as an overlay (not a dialog) because it lives above the
 /// router's Navigator.
 class DesktopPrompt extends StatelessWidget {

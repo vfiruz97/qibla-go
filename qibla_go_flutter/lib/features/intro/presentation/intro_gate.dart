@@ -1,21 +1,16 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import '../../../core/platform/platform_info.dart';
 import 'desktop_prompt.dart';
 import 'intro_overlay.dart';
 
 /// Wraps the router's navigator: plays the intro once per launch, then on
-/// desktop browsers switches to the map and explains why, once.
+/// the web explains once why the map is what you get (the router already
+/// starts there; see `webRedirect`).
 class IntroGate extends StatefulWidget {
-  const IntroGate({
-    super.key,
-    required this.child,
-    required this.onShowMap,
-    this.playIntro = true,
-  });
+  const IntroGate({super.key, required this.child, this.playIntro = true});
 
   final Widget child;
-  final VoidCallback onShowMap;
   final bool playIntro;
 
   @override
@@ -28,12 +23,9 @@ class _IntroGateState extends State<IntroGate> {
 
   void _introDone() {
     if (!mounted) return;
-    // Desktop browsers have no compass: open the map first so it is already
-    // visible behind the explanation card.
-    if (isDesktopBrowser) widget.onShowMap();
     setState(() {
       _intro = false;
-      _prompt = isDesktopBrowser;
+      _prompt = kIsWeb;
     });
   }
 
