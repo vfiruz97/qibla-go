@@ -13,6 +13,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'dart:io' as _idi;
+import 'package:qibla_go_server/src/generated/support/support_challenge.dart'
+    as _ibr6havt;
+import 'package:qibla_go_server/src/generated/support/support_submit_result.dart'
+    as _ifcf2aa8;
 import 'package:serverpod/serverpod.dart' as _is;
 import 'package:serverpod_test/serverpod_test.dart' as _ist;
 import 'package:qibla_go_server/src/generated/protocol.dart';
@@ -149,6 +153,8 @@ void withServerpod(
 
 class TestEndpoints {
   late final _HealthEndpoint health;
+
+  late final _SupportEndpoint support;
 }
 
 class _InternalTestEndpoints extends TestEndpoints
@@ -159,6 +165,10 @@ class _InternalTestEndpoints extends TestEndpoints
     _is.EndpointDispatch endpoints,
   ) {
     health = _HealthEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    support = _SupportEndpoint(
       endpoints,
       serializationManager,
     );
@@ -196,6 +206,90 @@ class _HealthEndpoint {
                   _localCallContext.arguments,
                 )
                 as _ida.Future<DateTime>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+}
+
+class _SupportEndpoint {
+  _SupportEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<_ibr6havt.SupportChallenge?> challenge(
+    _ist.TestSessionBuilder sessionBuilder,
+  ) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'support',
+            method: 'challenge',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'support',
+          methodName: 'challenge',
+          parameters: _ist.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_ibr6havt.SupportChallenge?>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
+  }
+
+  _ida.Future<_ifcf2aa8.SupportSubmitResult> submit(
+    _ist.TestSessionBuilder sessionBuilder, {
+    required String challengeId,
+    required int answer,
+    required String message,
+    String? contact,
+    String? platform,
+    String? appVersion,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'support',
+            method: 'submit',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'support',
+          methodName: 'submit',
+          parameters: _ist.testObjectToJson({
+            'challengeId': challengeId,
+            'answer': answer,
+            'message': message,
+            'contact': contact,
+            'platform': platform,
+            'appVersion': appVersion,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<_ifcf2aa8.SupportSubmitResult>);
         return _localReturnValue;
       } finally {
         await _localUniqueSession.close();

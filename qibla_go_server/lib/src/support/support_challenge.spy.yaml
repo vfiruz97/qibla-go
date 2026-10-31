@@ -1,0 +1,10 @@
+### A small arithmetic question the app shows before a support message can
+### be sent. The answer stays on the server; the id is single-use.
+class: SupportChallenge
+fields:
+  ### Opaque id to send back with the answer.
+  id: String
+  ### Human-readable question, e.g. "7 + 5".
+  question: String
+  ### After this moment the challenge is refused and a new one is needed.
+  expiresAt: DateTime

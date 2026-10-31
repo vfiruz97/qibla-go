@@ -1,0 +1,13 @@
+### Outcome of sending a support message.
+enum: SupportSubmitResult
+values:
+  ### Stored. Thank the user.
+  - accepted
+  ### The arithmetic answer was wrong; the challenge is spent, ask for a new one.
+  - wrongAnswer
+  ### Unknown or expired challenge id; ask for a new one.
+  - challengeExpired
+  ### This client has sent too much recently; try later.
+  - tooManyRequests
+  ### Message empty, too short or too long, or contact too long.
+  - messageInvalid

@@ -1,0 +1,21 @@
+### A message a user sent through "Write to us". Server-only: the app never
+### reads messages back. Holds no location, no device id, no address.
+class: SupportMessage
+table: support_message
+serverOnly: true
+fields:
+  ### The text as typed, trimmed. 10 to 2000 characters.
+  message: String
+  ### Optional way to reply (email or anything the user chose to leave).
+  contact: String?
+  ### "android", "web", "ios"... as reported by the app. Never a device id.
+  platform: String?
+  ### App version string reported by the app, if any.
+  appVersion: String?
+  ### When the server stored it (UTC).
+  createdAt: DateTime, default=now
+  ### Set by a human when the message has been read and dealt with.
+  handledAt: DateTime?
+indexes:
+  support_message_created_idx:
+    fields: createdAt

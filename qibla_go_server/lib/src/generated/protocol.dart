@@ -13,6 +13,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/protocol.dart' as _isp;
 import 'package:serverpod/serverpod.dart' as _is;
+import 'support/support_challenge.dart' as _iti73b7j;
+import 'support/support_message.dart' as _izh8ly96;
+import 'support/support_submit_result.dart' as _ian8tpl6;
+export 'support/support_challenge.dart';
+export 'support/support_message.dart';
+export 'support/support_submit_result.dart';
 
 class Protocol extends _is.DatabaseSerializationManager {
   Protocol._();
@@ -22,6 +28,75 @@ class Protocol extends _is.DatabaseSerializationManager {
   static final Protocol _instance = Protocol._();
 
   static List<_isp.TableDefinition> get targetTableDefinitions => [
+    _isp.TableDefinition(
+      name: 'support_message',
+      dartName: 'SupportMessage',
+      schema: 'public',
+      module: 'qibla_go',
+      columns: [
+        _isp.ColumnDefinition(
+          name: 'id',
+          columnType: _isp.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'serial',
+        ),
+        _isp.ColumnDefinition(
+          name: 'message',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _isp.ColumnDefinition(
+          name: 'contact',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'platform',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'appVersion',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+          columnDefault: 'now',
+        ),
+        _isp.ColumnDefinition(
+          name: 'handledAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: true,
+          dartType: 'DateTime?',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _isp.IndexDefinition(
+          indexName: 'support_message_created_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'createdAt',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
     ..._isp.Protocol.targetTableDefinitions,
   ];
 
@@ -52,6 +127,29 @@ class Protocol extends _is.DatabaseSerializationManager {
       }
     }
 
+    if (t == _iti73b7j.SupportChallenge) {
+      return _iti73b7j.SupportChallenge.fromJson(data) as T;
+    }
+    if (t == _izh8ly96.SupportMessage) {
+      return _izh8ly96.SupportMessage.fromJson(data) as T;
+    }
+    if (t == _ian8tpl6.SupportSubmitResult) {
+      return _ian8tpl6.SupportSubmitResult.fromJson(data) as T;
+    }
+    if (t == _is.getType<_iti73b7j.SupportChallenge?>()) {
+      return (data != null ? _iti73b7j.SupportChallenge.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_izh8ly96.SupportMessage?>()) {
+      return (data != null ? _izh8ly96.SupportMessage.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ian8tpl6.SupportSubmitResult?>()) {
+      return (data != null
+              ? _ian8tpl6.SupportSubmitResult.fromJson(data)
+              : null)
+          as T;
+    }
     try {
       return _isp.Protocol().deserialize<T>(data, t);
     } on _is.DeserializationTypeNotFoundException catch (_) {}
@@ -60,6 +158,9 @@ class Protocol extends _is.DatabaseSerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _iti73b7j.SupportChallenge => 'SupportChallenge',
+      _izh8ly96.SupportMessage => 'SupportMessage',
+      _ian8tpl6.SupportSubmitResult => 'SupportSubmitResult',
       _ => null,
     };
   }
@@ -73,6 +174,14 @@ class Protocol extends _is.DatabaseSerializationManager {
       return (data['__className__'] as String).replaceFirst('qibla_go.', '');
     }
 
+    switch (data) {
+      case _iti73b7j.SupportChallenge():
+        return 'SupportChallenge';
+      case _izh8ly96.SupportMessage():
+        return 'SupportMessage';
+      case _ian8tpl6.SupportSubmitResult():
+        return 'SupportSubmitResult';
+    }
     className = _isp.Protocol().getClassNameForObject(data);
     if (className != null) {
       return className.contains('.') ? className : 'serverpod.$className';
@@ -85,6 +194,15 @@ class Protocol extends _is.DatabaseSerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'SupportChallenge') {
+      return deserialize<_iti73b7j.SupportChallenge>(data['data']);
+    }
+    if (dataClassName == 'SupportMessage') {
+      return deserialize<_izh8ly96.SupportMessage>(data['data']);
+    }
+    if (dataClassName == 'SupportSubmitResult') {
+      return deserialize<_ian8tpl6.SupportSubmitResult>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -100,6 +218,10 @@ class Protocol extends _is.DatabaseSerializationManager {
       if (table != null) {
         return table;
       }
+    }
+    switch (t) {
+      case _izh8ly96.SupportMessage:
+        return _izh8ly96.SupportMessage.t;
     }
     return null;
   }
