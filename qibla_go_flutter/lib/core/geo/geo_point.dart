@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'angles.dart';
+
 /// A latitude/longitude pair in degrees on WGS-84.
 ///
 /// Immutable value type shared by location, geometry and persistence code.
@@ -31,6 +33,16 @@ final class GeoPoint {
     } on ArgumentError {
       return null;
     }
+  }
+
+  /// Point [t] of the way from [a] to [b], taking the short way round the
+  /// antimeridian. For on-screen motion only; it is not a geodesic.
+  static GeoPoint lerp(GeoPoint a, GeoPoint b, double t) {
+    final lat = a.latitude + (b.latitude - a.latitude) * t;
+    var lon = a.longitude + Angles.delta(a.longitude, b.longitude) * t;
+    if (lon > 180) lon -= 360;
+    if (lon < -180) lon += 360;
+    return GeoPoint(latitude: lat, longitude: lon);
   }
 
   final double latitude;

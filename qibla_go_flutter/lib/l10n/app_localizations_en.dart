@@ -418,7 +418,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapMoon => 'Moon';
 
   @override
-  String get mapRecenter => 'Back to my location';
+  String get mapRecenter => 'Use my real location';
 
   @override
   String get mapZoomIn => 'Closer';
@@ -429,9 +429,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mapLongPressHint =>
       'Long-press anywhere on the map to set your location there.';
-
-  @override
-  String get mapLocationSet => 'Location set from the map.';
 
   @override
   String get mapHowTitle => 'How to use this map';
