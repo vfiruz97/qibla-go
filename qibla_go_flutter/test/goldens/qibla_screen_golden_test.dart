@@ -20,6 +20,7 @@ import 'package:qibla_go_flutter/core/location/location_service.dart';
 import 'package:qibla_go_flutter/core/storage/app_preferences.dart';
 import 'package:qibla_go_flutter/features/qibla/application/compass_controller.dart';
 import 'package:qibla_go_flutter/features/qibla/application/location_controller.dart';
+import 'package:qibla_go_flutter/features/qibla/application/qibla_providers.dart';
 import 'package:qibla_go_flutter/features/map/application/sky_providers.dart';
 import 'package:qibla_go_flutter/features/map/presentation/map_screen.dart';
 import 'package:qibla_go_flutter/features/map/presentation/widgets/map_tiles.dart';
@@ -27,37 +28,9 @@ import 'package:qibla_go_flutter/features/qibla/presentation/qibla_screen.dart';
 import 'package:qibla_go_flutter/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../support/fake_location_service.dart';
+
 final _dushanbe = GeoPoint(latitude: 38.5598, longitude: 68.787);
-
-class _FakeLocationService implements LocationService {
-  _FakeLocationService({
-    this.fix,
-    this.permission = LocationPermissionState.granted,
-  });
-
-  final LocationFix? fix;
-  final LocationPermissionState permission;
-
-  @override
-  Future<bool> isServiceEnabled() async => true;
-
-  @override
-  Future<LocationPermissionState> checkPermission() async => permission;
-
-  @override
-  Future<LocationPermissionState> requestPermission() async => permission;
-
-  @override
-  Future<LocationFix?> currentPosition({
-    Duration timeout = const Duration(seconds: 20),
-  }) async => fix;
-
-  @override
-  Future<bool> openAppSettings() async => true;
-
-  @override
-  Future<bool> openLocationSettings() async => true;
-}
 
 Future<void> _loadFonts() async {
   Future<void> load(String family, String file) async {
@@ -83,6 +56,9 @@ Future<void> _loadFonts() async {
   }
 }
 
+/// A spring evening in Dushanbe with the sun low in the west.
+final _frozenNow = DateTime.utc(2026, 3, 20, 12, 30);
+
 Widget _app({
   required SharedPreferences prefs,
   required LocationService location,
@@ -96,8 +72,15 @@ Widget _app({
     // Pin the sky so the golden does not drift with the real clock:
     // a spring evening in Dushanbe with the sun low in the west.
     minuteClockProvider.overrideWith(
-      (ref) => Stream.value(DateTime.utc(2026, 3, 20, 12, 30)),
+      (ref) => Stream.value(_frozenNow),
     ),
+    // Pin the declination date too: the dial rotates by the true heading,
+    // which drifts a few thousandths of a degree per week with the magnetic
+    // model, enough to move anti-aliased pixels and fail the golden.
+    qiblaGeometryProvider.overrideWith((ref) {
+      final point = ref.watch(locationPointProvider);
+      return point == null ? null : QiblaGeometry.compute(point, _frozenNow);
+    }),
   ],
   child: MaterialApp(
     theme: AppTheme.dark(),
@@ -162,13 +145,13 @@ void main() {
     origin: LocationOrigin.device,
     accuracyMeters: 35,
   );
-  final geometry = QiblaGeometry.compute(_dushanbe, DateTime.now());
+  final geometry = QiblaGeometry.compute(_dushanbe, _frozenNow);
 
   testWidgets('needs location', (tester) async {
     await run(
       tester,
       name: 'needs_location',
-      location: _FakeLocationService(
+      location: FakeLocationService(
         permission: LocationPermissionState.denied,
       ),
       compass: SimulatedCompassSource(initialHeading: 10),
@@ -179,7 +162,7 @@ void main() {
     await run(
       tester,
       name: 'turning',
-      location: _FakeLocationService(fix: fix),
+      location: FakeLocationService(fix: fix),
       compass: SimulatedCompassSource(
         initialHeading: geometry.bearingFromMagneticNorth - 23,
       ),
@@ -190,7 +173,7 @@ void main() {
     await run(
       tester,
       name: 'aligned',
-      location: _FakeLocationService(fix: fix),
+      location: FakeLocationService(fix: fix),
       compass: SimulatedCompassSource(
         initialHeading: geometry.bearingFromMagneticNorth + 1,
       ),
@@ -201,7 +184,7 @@ void main() {
     await run(
       tester,
       name: 'blocked',
-      location: _FakeLocationService(fix: fix),
+      location: FakeLocationService(fix: fix),
       compass: SimulatedCompassSource(initialHeading: 100)
         ..issues = const [CompassIssue.magneticInterference],
     );
@@ -211,7 +194,7 @@ void main() {
     await run(
       tester,
       name: 'wide',
-      location: _FakeLocationService(fix: fix),
+      location: FakeLocationService(fix: fix),
       compass: SimulatedCompassSource(
         initialHeading: geometry.bearingFromMagneticNorth + 40,
       ),
@@ -223,7 +206,7 @@ void main() {
     await run(
       tester,
       name: 'map',
-      location: _FakeLocationService(fix: fix),
+      location: FakeLocationService(fix: fix),
       compass: SimulatedCompassSource(initialHeading: 10),
       home: const MapScreen(),
     );

@@ -69,7 +69,11 @@ CompassController ──reading──► QiblaSnapshot ──► CompassDial / R
 | Sun/moon azimuth | ≤ 0.5° sun, ≤ 2° moon | Only used as an orientation aid in words; the line itself never depends on them. Minute-level clock refresh. |
 
 Any change to `core/geo` or the trust policy must keep `flutter test` green;
-the tests pin published bearings and NOAA declination values.
+the tests pin published bearings and NOAA declination values. The
+user-facing version of this table is "How the direction is computed" in
+`README.md`; the two are updated together (see the accuracy change protocol
+in the root `AGENTS.md`). The reasoning behind each choice is logged in
+`docs/DECISIONS.md`.
 
 ## 3. Milestones
 
@@ -160,6 +164,7 @@ the tests pin published bearings and NOAA declination values.
 
 | Decision | Status |
 | --- | --- |
+| Source license for Qibla Go itself | Open; pick one (MIT or Apache 2.0 suggested) and add `LICENSE` before the first public release. |
 | Android `applicationId` / iOS bundle id | TODO before first store build (currently `com.example.qibla_go_flutter`). |
 | Domain and hosting (Serverpod Cloud vs. own VPS) | Open; server has no state yet so either works. |
 | Prayer-time engine (package vs. own) | Decide in M2 with reference tests. |

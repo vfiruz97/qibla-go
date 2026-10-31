@@ -82,7 +82,7 @@ class _LocationSheetState extends ConsumerState<LocationSheet> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    _problemText(l10n, state.problem),
+                    locationProblemText(l10n, state.problem),
                     style: text.bodySmall?.copyWith(color: p.warning),
                   ),
                 ),
@@ -208,20 +208,19 @@ class _LocationSheetState extends ConsumerState<LocationSheet> {
     await ref.read(locationControllerProvider.notifier).setManual(point);
     if (mounted) Navigator.of(context).pop();
   }
-
-  static String _problemText(
-    AppLocalizations l10n,
-    LocationProblem problem,
-  ) => switch (problem) {
-    LocationProblem.none => '',
-    LocationProblem.servicesDisabled => l10n.locationProblemServicesDisabled,
-    LocationProblem.permissionDenied => l10n.locationProblemPermissionDenied,
-    LocationProblem.permissionDeniedForever =>
-      l10n.locationProblemPermissionDeniedForever,
-    LocationProblem.timeout => l10n.locationProblemTimeout,
-    LocationProblem.unavailable => l10n.locationProblemUnavailable,
-  };
 }
+
+/// One sentence for a [LocationProblem]; empty for none.
+String locationProblemText(AppLocalizations l10n, LocationProblem problem) =>
+    switch (problem) {
+      LocationProblem.none => '',
+      LocationProblem.servicesDisabled => l10n.locationProblemServicesDisabled,
+      LocationProblem.permissionDenied => l10n.locationProblemPermissionDenied,
+      LocationProblem.permissionDeniedForever =>
+        l10n.locationProblemPermissionDeniedForever,
+      LocationProblem.timeout => l10n.locationProblemTimeout,
+      LocationProblem.unavailable => l10n.locationProblemUnavailable,
+    };
 
 class _FixSummary extends StatelessWidget {
   const _FixSummary({required this.fix});

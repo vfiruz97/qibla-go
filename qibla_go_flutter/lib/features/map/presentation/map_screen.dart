@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ import '../../../app/theme/qibla_palette.dart';
 import '../../../core/geo/geo_point.dart';
 import '../../../core/geo/great_circle.dart';
 import '../../../core/geo/qibla_geometry.dart' as geo;
+import '../../../core/location/location_models.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../qibla/application/location_controller.dart';
 import '../../qibla/application/qibla_providers.dart';
@@ -18,6 +20,7 @@ import '../../qibla/presentation/widgets/location_sheet.dart';
 import '../application/sky_providers.dart';
 import 'widgets/how_to_panel.dart';
 import 'widgets/kaaba_marker.dart';
+import 'widgets/map_camera_animator.dart';
 import 'widgets/map_tiles.dart';
 import 'widgets/sky_overlay.dart';
 import 'widgets/world_inset.dart';
@@ -32,48 +35,89 @@ class MapScreen extends ConsumerStatefulWidget {
   ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends ConsumerState<MapScreen> {
+class _MapScreenState extends ConsumerState<MapScreen>
+    with TickerProviderStateMixin {
   final _map = MapController();
+  final _tiles = qiblaTileLayer();
+  late final _camera = MapCameraAnimator(vsync: this, controller: _map);
+
+  /// Drives the marker and the line from the old position to the new one,
+  /// so a change of location is a movement, not a cut.
+  late final _origin = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 650),
+  )..addListener(() => setState(() {}));
+  GeoPoint? _originFrom;
+  GeoPoint? _originTo;
+
   bool _howExpanded = true;
-  GeoPoint? _centeredOn;
+
+  /// Set when the next location change comes from a long-press: the user
+  /// chose that spot on screen, so the camera must not move away from it.
+  bool _skipFollow = false;
 
   static final _kaaba = LatLng(geo.kaaba.latitude, geo.kaaba.longitude);
 
   /// Street level: individual buildings are drawn, so the line can be
   /// compared with the houses and roads around the user.
   static const _streetZoom = 17.0;
+  static const _minZoom = 2.0;
+  static const _maxZoom = 19.0;
 
   @override
   void dispose() {
+    _origin.dispose();
+    _camera.dispose();
     _map.dispose();
     super.dispose();
   }
 
-  /// Centers on the user; on narrow screens the guide panel covers the
-  /// lower part of the map, so the marker is placed in the upper third.
+  /// Where the marker is drawn right now: the real position, or a point on
+  /// the way there while the move animates.
+  GeoPoint? get _shownOrigin {
+    final to = _originTo;
+    final from = _originFrom;
+    if (to == null) return null;
+    if (from == null || !_origin.isAnimating) return to;
+    final t = Curves.easeInOutCubic.transform(_origin.value);
+    return GeoPoint.lerp(from, to, t);
+  }
+
+  /// Reacts to a new position: animates the marker there and, unless the
+  /// user picked it on the map, flies the camera along.
+  void _onPointChanged(GeoPoint point) {
+    final previous = _shownOrigin;
+    _originFrom = previous;
+    _originTo = point;
+    if (previous != null) {
+      _origin.forward(from: 0);
+    }
+    final follow = !_skipFollow;
+    _skipFollow = false;
+    if (follow) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _recenter(point);
+      });
+    }
+  }
+
+  /// Flies to the user; on narrow screens the guide panel covers the lower
+  /// part of the map, so the marker is placed in the upper third.
   void _recenter(GeoPoint point) {
-    final target = LatLng(point.latitude, point.longitude);
-    _map.move(target, _streetZoom);
-    final camera = _map.camera;
-    final size = camera.nonRotatedSize;
-    if (size.width >= 860) return;
-    final shifted = camera.screenOffsetToLatLng(
-      Offset(size.width / 2, size.height / 2 + size.height * 0.17),
+    final size = _map.camera.nonRotatedSize;
+    final shift = size.width >= 860 ? 0.0 : -size.height * 0.17;
+    _camera.flyTo(
+      LatLng(point.latitude, point.longitude),
+      _streetZoom,
+      screenOffset: Offset(0, shift),
     );
-    _map.move(shifted, _streetZoom);
   }
 
-  void _zoomBy(double delta) {
-    final camera = _map.camera;
-    final zoom = (camera.zoom + delta).clamp(_minZoom, _maxZoom).toDouble();
-    _map.move(camera.center, zoom);
-  }
-
-  static const _minZoom = 2.0;
-  static const _maxZoom = 19.0;
+  void _zoomBy(double delta) =>
+      _camera.zoomBy(delta, min: _minZoom, max: _maxZoom);
 
   void _fitWhole(GeoPoint point) {
-    _map.fitCamera(
+    _camera.flyToFit(
       CameraFit.coordinates(
         coordinates: [LatLng(point.latitude, point.longitude), _kaaba],
         padding: const EdgeInsets.all(48),
@@ -81,14 +125,45 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     );
   }
 
+  /// Long-press: the marker and the line glide to the pressed spot, which is
+  /// confirmation enough; no message, so nothing competes with the map.
   Future<void> _setLocation(LatLng at) async {
+    HapticFeedback.selectionClick();
+    _skipFollow = true;
     await ref
         .read(locationControllerProvider.notifier)
         .setManual(GeoPoint(latitude: at.latitude, longitude: at.longitude));
+  }
+
+  /// "Back to my location": asks the device for the real position (which
+  /// replaces a long-pressed or typed one) and flies there. If the device
+  /// cannot answer, says why and offers the location sheet.
+  Future<void> _goToMyLocation() async {
+    final controller = ref.read(locationControllerProvider.notifier);
+    await controller.refresh();
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(AppLocalizations.of(context).mapLocationSet)),
-    );
+    final state = ref.read(locationControllerProvider);
+    final fix = state.fix;
+    if (state.problem == LocationProblem.none && fix != null) {
+      // A changed point already flew the camera; the same point would not.
+      if (fix.point == _originTo) _recenter(fix.point);
+      return;
+    }
+    final l10n = AppLocalizations.of(context);
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(locationProblemText(l10n, state.problem)),
+          behavior: SnackBarBehavior.floating,
+          showCloseIcon: true,
+          duration: const Duration(seconds: 6),
+          action: SnackBarAction(
+            label: l10n.locationEnterCoordinates,
+            onPressed: () => LocationSheet.show(context, startWithForm: true),
+          ),
+        ),
+      );
   }
 
   @override
@@ -96,22 +171,21 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     final l10n = AppLocalizations.of(context);
     final p = QiblaPalette.of(context);
     final point = ref.watch(locationPointProvider);
+    final locating = ref.watch(
+      locationControllerProvider.select((s) => s.isRefreshing),
+    );
     final geometry = ref.watch(qiblaGeometryProvider);
     final sky = ref.watch(skySnapshotProvider);
 
-    // Follow the user's position when it changes (first fix, manual edit).
-    if (point != null && point != _centeredOn) {
-      _centeredOn = point;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _recenter(point);
-      });
-    }
+    // A new position (first fix, long-press, typed coordinates, refresh).
+    if (point != null && point != _originTo) _onPointChanged(point);
 
-    final user = point == null ? null : LatLng(point.latitude, point.longitude);
-    final path = point == null
+    final shown = _shownOrigin;
+    final user = shown == null ? null : LatLng(shown.latitude, shown.longitude);
+    final path = shown == null
         ? const <LatLng>[]
         : greatCirclePath(
-            point,
+            shown,
             geo.kaaba,
             segments: 256,
           ).map((g) => LatLng(g.latitude, g.longitude)).toList(growable: false);
@@ -127,8 +201,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               FlutterMap(
                 mapController: _map,
                 options: MapOptions(
-                  initialCenter: user ?? _kaaba,
-                  initialZoom: user == null ? 4 : _streetZoom,
+                  initialCenter: point == null
+                      ? _kaaba
+                      : LatLng(point.latitude, point.longitude),
+                  initialZoom: point == null ? 4 : _streetZoom,
                   minZoom: _minZoom,
                   maxZoom: _maxZoom,
                   backgroundColor: p.background,
@@ -138,7 +214,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   ),
                 ),
                 children: [
-                  qiblaTileLayer(),
+                  _tiles,
                   if (path.isNotEmpty)
                     PolylineLayer(
                       polylines: [
@@ -174,6 +250,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   if (sky != null)
                     SkyOverlay(
                       sky: sky,
+                      origin: user,
                       sunLabel: l10n.mapSun,
                       moonLabel: l10n.mapMoon,
                     ),
@@ -246,12 +323,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    if (point != null)
-                      _RoundButton(
-                        icon: Icons.my_location,
-                        tooltip: l10n.mapRecenter,
-                        onTap: () => _recenter(point),
-                      ),
+                    _RoundButton(
+                      icon: Icons.my_location,
+                      tooltip: l10n.mapRecenter,
+                      busy: locating,
+                      onTap: locating ? null : _goToMyLocation,
+                    ),
                   ],
                 ),
               ),
@@ -262,12 +339,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    if (user != null)
+                    if (point != null)
                       WorldInset(
-                        user: user,
+                        user: LatLng(point.latitude, point.longitude),
                         kaaba: _kaaba,
                         path: path,
-                        onTap: () => _fitWhole(point!),
+                        onTap: () => _fitWhole(point),
                         diameter: wide ? 170 : 128,
                       ),
                     const SizedBox(height: 12),
@@ -347,11 +424,15 @@ class _RoundButton extends StatelessWidget {
     required this.icon,
     required this.tooltip,
     required this.onTap,
+    this.busy = false,
   });
 
   final IconData icon;
   final String tooltip;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+
+  /// Shows a spinner instead of the icon while a request is in flight.
+  final bool busy;
 
   @override
   Widget build(BuildContext context) {
@@ -369,7 +450,18 @@ class _RoundButton extends StatelessWidget {
           child: SizedBox(
             width: 44,
             height: 44,
-            child: Icon(icon, size: 20, color: p.ink),
+            child: busy
+                ? Center(
+                    child: SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: p.gold,
+                      ),
+                    ),
+                  )
+                : Icon(icon, size: 20, color: p.ink),
           ),
         ),
       ),

@@ -18,9 +18,14 @@ class SkyOverlay extends StatelessWidget {
     required this.sky,
     required this.sunLabel,
     required this.moonLabel,
+    this.origin,
   });
 
   final SkySnapshot sky;
+
+  /// Where to anchor the bodies; defaults to [SkySnapshot.at]. The map passes
+  /// the animated marker position so the guides travel with it.
+  final LatLng? origin;
   final String sunLabel;
   final String moonLabel;
 
@@ -29,7 +34,7 @@ class SkyOverlay extends StatelessWidget {
     final camera = MapCamera.of(context);
     final p = QiblaPalette.of(context);
     final user = camera.latLngToScreenOffset(
-      LatLng(sky.at.latitude, sky.at.longitude),
+      origin ?? LatLng(sky.at.latitude, sky.at.longitude),
     );
     final size = camera.nonRotatedSize;
     final radius = math.min(size.width, size.height) * 0.30;

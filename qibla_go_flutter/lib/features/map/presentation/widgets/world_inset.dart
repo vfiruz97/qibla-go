@@ -8,7 +8,10 @@ import 'map_tiles.dart';
 
 /// Circular mini-map showing the whole line from the user to Makkah, so
 /// the street-level line is visibly the start of a real journey.
-class WorldInset extends StatelessWidget {
+///
+/// Keeps one map alive across location changes (recreating it reloads every
+/// tile and flashes); the camera is refitted instead.
+class WorldInset extends StatefulWidget {
   const WorldInset({
     super.key,
     required this.user,
@@ -25,10 +28,43 @@ class WorldInset extends StatelessWidget {
   final double diameter;
 
   @override
+  State<WorldInset> createState() => _WorldInsetState();
+}
+
+class _WorldInsetState extends State<WorldInset> {
+  final _map = MapController();
+  final _tiles = qiblaTileLayer();
+
+  CameraFit _fit() => CameraFit.coordinates(
+    coordinates: [widget.user, widget.kaaba],
+    padding: const EdgeInsets.all(28),
+  );
+
+  @override
+  void didUpdateWidget(WorldInset oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.user != widget.user ||
+        oldWidget.diameter != widget.diameter) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _map.fitCamera(_fit());
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _map.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final p = QiblaPalette.of(context);
+    final user = widget.user;
+    final kaaba = widget.kaaba;
+    final diameter = widget.diameter;
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         width: diameter,
         height: diameter,
@@ -46,22 +82,23 @@ class WorldInset extends StatelessWidget {
         child: ClipOval(
           child: IgnorePointer(
             child: FlutterMap(
-              key: ValueKey('${user.latitude},${user.longitude}'),
+              mapController: _map,
               options: MapOptions(
-                initialCameraFit: CameraFit.coordinates(
-                  coordinates: [user, kaaba],
-                  padding: const EdgeInsets.all(28),
-                ),
+                initialCameraFit: _fit(),
                 interactionOptions: const InteractionOptions(
                   flags: InteractiveFlag.none,
                 ),
                 backgroundColor: p.surface,
               ),
               children: [
-                qiblaTileLayer(),
+                _tiles,
                 PolylineLayer(
                   polylines: [
-                    Polyline(points: path, color: p.gold, strokeWidth: 2),
+                    Polyline(
+                      points: widget.path,
+                      color: p.gold,
+                      strokeWidth: 2,
+                    ),
                   ],
                 ),
                 MarkerLayer(

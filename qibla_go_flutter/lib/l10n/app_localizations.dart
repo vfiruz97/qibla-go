@@ -793,7 +793,7 @@ abstract class AppLocalizations {
   /// No description provided for @mapRecenter.
   ///
   /// In en, this message translates to:
-  /// **'Back to my location'**
+  /// **'Use my real location'**
   String get mapRecenter;
 
   /// No description provided for @mapZoomIn.
@@ -813,12 +813,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Long-press anywhere on the map to set your location there.'**
   String get mapLongPressHint;
-
-  /// No description provided for @mapLocationSet.
-  ///
-  /// In en, this message translates to:
-  /// **'Location set from the map.'**
-  String get mapLocationSet;
 
   /// No description provided for @mapHowTitle.
   ///

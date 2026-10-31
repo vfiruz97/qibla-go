@@ -20,3 +20,6 @@ pubspec_overrides.yaml
 
 # Build output
 build/
+
+# Golden test failure artifacts
+qibla_go_flutter/test/goldens/failures/
