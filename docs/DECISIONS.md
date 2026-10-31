@@ -77,3 +77,14 @@ in place, and a long-press never moves the map away from the finger. A
 "location set" snackbar was tried and dropped: it drew the eye away from the
 map and on web it did not always dismiss. Rule in `qibla_go_flutter/AGENTS.md`: nothing on
 the map jumps.
+
+## 2026-10-31 "Write to us" with a server-issued sum, no account
+
+Users need a way to report a wrong-looking direction, and the app has no
+accounts by design. The form asks one small addition or subtraction. The sum
+is issued and checked by the server, single use and short-lived, and backed
+by per-connection rate limits, because the sum alone would not stop a bot
+that reads the page. The caller address is used in memory only. Contact is
+optional and only for replying. Message content is never logged. Reading
+messages happens in the database or Insights; an email forwarder can come
+later.
