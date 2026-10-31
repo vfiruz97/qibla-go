@@ -1,11 +1,14 @@
 {
     "name": "Qibla Go",
     "short_name": "Qibla Go",
-    "start_url": ".",
+    "start_url": "/",
+    "scope": "/",
+    "lang": "en",
+    "categories": ["utilities", "navigation", "lifestyle"],
     "display": "standalone",
     "background_color": "#0B0A09",
     "theme_color": "#0B0A09",
-    "description": "A free, ad-free Qibla compass.",
+    "description": "A free, ad-free Qibla direction finder: the Kaaba on a map, and a live compass in the phone app.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
