@@ -103,6 +103,8 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Sun and moon are decoration plus a sentence; they never feed the bearing. Hide the moon in daylight (`SkySnapshot.showMoon`).
 - Anything inside `FlutterMap(children:)` that needs screen positions reads `MapCamera.of(context)`; nothing else may project coordinates by hand.
 - The intro overlay plays once per launch and is skipped under reduced motion; pass `QiblaGoApp(playIntro: false)` in tests.
+- **Nothing on the map jumps.** Camera moves go through `MapCameraAnimator` (`flyTo`, `zoomBy`, `flyToFit`); never call `MapController.move`/`fitCamera` directly from the screen. A location change animates the marker and the line from the old point to the new one (`GeoPoint.lerp` over 650 ms); a long-press keeps the camera where the user pressed, every other source flies the camera along. Keep `TileLayer` and `WorldInset`'s map alive across rebuilds: recreating them reloads tiles and flashes.
+- A map long-press shows no message: the moving marker is the confirmation. The way back to the real position is the location button.
 
 ## Platform notes
 

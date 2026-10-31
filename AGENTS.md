@@ -23,12 +23,82 @@ accuracy charter, `qibla_go_flutter/AGENTS.md` for frontend rules and
 ## Layout
 
 ```
+README.md           what the app is + the accuracy statement (user-facing promise)
 qibla_go_flutter/   Flutter app — see its AGENTS.md
 qibla_go_server/    Serverpod server — see its AGENTS.md
 qibla_go_client/    generated client; NEVER edit
 packages/compass_max/  vendored sensor plugin (MIT); NOTICE.md lists local changes
-docs/PLAN.md        roadmap, architecture, verification protocol
+docs/PLAN.md        roadmap, architecture, accuracy charter, verification protocol
+docs/DECISIONS.md   append-only log of why things are the way they are
+.github/PULL_REQUEST_TEMPLATE.md  the checklist every PR fills in
 ```
+
+## Accuracy change protocol
+
+An accuracy-relevant change is anything under
+`qibla_go_flutter/lib/core/{geo,compass,location,astro}`,
+`qibla_go_flutter/lib/features/qibla/domain`, `packages/compass_max`, the
+`qibla_math` version, the map line or tile code, or any threshold named in
+`README.md` (alignment 3°/6°, stale 3 s, fix reuse 250 m / 7 days, Kaaba
+radius 100 m, WMM validity, sensor chain order).
+
+For such a change, in the same pull request:
+
+1. Update the table "How the direction is computed" in `README.md` so it
+   describes the new behaviour exactly. The README is what users read; it
+   must never promise something the code no longer does.
+2. Update the accuracy charter in `docs/PLAN.md` if an error source, its
+   size or its mitigation changed.
+3. Add or change tests. Pin to published values (bearings, NOAA WMM test
+   points, suncalc references). Never loosen a tolerance to make a test
+   pass; find the bug.
+4. Write in the PR how the numbers were re-verified: which references, and
+   whether the device protocol in `docs/PLAN.md` was run.
+5. If the change is a judgement call (a new threshold, a new source order),
+   append the reasoning to `docs/DECISIONS.md`.
+
+A reviewer or agent that sees an accuracy-relevant diff without steps 1 to
+4 should ask for them before anything else.
+
+## Working rules
+
+- **Branches and PRs.** Never commit to `main`. Branch from an up-to-date
+  `main`, open a pull request, fill in the template. Commit prefixes:
+  `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, with the area in
+  parentheses, e.g. `fix(compass): ...`. One logical change per commit.
+- **Docs move with code.** A PR that changes behaviour updates the docs that
+  describe it: `README.md` for what users see, `docs/PLAN.md` for roadmap
+  and open decisions, the package `AGENTS.md` for rules, `docs/DECISIONS.md`
+  for the why. Do not leave "TODO: update docs" for later.
+- **Decisions are logged, not remembered.** When a choice is made that the
+  code alone cannot explain (a provider, a threshold, a dropped approach),
+  append a dated entry to `docs/DECISIONS.md`. Never edit old entries; add a
+  superseding one.
+- **Dependencies.** Anything that influences the direction is pinned exactly
+  or vendored. Everything else uses caret ranges. No dependency may require
+  an API key, a paid plan, an account, or send telemetry. Before adding a
+  package, check its license is MIT, BSD, Apache 2.0 or OFL and record it in
+  the README credits.
+- **Vendored code.** Upstream fixes to `packages/compass_max` are ported by
+  hand, one upstream commit per local commit, each noted in its `NOTICE.md`
+  with the upstream hash. Native code stays "facts only"; judgement lives in
+  tested Dart.
+- **Goldens.** Regenerate only on purpose with `--update-goldens`, look at
+  every changed PNG, and list them in the PR. A golden diff you did not
+  expect is a bug until proven otherwise.
+- **Strings and colours.** Every user-visible string is in
+  `qibla_go_flutter/lib/l10n/app_en.arb`; every colour comes from
+  `QiblaPalette`. Wording about accuracy must be honest: say "about",
+  "estimated" or "browser compass" when that is the truth.
+- **Secrets.** `qibla_go_server/config/passwords.yaml` is git-ignored and
+  stays that way. Nothing under `config/` may contain real credentials; use
+  environment variables in production.
+- **Generated code.** `qibla_go_client/`, the server's `lib/src/generated/`
+  and the Flutter `lib/l10n/app_localizations*.dart` files are outputs. Fix
+  the source (`.spy.yaml`, endpoints, ARB) and regenerate.
+- **Release gate.** Before any store or public web release: device
+  verification protocol run and noted, `applicationId`/bundle id final, tile
+  provider terms checked, licenses listed, version bumped in both pubspecs.
 
 ## Flutter & Serverpod workflow
 

@@ -1,15 +1,11 @@
 # qibla_go_flutter
 
-A new Flutter project with Serverpod.
+The Flutter app of Qibla Go. Start with the repository `README.md` for what
+the app does and how the direction is computed, then `AGENTS.md` in this
+directory for the structure and the rules that apply to this package.
 
-## Getting Started
+Run everything (server plus app, with hot reload) from the server package:
 
-This project is a starting point for a Flutter application that is using
-Serverpod.
+    cd ../qibla_go_server && serverpod start
 
-A great starting point for learning Serverpod is our documentation site at:
-[https://docs.serverpod.dev](https://docs.serverpod.dev).
-
-To run the project, first make sure that the server is running, then do:
-
-    flutter run
+Checks: `dart analyze && dart format lib test && flutter test`.
