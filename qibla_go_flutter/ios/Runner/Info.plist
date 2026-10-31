@@ -6,8 +6,12 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Qibla Go uses your location to compute the direction of the Kaaba and to correct the compass to true north. It never leaves your device.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Qibla Go reads the compass and motion sensors to show which way you are facing.</string>
 	<key>CFBundleDisplayName</key>
-	<string>Qibla Go Flutter</string>
+	<string>Qibla Go</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

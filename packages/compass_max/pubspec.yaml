@@ -1,0 +1,30 @@
+name: compass_max
+description: "A compass plugin that reports how much you can trust the heading — accuracy in degrees, magnetic interference detection, and a sensor fallback chain that works on devices without a gyroscope."
+version: 0.1.0+qiblago.1
+homepage: https://github.com/kamranbekirovyz/compass_max
+repository: https://github.com/kamranbekirovyz/compass_max
+issue_tracker: https://github.com/kamranbekirovyz/compass_max/issues
+
+resolution: workspace
+
+environment:
+  sdk: '^3.12.2'
+  flutter: '>=3.44.4'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.kamranbekirov.compass_max
+        pluginClass: CompassMaxPlugin
+      ios:
+        pluginClass: CompassMaxPlugin

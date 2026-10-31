@@ -1,0 +1,259 @@
+{
+  "@@locale": "en",
+  "appName": "Qibla Go",
+  "qiblaLabel": "QIBLA",
+  "fromTrueNorth": "from true north",
+  "fromMagneticNorth": "from magnetic north",
+  "facingQibla": "You are facing the Qibla",
+  "turnRight": "Turn right {degrees}°",
+  "@turnRight": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
+  "turnLeft": "Turn left {degrees}°",
+  "@turnLeft": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
+  "turnAround": "Turn around",
+  "distanceToMakkah": "{distance} km to Makkah",
+  "@distanceToMakkah": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "atKaabaTitle": "You are at the Kaaba",
+  "atKaabaBody": "Face it directly; a bearing has no meaning this close.",
+  "accuracyPlusMinus": "±{degrees}°",
+  "@accuracyPlusMinus": {
+    "placeholders": {
+      "degrees": {
+        "type": "int"
+      }
+    }
+  },
+  "accuracyUnknown": "Accuracy unknown",
+  "qualityGood": "Good",
+  "qualityFair": "Fair",
+  "qualityPoor": "Poor",
+  "headingLabel": "Heading",
+  "bearingSummary": "Qibla is {bearing}° from true north ({magnetic}° on a magnetic compass). Valid with any compass or map.",
+  "@bearingSummary": {
+    "placeholders": {
+      "bearing": {
+        "type": "int"
+      },
+      "magnetic": {
+        "type": "int"
+      }
+    }
+  },
+  "locationSetLocation": "Set location",
+  "locationLocating": "Locating…",
+  "locationOriginDevice": "Live location",
+  "locationOriginCached": "Last known location",
+  "locationOriginManual": "Entered by hand",
+  "locationAccuracyMeters": "±{meters} m",
+  "@locationAccuracyMeters": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "locationAgeJustNow": "just now",
+  "locationAgeMinutes": "{count, plural, =1{1 minute ago} other{{count} minutes ago}}",
+  "@locationAgeMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "locationAgeHours": "{count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "@locationAgeHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "locationAgeDays": "{count, plural, =1{1 day ago} other{{count} days ago}}",
+  "@locationAgeDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "locationNeededTitle": "Where are you?",
+  "locationNeededBody": "The Qibla direction depends on where you stand. Allow location access, or enter your coordinates. Your location never leaves this device.",
+  "locationUseMyLocation": "Use my location",
+  "locationEnterCoordinates": "Enter coordinates",
+  "locationLatitude": "Latitude",
+  "locationLongitude": "Longitude",
+  "locationLatitudeHint": "e.g. 38.5598",
+  "locationLongitudeHint": "e.g. 68.7870",
+  "locationInvalidLatitude": "Latitude must be between -90 and 90",
+  "locationInvalidLongitude": "Longitude must be between -180 and 180",
+  "locationSave": "Use these coordinates",
+  "locationOpenSettings": "Open settings",
+  "locationProblemServicesDisabled": "Location services are turned off on this device.",
+  "locationProblemPermissionDenied": "Location permission was not granted.",
+  "locationProblemPermissionDeniedForever": "Location permission is blocked. Allow it in the system settings.",
+  "locationProblemTimeout": "Could not get a position in time. Try near a window or outdoors.",
+  "locationProblemUnavailable": "Could not determine your position.",
+  "locationStaleNote": "Using a saved position. If you have travelled since, refresh it.",
+  "locationSheetTitle": "Your location",
+  "locationCoordinates": "{latitude}, {longitude}",
+  "@locationCoordinates": {
+    "placeholders": {
+      "latitude": {
+        "type": "String"
+      },
+      "longitude": {
+        "type": "String"
+      }
+    }
+  },
+  "compassCheckingTitle": "Checking the compass…",
+  "compassWaitingTitle": "Waiting for the sensor…",
+  "compassWaitingBody": "Move the phone gently if this takes more than a moment.",
+  "compassStaleTitle": "The compass stopped responding",
+  "compassStaleBody": "Readings have paused. Move the phone a little, or restart the app.",
+  "compassNoSensorTitle": "No compass on this device",
+  "compassNoSensorBody": "This device has no magnetometer, so it cannot show a live direction. The bearing below still works with any physical compass or a map.",
+  "compassBrowserNoSensorTitle": "No compass in this browser",
+  "compassBrowserNoSensorBody": "Desktop browsers have no orientation sensors. Open Qibla Go on a phone, or use the bearing below with a compass or a map.",
+  "compassPermissionTitle": "Allow motion access",
+  "compassPermissionBody": "Your browser needs permission to read the phone's orientation.",
+  "compassPermissionButton": "Enable compass",
+  "compassPermissionDeniedBody": "Motion access was declined. Allow it in the browser settings and reload.",
+  "compassRetry": "Try again",
+  "compassPausedTitle": "Compass paused",
+  "issueInterferenceTitle": "Magnetic interference",
+  "issueInterferenceBody": "Something magnetic or metal is nearby: a laptop, a car, a phone case with a magnet. The direction is hidden until the field is clean. Step away and try again.",
+  "issueMovingFastTitle": "You seem to be in a vehicle",
+  "issueMovingFastBody": "A compass cannot be trusted inside a moving car or train. Stop and step outside to check the direction.",
+  "issueCalibrationTitle": "Calibrate your compass",
+  "issueCalibrationBody": "Move the phone in a figure of eight a few times, away from metal.",
+  "issueNotFlatTitle": "Hold the phone flat",
+  "issueNotFlatBody": "Keep the screen facing the sky for the steadiest reading.",
+  "issueBrowserTitle": "Browser compass",
+  "issueBrowserBody": "Browsers give a rough heading and cannot detect interference. Before praying, confirm with the bearing below and a real compass if you can.",
+  "issueLowAccuracyTitle": "Low accuracy",
+  "issueLowAccuracyBody": "The sensor reports a large error right now. Calibrate, then check again.",
+  "declinationExtrapolatedNote": "This app's magnetic model has expired. Update the app for the best accuracy.",
+  "detailsButton": "Details",
+  "detailsTitle": "How this direction was computed",
+  "detailsSource": "Sensor",
+  "detailsMagneticHeading": "Magnetic heading",
+  "detailsDeclination": "Declination (WMM2025)",
+  "detailsTrueHeading": "True heading",
+  "detailsPlatformTrueHeading": "Platform true heading",
+  "detailsAccuracy": "Reported accuracy",
+  "detailsConfidence": "Confidence",
+  "detailsPitch": "Tilt",
+  "detailsField": "Field strength",
+  "detailsFieldExpected": "Expected field",
+  "detailsBearing": "Qibla bearing (true)",
+  "detailsBearingMagnetic": "Qibla bearing (magnetic)",
+  "detailsDistance": "Distance to the Kaaba",
+  "detailsLocation": "Position",
+  "detailsKaaba": "Kaaba",
+  "detailsMethod": "Great-circle initial bearing on WGS-84 coordinates; true north from the magnetic heading plus WMM2025 declination computed on this device.",
+  "detailsNotAvailable": "—",
+  "detailsSimulateToggle": "Simulate compass (debug build only)",
+  "detailsSimulateHeading": "Simulated heading",
+  "footerFree": "Free, forever. No ads, no accounts.",
+  "footerIntention": "Made for the pleasure of God.",
+  "cardinalN": "N",
+  "cardinalE": "E",
+  "cardinalS": "S",
+  "cardinalW": "W",
+  "introTagline": "Face the Kaaba, wherever you are",
+  "introSkip": "Skip",
+  "desktopPromptTitle": "Best experience on a phone",
+  "desktopPromptBody": "The live compass needs a phone's motion sensors. On this computer, Qibla Go shows the direction on a map instead, with the sun and the moon to help you orient yourself.",
+  "desktopPromptContinue": "Continue to the map",
+  "navCompass": "Compass",
+  "navMap": "Map",
+  "mapTitle": "Qibla on the map",
+  "mapYourLocation": "You",
+  "mapKaaba": "Kaaba, Makkah",
+  "mapQiblaLine": "Qibla line",
+  "mapSun": "Sun",
+  "mapMoon": "Moon",
+  "mapRecenter": "Back to my location",
+  "mapZoomIn": "Closer",
+  "mapZoomOut": "Farther",
+  "mapLongPressHint": "Long-press anywhere on the map to set your location there.",
+  "mapLocationSet": "Location set from the map.",
+  "mapHowTitle": "How to use this map",
+  "mapHowStep1": "The gold line starts where you are and runs straight to the Kaaba. Prayer faces along this line.",
+  "mapHowStep2": "Find something the line crosses near you: a road, a tall building, a hill, a bridge. Stand so that you face it, and you face the Qibla.",
+  "mapHowStep3": "Zoom in to check which side of a building the line passes, and zoom out to see that the line really ends in Makkah.",
+  "mapHowSunAbove": "The sun is now at {azimuth}° (about {direction}). The Qibla is {offset}° to the {side} of the sun: stand facing the sun, then turn that much.",
+  "@mapHowSunAbove": {
+    "placeholders": {
+      "azimuth": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "side": {
+        "type": "String"
+      }
+    }
+  },
+  "mapHowMoonAbove": "The moon ({phase}) is at {azimuth}°. The Qibla is {offset}° to the {side} of it.",
+  "@mapHowMoonAbove": {
+    "placeholders": {
+      "phase": {
+        "type": "String"
+      },
+      "azimuth": {
+        "type": "int"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "side": {
+        "type": "String"
+      }
+    }
+  },
+  "mapHowSkyNone": "Neither the sun nor the moon is up right now; use landmarks on the map.",
+  "sideLeft": "left",
+  "sideRight": "right",
+  "compassPointNorth": "north",
+  "compassPointNortheast": "north-east",
+  "compassPointEast": "east",
+  "compassPointSoutheast": "south-east",
+  "compassPointSouth": "south",
+  "compassPointSouthwest": "south-west",
+  "compassPointWest": "west",
+  "compassPointNorthwest": "north-west",
+  "moonPhaseNew": "new moon",
+  "moonPhaseWaxingCrescent": "waxing crescent",
+  "moonPhaseFirstQuarter": "first quarter",
+  "moonPhaseWaxingGibbous": "waxing gibbous",
+  "moonPhaseFull": "full moon",
+  "moonPhaseWaningGibbous": "waning gibbous",
+  "moonPhaseLastQuarter": "last quarter",
+  "moonPhaseWaningCrescent": "waning crescent",
+  "mapAttribution": "© OpenStreetMap contributors",
+  "mapNeedsLocation": "Set your location to draw the Qibla line."
+}

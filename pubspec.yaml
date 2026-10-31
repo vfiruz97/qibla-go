@@ -8,4 +8,5 @@ workspace:
   - qibla_go_client
   - qibla_go_server
   - qibla_go_flutter
+  - packages/compass_max
 
