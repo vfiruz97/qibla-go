@@ -31,7 +31,9 @@ lib/
     ├── health/                 health_endpoint.dart
     ├── support/                support_endpoint.dart, SupportGuard (challenge + rate limits), models
     ├── <feature>/              <feature>_endpoint.dart + <model>.spy.yaml + logic
-    └── web/                    Relic routes (config route, Flutter web app)
+    └── web/                    Relic routes and middleware for the web app:
+                                gzip_middleware, seo (robots/sitemap/index),
+                                public_origin, routes/web_app_routes
 config/                         development/staging/production/test yaml
 migrations/                     generated; see root AGENTS.md for the SQL exception
 test/integration/               withServerpod endpoint tests (embedded Postgres)
@@ -69,6 +71,29 @@ for any future one:
   first. Content and contact details are never written to `session.log`.
 - Reading what users sent happens in the database or Serverpod Insights; no
   endpoint ever returns stored messages.
+
+## Web app serving
+
+`serverpod run flutter_build` builds the Flutter web app into `web/app`
+(git-ignored); `server.dart` serves it when the folder exists.
+
+- `/` goes through `IndexPageRoute`, which fills `__QIBLA_ORIGIN__` in
+  `index.html` with the public address from the web server config
+  (`publicScheme`/`publicHost`/`publicPort`). `/map` and `/index.html`
+  answer `301` to `/`, so crawlers see one URL.
+  `production.yaml` must carry the real domain; canonical links, Open Graph
+  and the sitemap all derive from it.
+- `robots.txt` and `sitemap.xml` are generated (`seo.dart`); the sitemap
+  lists the single page.
+- `gzipMiddleware` compresses scripts, styles, fonts, JSON and WASM when the
+  client accepts gzip, keeps `ETag`, adds `Vary: Accept-Encoding` and skips
+  anything under 1 KB. HTML is compressed too, except in the `development`
+  run mode, because the dev watcher injects its reload script into HTML
+  bodies outside the middleware. Everything else is `FlutterRoute` with its
+  `private, no-cache` + `ETag` revalidation.
+- Verify after a change: `curl -sI -H 'Accept-Encoding: gzip'
+  localhost:8082/main.dart.js` shows `content-encoding: gzip`, and `curl -s
+  localhost:8082/ | grep canonical` shows the origin, no placeholder.
 
 ## Tests
 
