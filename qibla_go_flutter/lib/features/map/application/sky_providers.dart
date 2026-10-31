@@ -4,7 +4,7 @@ import '../../../core/astro/sky_position.dart';
 import '../../../core/geo/angles.dart';
 import '../../../core/geo/geo_point.dart';
 import '../../qibla/application/location_controller.dart';
-import '../../qibla/application/qibla_providers.dart';
+import '../../qibla/application/qibla_geometry_provider.dart';
 
 /// Ticks once a minute; sun and moon move about a quarter degree in that
 /// time, which no one can see on a map.

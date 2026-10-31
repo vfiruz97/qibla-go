@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../../app/theme/qibla_palette.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/astro/sky_position.dart';
-import '../../../support/presentation/support_sheet.dart';
+import '../../../support/presentation/support_sheet.dart' deferred as support;
 import '../../application/sky_providers.dart';
 import 'sky_overlay.dart';
+
+/// "Write to us" and the Serverpod client behind it load on first use, so
+/// they are not part of the initial web bundle (dart2js deferred part).
+Future<void> _openSupport(BuildContext context) async {
+  await support.loadLibrary();
+  if (context.mounted) await support.SupportSheet.show(context);
+}
 
 /// Plain-language guide: what the line is, how to use landmarks, and how
 /// the sun or moon can orient you right now.
@@ -83,7 +90,7 @@ class HowToPanel extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton.icon(
-                            onPressed: () => SupportSheet.show(context),
+                            onPressed: () => _openSupport(context),
                             icon: const Icon(Icons.mail_outline, size: 16),
                             label: Text(l10n.supportButton),
                           ),
