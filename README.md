@@ -77,6 +77,13 @@ flutter pub get                       # from the repository root
 cd qibla_go_server && serverpod start # server plus the Flutter app, with hot reload
 ```
 
+The web version is built into the server and served by it:
+
+```
+cd qibla_go_server && serverpod run flutter_build   # builds into web/app
+cd qibla_go_flutter && tool/check_web_bundle.sh ../qibla_go_server/web/app/main.dart.js
+```
+
 Useful flags for the Flutter app:
 
 ```
@@ -99,6 +106,21 @@ The map uses OpenStreetMap's standard tiles, which need no API key. The
 project only ever uses free providers. OpenStreetMap allows light use by a
 small app but not heavy traffic, so before a public release the tile URL
 should point at a free-tier provider whose terms cover the load.
+
+## Web version
+
+One page at `/` (old `/map` links redirect there), served by the Serverpod
+web server. The compass code is not compiled into the web bundle at all
+(`tool/check_web_bundle.sh` proves it after every build). The page's HTML
+carries the title, description and a plain-text summary of what the app
+does, so search engines and screen readers get real content before Flutter
+loads; the server fills in absolute links from its configured public
+address, answers old `/map` links with a permanent redirect, and serves
+`robots.txt` and `sitemap.xml`. Scripts and fonts go out gzipped, and
+"Write to us" loads on first tap rather than at start-up. The Flutter
+rendering engine (CanvasKit) is loaded from Google's CDN, which is the only
+third-party request besides map tiles; build with `--no-web-resources-cdn`
+to self-host it. Fonts are bundled, so nothing is fetched from Google Fonts.
 
 ## Licenses and credits
 
