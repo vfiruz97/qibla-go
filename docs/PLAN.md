@@ -94,6 +94,14 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
 - Vendored `compass_max`; `qibla_math` pinned; unit tests for geometry.
 - Server stripped to a public `health.ping`; auth removed.
 
+### M0.5 — Write to us ✅
+
+- `support.challenge` / `support.submit`: server-issued arithmetic challenge,
+  single use, 10 min; 5 messages and 30 challenges per client per hour;
+  message 10–2000 chars, optional contact. Stored in `support_message`;
+  content never logged. Entry points: compass footer, map guide.
+- Later: forward new messages by email; a tiny admin page in Insights.
+
 ### M1 — Release readiness
 - App icon, splash, store listing, privacy policy page (served by the
   Serverpod web server).

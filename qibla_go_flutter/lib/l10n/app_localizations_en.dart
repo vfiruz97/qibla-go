@@ -523,4 +523,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapNeedsLocation => 'Set your location to draw the Qibla line.';
+
+  @override
+  String get supportButton => 'Write to us';
+
+  @override
+  String get supportTitle => 'Write to us';
+
+  @override
+  String get supportIntro =>
+      'A direction that looks wrong somewhere, a bug, an idea, or just a salam. Every message is read.';
+
+  @override
+  String get supportMessageLabel => 'Your message';
+
+  @override
+  String get supportMessageHint => 'What happened, and where?';
+
+  @override
+  String get supportContactLabel => 'How to reach you (optional)';
+
+  @override
+  String get supportContactHint =>
+      'Email or anything you like, only if you want a reply';
+
+  @override
+  String supportChallengeLabel(String question) {
+    return 'Quick check: what is $question?';
+  }
+
+  @override
+  String get supportChallengeLoading => 'Getting a question…';
+
+  @override
+  String get supportChallengeUnavailable => 'No question available right now.';
+
+  @override
+  String get supportAnswerHint => '=';
+
+  @override
+  String get supportNewQuestion => 'New question';
+
+  @override
+  String get supportSend => 'Send';
+
+  @override
+  String get supportSending => 'Sending…';
+
+  @override
+  String get supportSentTitle => 'Received';
+
+  @override
+  String get supportSentBody => 'Thank you for writing. JazakAllahu khairan.';
+
+  @override
+  String get supportClose => 'Close';
+
+  @override
+  String get supportPrivacyNote =>
+      'No location or device data is sent with your message.';
+
+  @override
+  String get supportErrorOffline =>
+      'Could not reach the server. Check your connection and try again; your text is kept.';
+
+  @override
+  String get supportErrorTooMany =>
+      'Too many messages from this connection in the last hour. Please try again later.';
+
+  @override
+  String get supportErrorWrongAnswer =>
+      'That answer was not right. Please try the new question.';
+
+  @override
+  String get supportErrorExpired =>
+      'That question expired. Please try the new one.';
+
+  @override
+  String get supportErrorInvalid =>
+      'The server could not accept this message. Please shorten it and try again.';
+
+  @override
+  String get supportErrorTooShort => 'Please write at least 10 characters.';
+
+  @override
+  String get supportErrorTooLong => 'Please keep it under 2000 characters.';
+
+  @override
+  String get supportErrorAnswerMissing =>
+      'Please answer the quick check with a number.';
 }

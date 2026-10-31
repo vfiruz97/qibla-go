@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../app/theme/qibla_palette.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/astro/sky_position.dart';
+import '../../../support/presentation/support_sheet.dart';
 import '../../application/sky_providers.dart';
 import 'sky_overlay.dart';
 
@@ -78,6 +79,15 @@ class HowToPanel extends StatelessWidget {
                         _Step(n: 3, text: l10n.mapHowStep3),
                         const SizedBox(height: 8),
                         _SkySentence(sky: sky),
+                        const SizedBox(height: 4),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton.icon(
+                            onPressed: () => SupportSheet.show(context),
+                            icon: const Icon(Icons.mail_outline, size: 16),
+                            label: Text(l10n.supportButton),
+                          ),
+                        ),
                       ],
                     ),
                   )

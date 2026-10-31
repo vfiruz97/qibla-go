@@ -1,8 +1,9 @@
 # Qibla Go — server rules
 
-Serverpod 4 backend. Today it only answers `health.ping`; its purpose is to
-deliver prayer-time datasets for offline sync (see `docs/PLAN.md`, M2). Read
-the root `AGENTS.md` first for the MCP workflow and checklist.
+Serverpod 4 backend. Today it answers `health.ping` and stores "Write to us"
+messages (`support.*`); its main purpose will be to deliver prayer-time
+datasets for offline sync (see `docs/PLAN.md`, M2). Read the root `AGENTS.md`
+first for the MCP workflow and checklist.
 
 ## Principles
 
@@ -28,6 +29,7 @@ lib/
 └── src/
     ├── generated/              NEVER edit
     ├── health/                 health_endpoint.dart
+    ├── support/                support_endpoint.dart, SupportGuard (challenge + rate limits), models
     ├── <feature>/              <feature>_endpoint.dart + <model>.spy.yaml + logic
     └── web/                    Relic routes (config route, Flutter web app)
 config/                         development/staging/production/test yaml
@@ -52,6 +54,21 @@ classes that can be unit tested without a `Session`.
 - After changing a model with a `table`: `create_migration` →
   `apply_migrations` (MCP). Destructive changes need `force` and a sentence
   in the PR about data impact.
+
+## Public write endpoints
+
+`support.submit` is the only endpoint that writes user content. The pattern
+for any future one:
+
+- A server-issued, single-use, short-lived challenge (`SupportGuard`), checked
+  before anything touches the database.
+- Per-client counters keyed by the caller address (first `X-Forwarded-For`
+  hop behind a proxy, else the socket address). The address lives in memory
+  only; it is never stored, never logged.
+- Bounds on every field, enforced server-side even though the app checks
+  first. Content and contact details are never written to `session.log`.
+- Reading what users sent happens in the database or Serverpod Insights; no
+  endpoint ever returns stored messages.
 
 ## Tests
 

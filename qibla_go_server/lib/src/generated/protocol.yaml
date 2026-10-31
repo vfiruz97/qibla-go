@@ -1,2 +1,5 @@
 health:
   - ping:
+support:
+  - challenge:
+  - submit:

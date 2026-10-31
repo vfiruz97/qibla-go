@@ -12,6 +12,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'support/support_challenge.dart' as _iti73b7j;
+import 'support/support_submit_result.dart' as _ian8tpl6;
+export 'support/support_challenge.dart';
+export 'support/support_submit_result.dart';
 export 'client.dart';
 
 class Protocol extends _isc.SerializationManager {
@@ -48,11 +52,29 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
+    if (t == _iti73b7j.SupportChallenge) {
+      return _iti73b7j.SupportChallenge.fromJson(data) as T;
+    }
+    if (t == _ian8tpl6.SupportSubmitResult) {
+      return _ian8tpl6.SupportSubmitResult.fromJson(data) as T;
+    }
+    if (t == _isc.getType<_iti73b7j.SupportChallenge?>()) {
+      return (data != null ? _iti73b7j.SupportChallenge.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ian8tpl6.SupportSubmitResult?>()) {
+      return (data != null
+              ? _ian8tpl6.SupportSubmitResult.fromJson(data)
+              : null)
+          as T;
+    }
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _iti73b7j.SupportChallenge => 'SupportChallenge',
+      _ian8tpl6.SupportSubmitResult => 'SupportSubmitResult',
       _ => null,
     };
   }
@@ -66,6 +88,12 @@ class Protocol extends _isc.SerializationManager {
       return (data['__className__'] as String).replaceFirst('qibla_go.', '');
     }
 
+    switch (data) {
+      case _iti73b7j.SupportChallenge():
+        return 'SupportChallenge';
+      case _ian8tpl6.SupportSubmitResult():
+        return 'SupportSubmitResult';
+    }
     return null;
   }
 
@@ -74,6 +102,12 @@ class Protocol extends _isc.SerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'SupportChallenge') {
+      return deserialize<_iti73b7j.SupportChallenge>(data['data']);
+    }
+    if (dataClassName == 'SupportSubmitResult') {
+      return deserialize<_ian8tpl6.SupportSubmitResult>(data['data']);
     }
     return super.deserializeByClassName(data);
   }

@@ -18,6 +18,9 @@ is a promise to the user; keep it true.
   along their true azimuths to help you orient yourself.
 - **Offline.** Fonts, the magnetic model and the last known location are on
   the device. The server is optional at runtime.
+- **Write to us.** A short form on the compass and the map sends a message
+  to the maintainers: a wrong-looking direction, a bug, an idea. One small
+  sum keeps bots out; no account, no location, no device data.
 - **Prayer times** with offline sync are planned; see `docs/PLAN.md`.
 
 ## How the direction is computed
