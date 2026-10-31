@@ -30,7 +30,6 @@ class QiblaGoApp extends StatelessWidget {
         routerConfig: appRouter,
         builder: (context, child) => IntroGate(
           playIntro: playIntro,
-          onShowMap: () => appRouter.go(AppRoutes.map),
           child: child ?? const SizedBox.shrink(),
         ),
       ),

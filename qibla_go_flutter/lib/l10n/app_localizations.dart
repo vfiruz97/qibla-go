@@ -727,13 +727,13 @@ abstract class AppLocalizations {
   /// No description provided for @desktopPromptTitle.
   ///
   /// In en, this message translates to:
-  /// **'Best experience on a phone'**
+  /// **'On the web, the map'**
   String get desktopPromptTitle;
 
   /// No description provided for @desktopPromptBody.
   ///
   /// In en, this message translates to:
-  /// **'The live compass needs a phone\'s motion sensors. On this computer, Qibla Go shows the direction on a map instead, with the sun and the moon to help you orient yourself.'**
+  /// **'The live compass is in the phone app, where it can use the motion sensors. On the web, Qibla Go shows the direction on a map instead, with the sun and the moon to help you orient yourself.'**
   String get desktopPromptBody;
 
   /// No description provided for @desktopPromptContinue.

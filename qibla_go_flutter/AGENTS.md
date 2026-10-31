@@ -14,7 +14,6 @@ lib/
 ├── core/                     reusable, feature-agnostic, mostly pure Dart
 │   ├── geo/                  GeoPoint, Angles/HeadingSmoother/UnwrappedAngle, QiblaGeometry, greatCirclePath
 │   ├── astro/                SkyCalculator: sun/moon azimuth, altitude, moon phase
-│   ├── platform/             isDesktopBrowser (conditional import)
 │   ├── compass/              CompassSource seam + native/web/simulated implementations
 │   ├── location/             LocationService seam + models
 │   ├── storage/              AppPreferences (typed SharedPreferences)
@@ -103,6 +102,7 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Sun and moon are decoration plus a sentence; they never feed the bearing. Hide the moon in daylight (`SkySnapshot.showMoon`).
 - Anything inside `FlutterMap(children:)` that needs screen positions reads `MapCamera.of(context)`; nothing else may project coordinates by hand.
 - The intro overlay plays once per launch and is skipped under reduced motion; pass `QiblaGoApp(playIntro: false)` in tests.
+- **Web has no compass screen.** `webRedirect` sends `/` to `/map` on the web, the router starts on the map, the compass button is hidden there, and a one-time card explains it. Phones running the app keep both screens. The browser compass source stays in `core/compass` in case a phone-browser mode is ever wanted; do not wire it to a screen without a decision-log entry.
 - **Nothing on the map jumps.** Camera moves go through `MapCameraAnimator` (`flyTo`, `zoomBy`, `flyToFit`); never call `MapController.move`/`fitCamera` directly from the screen. A location change animates the marker and the line from the old point to the new one (`GeoPoint.lerp` over 650 ms); a long-press keeps the camera where the user pressed, every other source flies the camera along. Keep `TileLayer` and `WorldInset`'s map alive across rebuilds: recreating them reloads tiles and flashes.
 - A map long-press shows no message: the moving marker is the confirmation. The way back to the real position is the location button.
 
