@@ -975,6 +975,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set your location to draw the Qibla line.'**
   String get mapNeedsLocation;
+
+  /// No description provided for @supportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Write to us'**
+  String get supportButton;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write to us'**
+  String get supportTitle;
+
+  /// No description provided for @supportIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'A direction that looks wrong somewhere, a bug, an idea, or just a salam. Every message is read.'**
+  String get supportIntro;
+
+  /// No description provided for @supportMessageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your message'**
+  String get supportMessageLabel;
+
+  /// No description provided for @supportMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened, and where?'**
+  String get supportMessageHint;
+
+  /// No description provided for @supportContactLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'How to reach you (optional)'**
+  String get supportContactLabel;
+
+  /// No description provided for @supportContactHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or anything you like, only if you want a reply'**
+  String get supportContactHint;
+
+  /// No description provided for @supportChallengeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick check: what is {question}?'**
+  String supportChallengeLabel(String question);
+
+  /// No description provided for @supportChallengeLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting a question…'**
+  String get supportChallengeLoading;
+
+  /// No description provided for @supportChallengeUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No question available right now.'**
+  String get supportChallengeUnavailable;
+
+  /// No description provided for @supportAnswerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'='**
+  String get supportAnswerHint;
+
+  /// No description provided for @supportNewQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'New question'**
+  String get supportNewQuestion;
+
+  /// No description provided for @supportSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get supportSend;
+
+  /// No description provided for @supportSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending…'**
+  String get supportSending;
+
+  /// No description provided for @supportSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get supportSentTitle;
+
+  /// No description provided for @supportSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for writing. JazakAllahu khairan.'**
+  String get supportSentBody;
+
+  /// No description provided for @supportClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get supportClose;
+
+  /// No description provided for @supportPrivacyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'No location or device data is sent with your message.'**
+  String get supportPrivacyNote;
+
+  /// No description provided for @supportErrorOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. Check your connection and try again; your text is kept.'**
+  String get supportErrorOffline;
+
+  /// No description provided for @supportErrorTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many messages from this connection in the last hour. Please try again later.'**
+  String get supportErrorTooMany;
+
+  /// No description provided for @supportErrorWrongAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'That answer was not right. Please try the new question.'**
+  String get supportErrorWrongAnswer;
+
+  /// No description provided for @supportErrorExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'That question expired. Please try the new one.'**
+  String get supportErrorExpired;
+
+  /// No description provided for @supportErrorInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The server could not accept this message. Please shorten it and try again.'**
+  String get supportErrorInvalid;
+
+  /// No description provided for @supportErrorTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write at least 10 characters.'**
+  String get supportErrorTooShort;
+
+  /// No description provided for @supportErrorTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Please keep it under 2000 characters.'**
+  String get supportErrorTooLong;
+
+  /// No description provided for @supportErrorAnswerMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Please answer the quick check with a number.'**
+  String get supportErrorAnswerMissing;
 }
 
 class _AppLocalizationsDelegate

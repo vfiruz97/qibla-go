@@ -18,6 +18,7 @@ import 'widgets/compass_dial.dart';
 import 'widgets/details_sheet.dart';
 import 'widgets/location_sheet.dart';
 import 'widgets/status_strip.dart';
+import '../../support/presentation/support_sheet.dart';
 
 /// The one screen that matters: the dial, the number, the sentence.
 class QiblaScreen extends ConsumerStatefulWidget {
@@ -527,7 +528,14 @@ class _Footer extends StatelessWidget {
               ),
             ],
           ),
-        const SizedBox(height: 4),
+        Align(
+          alignment: Alignment.center,
+          child: TextButton.icon(
+            onPressed: () => SupportSheet.show(context),
+            icon: const Icon(Icons.mail_outline, size: 16),
+            label: Text(l10n.supportButton),
+          ),
+        ),
         Text(
           '${l10n.footerFree}  ·  ${l10n.footerIntention}',
           textAlign: TextAlign.center,

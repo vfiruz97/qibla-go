@@ -75,7 +75,7 @@ void main() {
     final markerBefore = tester.state(find.byType(UserMarker));
 
     final mapCenter = tester.getCenter(find.byType(MapScreen));
-    await tester.longPressAt(mapCenter + const Offset(60, -80));
+    await tester.longPressAt(Offset(mapCenter.dx + 60, 120));
     await tester.pump();
 
     // Mid-animation: still the same marker, position already changed.
@@ -96,7 +96,7 @@ void main() {
   ) async {
     final container = await pumpMap(tester);
     final mapCenter = tester.getCenter(find.byType(MapScreen));
-    await tester.longPressAt(mapCenter + const Offset(50, -50));
+    await tester.longPressAt(Offset(mapCenter.dx + 50, 120));
     await settle(tester);
     expect(
       container.read(locationControllerProvider).fix!.origin,
