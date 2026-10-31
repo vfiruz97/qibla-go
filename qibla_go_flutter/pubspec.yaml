@@ -69,3 +69,9 @@ flutter:
     - family: Manrope
       fonts:
         - asset: assets/fonts/Manrope-Variable.ttf
+    # Not a real Roboto. Flutter's web engine downloads Roboto from Google
+    # Fonts at start-up unless a family by that name is bundled; pointing
+    # the name at Manrope keeps start-up offline and free of that request.
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Manrope-Variable.ttf

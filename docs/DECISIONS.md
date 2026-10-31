@@ -99,3 +99,57 @@ at all: `/` redirects to `/map`, the map has no compass button, and a card
 explains once that the live compass is in the phone app. The browser heading
 source stays in the code, unreachable, in case a clearly labelled
 phone-browser mode is wanted later.
+
+## 2026-10-31 Web: one page, compass compiled out, gzip and SEO on the server
+
+- The web app is a single page at `/`; `/map` redirects there. Supersedes
+  the `/` → `/map` redirect of the same day: one canonical URL is better for
+  sharing and indexing than a client-side hop.
+- The compass route is swapped out by conditional import
+  (`compass_routes_web.dart`), so no sensor or dial code is compiled into
+  the web bundle. `kIsWeb` branches would mostly be tree-shaken too, but the
+  import makes it structural and `tool/check_web_bundle.sh` checks it.
+  `LocationState` and `qiblaGeometryProvider` moved to their own files so the
+  map can depend on location and geometry without the compass controller;
+  no behaviour changed.
+- Search engines cannot read a Flutter canvas, so `web/index.html` carries
+  the indexable text (shown until Flutter's first frame, and if Flutter
+  fails to load), with canonical, Open Graph and JSON-LD built from the
+  server's configured public address. `robots.txt` and `sitemap.xml` come
+  from the server. No prerendering service: nothing third-party, nothing
+  that costs money.
+- Relic sent `main.dart.js` uncompressed (3.3 MB). A small gzip middleware
+  on the Serverpod web server brings it to under 1 MB. HTML is excluded
+  because the dev watcher's reload injection reads HTML bodies as text.
+  Brotli was not added: Dart has no built-in encoder and it would mean a
+  native dependency for a modest extra gain.
+- CanvasKit stays on Google's CDN (the Flutter default): it is likely
+  already cached in the visitor's browser from other Flutter sites and is
+  served brotli-compressed. Documented in the README as the one third-party
+  request besides map tiles; `--no-web-resources-cdn` self-hosts it if that
+  ever changes.
+
+## 2026-10-31 Web pass two: redirects, lazy support, no Google Fonts, no first-focus
+
+- `/map` and `/index.html` now answer `301` to `/` on the server; the
+  client-side redirect stays as a fallback. One URL for crawlers.
+- The indexable text in `index.html` is no longer removed after Flutter's
+  first frame; it moves off screen. Google indexes the rendered DOM, and a
+  Flutter canvas has no text.
+- "Write to us" is a deferred import, which also moves the Serverpod client
+  and protocol out of the initial bundle into a part file loaded on first
+  tap. Measured on the release build (see the PR).
+- `Roboto` is declared in `pubspec.yaml` as an alias of Manrope. The web
+  engine otherwise downloads Roboto from fonts.gstatic.com at start-up
+  whether or not it is used; the app promises no third-party requests
+  beyond tiles and the engine CDN.
+- The first web frame is an empty box. Headless Chrome (so Lighthouse, and
+  any user whose browser focuses the page before Flutter's first layout)
+  hands the Flutter view focus with direction "forward"; the framework
+  then sorts focusable widgets by position and reads the navigator
+  overlay's size before it exists, logging "RenderBox was not laid out".
+  With nothing focusable in the first frame the search is empty. Traced in
+  an unminified build; `GoRouter(requestFocus: false)` was tried first and
+  did not help, since the request comes from the view, not the route.
+- HTML is gzipped in every run mode except development, where the dev
+  watcher's reload injection reads HTML bodies as text.

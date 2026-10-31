@@ -102,7 +102,23 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Sun and moon are decoration plus a sentence; they never feed the bearing. Hide the moon in daylight (`SkySnapshot.showMoon`).
 - Anything inside `FlutterMap(children:)` that needs screen positions reads `MapCamera.of(context)`; nothing else may project coordinates by hand.
 - The intro overlay plays once per launch and is skipped under reduced motion; pass `QiblaGoApp(playIntro: false)` in tests.
-- **Web has no compass screen.** `webRedirect` sends `/` to `/map` on the web, the router starts on the map, the compass button is hidden there, and a one-time card explains it. Phones running the app keep both screens. The browser compass source stays in `core/compass` in case a phone-browser mode is ever wanted; do not wire it to a screen without a decision-log entry.
+- **Web has no compass screen, and no compass code.** On the web the map is
+  the one page at `/` (`/map` redirects there); the compass route comes from
+  `app/compass_routes.dart`, which the web build swaps for
+  `compass_routes_web.dart` by conditional import, so the dial, sensors and
+  `compass_controller` are not compiled into the bundle. Keep it that way:
+  the map feature imports `qibla_geometry_provider.dart` and
+  `location_controller.dart`, never `qibla_providers.dart` or anything under
+  `core/compass`. After `flutter build web`, run `tool/check_web_bundle.sh`;
+  it fails if compass code reached `main.dart.js`. Phones keep both screens.
+  The browser compass source stays in `core/compass` in case a phone-browser
+  mode is ever wanted; do not wire it to a screen without a decision-log
+  entry.
+- **Lazy features.** "Write to us" (and with it the Serverpod client) is a
+  deferred import (`deferred as support` + `loadLibrary()`), so it ships as
+  a separate part file loaded on first tap. Do the same for any future
+  feature the first screen does not need; never import `qibla_go_client`
+  or `core/serverpod` from a screen directly.
 - **Nothing on the map jumps.** Camera moves go through `MapCameraAnimator` (`flyTo`, `zoomBy`, `flyToFit`); never call `MapController.move`/`fitCamera` directly from the screen. A location change animates the marker and the line from the old point to the new one (`GeoPoint.lerp` over 650 ms); a long-press keeps the camera where the user pressed, every other source flies the camera along. Keep `TileLayer` and `WorldInset`'s map alive across rebuilds: recreating them reloads tiles and flashes.
 - A map long-press shows no message: the moving marker is the confirmation. The way back to the real position is the location button.
 
@@ -111,6 +127,23 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Web: platform-specific code uses the conditional import pattern
   (`x_stub.dart` + `x_web.dart` chosen with `if (dart.library.js_interop)`).
   Use `package:web` + `dart:js_interop`; never `dart:html`.
+- `web/index.html` is the page search engines read: title, description,
+  Open Graph, JSON-LD and a plain-text summary shown until Flutter's first
+  frame. It is the one place with user-visible copy outside the ARB; keep
+  it honest and in step with `README.md`. `__QIBLA_ORIGIN__` is filled by
+  the server from its public address; `{{flutter_js}}` and
+  `{{flutter_build_config}}` by `flutter build`. It preloads
+  `main.dart.js` and the two fonts; keep those names in sync with
+  `pubspec.yaml`. After Flutter's first frame the summary stays in the
+  document off screen (`sr-only`), so the rendered page still has text.
+- The `Roboto` family in `pubspec.yaml` is an alias of Manrope on purpose:
+  without it the web engine downloads Roboto from Google Fonts at start-up.
+  Missing glyphs (Arabic, emoji) still trigger Noto fallback downloads from
+  Google; bundle those fonts when adding such languages.
+- `QiblaGoApp` draws an empty first frame on the web (`_ready`): the
+  browser can focus the Flutter view before the first layout, and Flutter's
+  search for the first focusable widget then logs "RenderBox was not laid
+  out". Keep the first web frame free of focusable widgets.
 - Android permissions and features are declared in
   `android/app/src/main/AndroidManifest.xml`; iOS usage strings in
   `ios/Runner/Info.plist`. Keep the wording honest about what is used.
@@ -133,4 +166,5 @@ dart analyze && dart format lib test
 flutter test
 flutter gen-l10n
 flutter run -d chrome --dart-define=QIBLA_SIMULATE_COMPASS=true
+flutter build web --release && tool/check_web_bundle.sh   # no compass in the bundle
 ```

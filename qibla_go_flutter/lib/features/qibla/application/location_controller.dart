@@ -6,7 +6,7 @@ import '../../../core/geo/geo_point.dart';
 import '../../../core/location/location_models.dart';
 import '../../../core/location/location_service.dart';
 import '../../../core/storage/app_preferences.dart';
-import '../domain/qibla_state.dart';
+import '../domain/location_state.dart';
 
 final locationServiceProvider = Provider<LocationService>(
   (ref) => const GeolocatorLocationService(),

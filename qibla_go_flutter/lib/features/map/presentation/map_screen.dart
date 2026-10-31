@@ -16,7 +16,7 @@ import '../../../core/geo/qibla_geometry.dart' as geo;
 import '../../../core/location/location_models.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../qibla/application/location_controller.dart';
-import '../../qibla/application/qibla_providers.dart';
+import '../../qibla/application/qibla_geometry_provider.dart';
 import '../../qibla/presentation/widgets/location_sheet.dart';
 import '../application/sky_providers.dart';
 import 'widgets/how_to_panel.dart';

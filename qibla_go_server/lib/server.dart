@@ -2,7 +2,11 @@ import 'dart:io';
 
 import 'src/cache_busting.dart';
 import 'src/generated/serverpod.dart';
+import 'src/web/gzip_middleware.dart';
+import 'src/web/public_origin.dart';
 import 'src/web/routes/app_config_route.dart';
+import 'src/web/routes/web_app_routes.dart';
+import 'src/web/seo.dart';
 
 /// The starting point of the Serverpod server.
 ///
@@ -12,6 +16,13 @@ void run(List<String> args) async {
   // Initialize Serverpod. The generated Serverpod class is already connected
   // with your project's generated code.
   final pod = Serverpod(args);
+
+  // Everything the web server sends that compresses well goes out gzipped.
+  // HTML only outside development; see gzipMiddleware.
+  pod.webServer.addMiddleware(
+    gzipMiddleware(compressHtml: pod.runMode != ServerpodRunMode.development),
+    '/',
+  );
 
   // Serve all files in the web/static relative directory under /web.
   // These are used by the default web page.
@@ -31,6 +42,27 @@ void run(List<String> args) async {
   // Checks if the flutter web app has been built and serves it if it has.
   final appDir = Directory(Uri(path: 'web/app').toFilePath());
   if (appDir.existsSync()) {
+    // The page itself, with absolute links for search engines, plus
+    // robots.txt and the sitemap. See src/web/seo.dart.
+    final origin = publicOrigin(pod.config.webServer);
+    final indexFile = File('${appDir.path}/index.html');
+    pod.webServer.addRoute(IndexPageRoute(indexFile, origin: origin), '/');
+    // The one page lives at /; old links and the file name go there for good.
+    for (final oldPath in ['/map', '/index.html']) {
+      pod.webServer.addRoute(RedirectRoute('/'), oldPath);
+    }
+    pod.webServer.addRoute(
+      TextRoute(robotsTxt(origin), mimeType: MimeType.plainText),
+      '/robots.txt',
+    );
+    pod.webServer.addRoute(
+      TextRoute(
+        sitemapXml(origin, lastModified: indexFile.lastModifiedSync()),
+        mimeType: MimeType.xml,
+      ),
+      '/sitemap.xml',
+    );
+
     // Serve the flutter web app under /.
     pod.webServer.addRoute(
       FlutterRoute(

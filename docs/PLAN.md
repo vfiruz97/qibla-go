@@ -108,9 +108,19 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
 - Decide and set `applicationId` / bundle id and the domain.
 - Physical-device verification protocol (see §5) on at least three Android
   phones (one without a gyroscope) and one iPhone via Safari.
-- Build pipelines: `flutter build appbundle`, `flutter build web --wasm`
-  evaluation, GitHub Actions running `dart analyze`, `flutter test`,
-  `dart test` (server).
+- Build pipelines: `flutter build appbundle`, `serverpod run flutter_build`
+  plus `tool/check_web_bundle.sh`, GitHub Actions running `dart analyze`,
+  `flutter test`, `dart test` (server).
+- Web load time, further options (2026-10-31, Lighthouse 12 against the
+  local dev server, release build: mobile simulation performance 29 → 76,
+  desktop 91 → 92, console errors 2 → 0; what remains is Flutter web's
+  script evaluation on a throttled phone, TBT 610 ms, TTI 14 s): `--wasm` with skwasm needs COOP/COEP
+  headers, which also require tile images to be served with CORS, so test
+  tiles first; content-hashed asset names would allow `immutable` caching
+  instead of revalidation; a Content-Security-Policy needs a nonce for the
+  inline loader; the location permission is requested at start-up, which
+  Lighthouse flags, and a web-only "tap to use my location" start would
+  change the first-run flow (decide with the UX).
 - Settings: theme (night/day/system), units, compass smoothing.
 
 ### M2 — Prayer times with offline sync
@@ -174,7 +184,7 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
 | --- | --- |
 | Source license for Qibla Go itself | Open; pick one (MIT or Apache 2.0 suggested) and add `LICENSE` before the first public release. |
 | Android `applicationId` / iOS bundle id | TODO before first store build (currently `com.example.qibla_go_flutter`). |
-| Domain and hosting (Serverpod Cloud vs. own VPS) | Open; server has no state yet so either works. |
+| Domain and hosting (Serverpod Cloud vs. own VPS) | Open; server has no state yet so either works. The domain goes into `webServer.publicHost` in `production.yaml`; every SEO link derives from it. |
 | Prayer-time engine (package vs. own) | Decide in M2 with reference tests. |
 | Fonts | Marcellus (display) + Manrope (body), both OFL, bundled. |
 | Map tiles | OpenStreetMap standard tiles in their light style (no key; buildings visible from zoom 16). CARTO was dropped on 2026-10-24 because it now requires an API key, and the inverted dark style was dropped the same day because it hid buildings. Decision: always a free provider. The OSM usage policy forbids heavy app traffic, so before release move to a free-tier provider whose terms cover the load (MapTiler/Stadia/Thunderforest/self-hosted) via `QIBLA_TILE_URL`. |
