@@ -79,58 +79,64 @@ class _IntroOverlayState extends State<IntroOverlay>
   Widget build(BuildContext context) {
     final p = QiblaPalette.night;
     final l10n = AppLocalizations.of(context);
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, _) {
-        final t = _controller.value;
-        final veil =
-            1 -
-            Curves.easeInCubic.transform(
-              ((t - _fadeStart) / (1 - _fadeStart)).clamp(0.0, 1.0),
-            );
-        final scale = 1 + (1 - veil) * 0.05;
-        return IgnorePointer(
-          ignoring: veil == 0,
-          child: Opacity(
-            opacity: veil,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: _skip,
-              child: Transform.scale(
-                scale: scale,
-                child: ColoredBox(
-                  color: p.background,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CustomPaint(
-                        painter: _IntroPainter(t: t, palette: p),
-                      ),
-                      _Wordmark(t: t, palette: p, tagline: l10n.introTagline),
-                      Positioned(
-                        right: 16,
-                        top: MediaQuery.paddingOf(context).top + 8,
-                        child: Opacity(
-                          opacity: Curves.easeIn.transform(
-                            (t * 3).clamp(0.0, 1.0),
-                          ),
-                          child: TextButton(
-                            onPressed: _skip,
-                            child: Text(
-                              l10n.introSkip,
-                              style: TextStyle(color: p.inkFaint),
+    // The overlay lives above the Navigator, outside any Scaffold. Without a
+    // Material ancestor, Text falls back to the framework's yellow
+    // double-underline "missing Material" style.
+    return Material(
+      type: MaterialType.transparency,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) {
+          final t = _controller.value;
+          final veil =
+              1 -
+              Curves.easeInCubic.transform(
+                ((t - _fadeStart) / (1 - _fadeStart)).clamp(0.0, 1.0),
+              );
+          final scale = 1 + (1 - veil) * 0.05;
+          return IgnorePointer(
+            ignoring: veil == 0,
+            child: Opacity(
+              opacity: veil,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _skip,
+                child: Transform.scale(
+                  scale: scale,
+                  child: ColoredBox(
+                    color: p.background,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CustomPaint(
+                          painter: _IntroPainter(t: t, palette: p),
+                        ),
+                        _Wordmark(t: t, palette: p, tagline: l10n.introTagline),
+                        Positioned(
+                          right: 16,
+                          top: MediaQuery.paddingOf(context).top + 8,
+                          child: Opacity(
+                            opacity: Curves.easeIn.transform(
+                              (t * 3).clamp(0.0, 1.0),
+                            ),
+                            child: TextButton(
+                              onPressed: _skip,
+                              child: Text(
+                                l10n.introSkip,
+                                style: TextStyle(color: p.inkFaint),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
