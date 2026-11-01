@@ -1,8 +1,9 @@
 # Qibla Go — server rules
 
-Serverpod 4 backend. Today it answers `health.ping` and stores "Write to us"
-messages (`support.*`); its main purpose will be to deliver prayer-time
-datasets for offline sync (see `docs/PLAN.md`, M2). Read the root `AGENTS.md`
+Serverpod 4 backend. Today it answers `health.ping`, stores "Write to us"
+messages (`support.*`) and anonymous usage events (`analytics.record`); its
+main purpose will be to deliver prayer-time datasets for offline sync (see
+`docs/PLAN.md`, M2). Read the root `AGENTS.md`
 first for the MCP workflow and checklist.
 
 ## Principles
@@ -30,6 +31,8 @@ lib/
     ├── generated/              NEVER edit
     ├── health/                 health_endpoint.dart
     ├── support/                support_endpoint.dart, SupportGuard (challenge + rate limits), models
+    ├── analytics/              analytics_endpoint.dart (write-only), AnalyticsGuard (allowlists,
+    │                           bounds, hourly budget), AnalyticsRetention (90-day purge), models
     ├── <feature>/              <feature>_endpoint.dart + <model>.spy.yaml + logic
     └── web/                    Relic routes and middleware for the web app:
                                 gzip_middleware, seo (robots/sitemap/index),
@@ -59,8 +62,8 @@ classes that can be unit tested without a `Session`.
 
 ## Public write endpoints
 
-`support.submit` is the only endpoint that writes user content. The pattern
-for any future one:
+`support.submit` is the only endpoint that writes user content;
+`analytics.record` writes anonymous counters. The pattern for any future one:
 
 - A server-issued, single-use, short-lived challenge (`SupportGuard`), checked
   before anything touches the database.
@@ -71,6 +74,23 @@ for any future one:
   first. Content and contact details are never written to `session.log`.
 - Reading what users sent happens in the database or Serverpod Insights; no
   endpoint ever returns stored messages.
+
+`analytics.record` has no challenge (it runs in the background and a bogus
+row costs nothing), so everything rests on `AnalyticsGuard`: event names and
+platforms from an allowlist, every string a short token, numbers bounded,
+device clocks clamped to a day, 1000 events per client address per hour, and
+a refused batch answers 0 instead of throwing so the app never retries or
+reports. The table holds no identifier beyond the per-launch session id and
+no free text; `AnalyticsRetention.purge` deletes rows after 90 days, run
+opportunistically from the endpoint (once an hour per process). A new event
+name goes into `AnalyticsGuard.allowedNames`, the app's
+`AnalyticsEventName` and the README in the same change. Counting happens in
+SQL, e.g. launches per platform and day:
+
+```sql
+select date_trunc('day', "occurredAt") d, platform, count(*)
+from analytics_event where name = 'app_launch' group by 1, 2 order by 1;
+```
 
 ## Web app serving
 

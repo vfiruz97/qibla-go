@@ -238,3 +238,42 @@ phone-browser mode is wanted later.
 - The iOS listing needs the numeric App Store id, unknown until the app is
   listed; it is a build-time define (`QIBLA_APP_STORE_ID`) and a release
   gate item rather than a hard-coded placeholder.
+
+## 2026-11-01 Usage statistics: first-party, anonymous, write-only
+
+- The founding rule was "no tracking". The owner asked for usage analytics
+  (launches, load time, screen views, navigation, support submissions,
+  platform), so the rule is now "no identifying tracking": the README, the
+  plan and the three AGENTS files say so, and the README lists what is sent
+  to the word. This entry records that the change was deliberate.
+- No SDK. Firebase, Amplitude and the like bring identifiers, device
+  fingerprints and third-party terms; a table and one endpoint on the
+  project's own Serverpod bring none of that and cost nothing.
+- Anonymous by construction, not by policy: the only id is drawn at launch
+  and forgotten at exit, so two launches cannot be joined and no profile
+  can form; no install id, no advertising id, no account. The server keeps
+  the caller address in memory for the hourly budget and never stores or
+  logs it. Rows are purged after 90 days.
+- Allowlists on both ends. The app can only send names from an enum; the
+  server only stores names, platforms and short tokens it knows. A new
+  field or event is a visible change in four places (enum, guard, README,
+  store declarations), which is the point.
+- Write-only. No endpoint returns events; counting happens in SQL. The
+  endpoint answers 0 for a refused batch rather than an error, so the app
+  has nothing to retry or show. Nothing is ever a user-facing state.
+- Cheap on the device: events are a struct in a list; batches go after
+  10 s of quiet, at 20 events, or on background; a launch's queue is
+  capped at 200 and nothing touches disk. On the web the Serverpod client
+  loads as a deferred part on the first batch, seconds after the first
+  frame, so the start-up work of the SEO/performance pass is kept.
+- Timing is measured from Dart `main` to the first content frame, not from
+  process start, because that is what the app can measure on every
+  platform the same way. It is a relative number for spotting regressions.
+- Support messages: the message itself still travels only with
+  `support.submit`; the analytics event records that an attempt happened
+  and the server's answer, in a separate request with no link to the row.
+- Retention runs from the record endpoint once an hour per process instead
+  of a future call, in line with the server rule to keep things boring.
+- Not done, recorded as open: an in-app off switch (there is no Settings
+  screen yet; the build-time define exists), and the store privacy
+  declarations, which must be filled in before release.

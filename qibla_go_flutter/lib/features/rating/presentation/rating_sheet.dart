@@ -15,6 +15,8 @@ class RatingSheet extends StatelessWidget {
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
+    // Named so the analytics observer can count the view.
+    routeSettings: const RouteSettings(name: 'rating'),
     builder: (_) => const RatingSheet(),
   );
 

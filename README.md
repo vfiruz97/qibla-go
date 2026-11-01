@@ -1,7 +1,7 @@
 # Qibla Go
 
 A free, ad-free Qibla compass and map for Android and the web (iOS later).
-No accounts, no tracking, no ads. Built for the pleasure of God.
+No accounts, no ads, no identifying tracking. Built for the pleasure of God.
 
 Showing a believer the wrong direction is the one failure this project must
 not have. Everything below the line in [How the direction is computed](#how-the-direction-is-computed)
@@ -131,6 +131,32 @@ Japanese and Korean the phone's system fonts fill in; on the web the Flutter eng
 fetches Google's Noto fallback fonts for those scripts when they are first
 needed, which is the one case where the web version talks to Google Fonts.
 
+## Usage statistics
+
+The app counts how it is used, so the maintainers know which screens and
+languages matter and whether launches are slow. What is sent, in small
+batches a few seconds after it happens and again when the app goes to the
+background:
+
+- the event: `app_launch` (with the time from start to the first frame),
+  `app_resume`, `app_background` (with the time spent in the foreground),
+  `screen_view` and `sheet_view` (which screen or sheet, and from which),
+  `support_sent` (that a message was sent and whether the server accepted
+  it; never the message), `rating_prompt` and `rating_answer`;
+- the moment it happened, the platform (`android`, `ios`, `web`, …), the
+  app version and the language the app is shown in;
+- a random session id drawn at launch and forgotten at exit, so the events
+  of one launch can be grouped and two launches cannot be linked.
+
+Never sent: any location, any text the user typed, any device or
+advertising identifier, any account (there are none). The server keeps the
+caller's address in memory only, for rate limiting, and never stores or
+logs it. Events are deleted after 90 days. Nothing is kept on the device:
+a launch that never reaches the server leaves no trace. There is no
+third-party analytics SDK; the endpoint is this project's own
+(`analytics.record`). The feature compiles out with
+`--dart-define=QIBLA_ANALYTICS=false`.
+
 ## Rating prompt
 
 The phone app asks for a store rating exactly as described above and never
@@ -171,4 +197,6 @@ for the scripts that still fetch a fallback font.
   domain (NOAA/NCEI).
 - Fonts Marcellus (Astigmatic) and Manrope (Mikhail Sharanda): SIL OFL 1.1.
 - `in_app_review`: MIT, Britannio Jarrett. Store rating prompt.
+- `package_info_plus`: BSD-3-Clause, Flutter Community. App version for the
+  usage statistics.
 - Map data © OpenStreetMap contributors (ODbL).

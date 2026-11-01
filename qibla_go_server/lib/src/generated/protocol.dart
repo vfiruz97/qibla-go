@@ -11,11 +11,17 @@
 // ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:qibla_go_server/src/generated/analytics/analytics_event_input.dart'
+    as _ij72q2bz;
 import 'package:serverpod/protocol.dart' as _isp;
 import 'package:serverpod/serverpod.dart' as _is;
+import 'analytics/analytics_event.dart' as _i69cfam9;
+import 'analytics/analytics_event_input.dart' as _i7agsfz9;
 import 'support/support_challenge.dart' as _iti73b7j;
 import 'support/support_message.dart' as _izh8ly96;
 import 'support/support_submit_result.dart' as _ian8tpl6;
+export 'analytics/analytics_event.dart';
+export 'analytics/analytics_event_input.dart';
 export 'support/support_challenge.dart';
 export 'support/support_message.dart';
 export 'support/support_submit_result.dart';
@@ -28,6 +34,134 @@ class Protocol extends _is.DatabaseSerializationManager {
   static final Protocol _instance = Protocol._();
 
   static List<_isp.TableDefinition> get targetTableDefinitions => [
+    _isp.TableDefinition(
+      name: 'analytics_event',
+      dartName: 'AnalyticsEvent',
+      schema: 'public',
+      module: 'qibla_go',
+      columns: [
+        _isp.ColumnDefinition(
+          name: 'id',
+          columnType: _isp.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'serial',
+        ),
+        _isp.ColumnDefinition(
+          name: 'receivedAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _isp.ColumnDefinition(
+          name: 'occurredAt',
+          columnType: _isp.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _isp.ColumnDefinition(
+          name: 'sessionId',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _isp.ColumnDefinition(
+          name: 'name',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _isp.ColumnDefinition(
+          name: 'platform',
+          columnType: _isp.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _isp.ColumnDefinition(
+          name: 'appVersion',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'language',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'screen',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'fromScreen',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'durationMs',
+          columnType: _isp.ColumnType.bigint,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+        _isp.ColumnDefinition(
+          name: 'outcome',
+          columnType: _isp.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _isp.IndexDefinition(
+          indexName: 'analytics_event_name_time_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'name',
+            ),
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'occurredAt',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+        _isp.IndexDefinition(
+          indexName: 'analytics_event_received_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'receivedAt',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+        _isp.IndexDefinition(
+          indexName: 'analytics_event_session_idx',
+          tableSpace: null,
+          elements: [
+            _isp.IndexElementDefinition(
+              type: _isp.IndexElementDefinitionType.column,
+              definition: 'sessionId',
+            ),
+          ],
+          type: 'btree',
+          isUnique: false,
+          isPrimary: false,
+        ),
+      ],
+      managed: true,
+    ),
     _isp.TableDefinition(
       name: 'support_message',
       dartName: 'SupportMessage',
@@ -127,6 +261,12 @@ class Protocol extends _is.DatabaseSerializationManager {
       }
     }
 
+    if (t == _i69cfam9.AnalyticsEvent) {
+      return _i69cfam9.AnalyticsEvent.fromJson(data) as T;
+    }
+    if (t == _i7agsfz9.AnalyticsEventInput) {
+      return _i7agsfz9.AnalyticsEventInput.fromJson(data) as T;
+    }
     if (t == _iti73b7j.SupportChallenge) {
       return _iti73b7j.SupportChallenge.fromJson(data) as T;
     }
@@ -135,6 +275,16 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (t == _ian8tpl6.SupportSubmitResult) {
       return _ian8tpl6.SupportSubmitResult.fromJson(data) as T;
+    }
+    if (t == _is.getType<_i69cfam9.AnalyticsEvent?>()) {
+      return (data != null ? _i69cfam9.AnalyticsEvent.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_i7agsfz9.AnalyticsEventInput?>()) {
+      return (data != null
+              ? _i7agsfz9.AnalyticsEventInput.fromJson(data)
+              : null)
+          as T;
     }
     if (t == _is.getType<_iti73b7j.SupportChallenge?>()) {
       return (data != null ? _iti73b7j.SupportChallenge.fromJson(data) : null)
@@ -150,6 +300,12 @@ class Protocol extends _is.DatabaseSerializationManager {
               : null)
           as T;
     }
+    if (t == List<_ij72q2bz.AnalyticsEventInput>) {
+      return (data as List)
+              .map((e) => deserialize<_ij72q2bz.AnalyticsEventInput>(e))
+              .toList()
+          as T;
+    }
     try {
       return _isp.Protocol().deserialize<T>(data, t);
     } on _is.DeserializationTypeNotFoundException catch (_) {}
@@ -158,6 +314,8 @@ class Protocol extends _is.DatabaseSerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _i69cfam9.AnalyticsEvent => 'AnalyticsEvent',
+      _i7agsfz9.AnalyticsEventInput => 'AnalyticsEventInput',
       _iti73b7j.SupportChallenge => 'SupportChallenge',
       _izh8ly96.SupportMessage => 'SupportMessage',
       _ian8tpl6.SupportSubmitResult => 'SupportSubmitResult',
@@ -175,6 +333,10 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
 
     switch (data) {
+      case _i69cfam9.AnalyticsEvent():
+        return 'AnalyticsEvent';
+      case _i7agsfz9.AnalyticsEventInput():
+        return 'AnalyticsEventInput';
       case _iti73b7j.SupportChallenge():
         return 'SupportChallenge';
       case _izh8ly96.SupportMessage():
@@ -194,6 +356,12 @@ class Protocol extends _is.DatabaseSerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'AnalyticsEvent') {
+      return deserialize<_i69cfam9.AnalyticsEvent>(data['data']);
+    }
+    if (dataClassName == 'AnalyticsEventInput') {
+      return deserialize<_i7agsfz9.AnalyticsEventInput>(data['data']);
     }
     if (dataClassName == 'SupportChallenge') {
       return deserialize<_iti73b7j.SupportChallenge>(data['data']);
@@ -220,6 +388,8 @@ class Protocol extends _is.DatabaseSerializationManager {
       }
     }
     switch (t) {
+      case _i69cfam9.AnalyticsEvent:
+        return _i69cfam9.AnalyticsEvent.t;
       case _izh8ly96.SupportMessage:
         return _izh8ly96.SupportMessage.t;
     }

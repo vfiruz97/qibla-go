@@ -17,6 +17,7 @@ lib/
 │   ├── compass/              CompassSource seam + native/web/simulated implementations
 │   ├── location/             LocationService seam + models
 │   ├── storage/              AppPreferences (typed SharedPreferences)
+│   ├── analytics/            Analytics (queue + batches), sinks, navigator + lifecycle observers
 │   └── serverpod/            serverpodClientProvider (lazy)
 ├── features/<feature>/
 │   ├── domain/               immutable state classes and pure decision functions
@@ -126,6 +127,34 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Material widgets under a `Scaffold`; bottom sheets for secondary flows
   (location, details). No dialogs for routine states.
 
+## Usage statistics rules
+
+- `Analytics` (`core/analytics`) is the only way to record an event:
+  `ref.read(analyticsProvider).track(AnalyticsEventName.x, ...)`. The
+  default provider is `Analytics.disabled()`; only `main` installs a live
+  one, so tests and tools send nothing unless they override it with a
+  `RecordingAnalyticsSink` (`test/support`).
+- An event is a name from `AnalyticsEventName` plus at most `screen`,
+  `fromScreen`, `durationMs` and `outcome`, all short tokens. Never a
+  coordinate, a heading, typed text, a contact, or any id that outlives the
+  process. Adding a name means: the enum, the server's
+  `AnalyticsGuard.allowedNames`, `README.md` "Usage statistics", and the
+  store privacy declarations, in one PR.
+- Screens and sheets are counted by `AnalyticsNavigatorObserver` from
+  route names: GoRoute `name:` for screens, `routeSettings:
+  RouteSettings(name:)` in a sheet's `show`. An unnamed route is not
+  counted; name every new screen and sheet.
+- `app_launch` is tracked once from `QiblaGoApp` after the first content
+  frame, timed from `appLaunchStopwatch` (started first thing in `main`).
+  `AnalyticsLifecycleObserver` adds `app_background` with the foreground
+  time, flushes on the way out, and `app_resume`.
+- Sending is best effort and off the frame: batches after 10 s of quiet,
+  at 20 queued, or on background; a failed batch is retried on the next
+  flush up to three times, then dropped; nothing is written to disk. The
+  Serverpod sink sits behind a deferred import (`LazyAnalyticsSink`) so the
+  client library stays out of the initial web bundle; keep it that way.
+- `--dart-define=QIBLA_ANALYTICS=false` compiles the feature to no-ops.
+
 ## Rating prompt rules
 
 - The ask is one bottom sheet (`RatingSheet`), shown from `QiblaScreen`
@@ -177,7 +206,8 @@ Anything two features share moves to `core/`. Do not create `utils/` or
   entry.
 - **Lazy features.** "Write to us" (and with it the Serverpod client) is a
   deferred import (`deferred as support` + `loadLibrary()`), so it ships as
-  a separate part file loaded on first tap. Do the same for any future
+  a separate part file loaded on first tap; the analytics sink loads the
+  same way on the first batch. Do the same for any future
   feature the first screen does not need; never import `qibla_go_client`
   or `core/serverpod` from a screen directly.
 - **Nothing on the map jumps.** Camera moves go through `MapCameraAnimator` (`flyTo`, `zoomBy`, `flyToFit`); never call `MapController.move`/`fitCamera` directly from the screen. A location change animates the marker and the line from the old point to the new one (`GeoPoint.lerp` over 650 ms); a long-press keeps the camera where the user pressed, every other source flies the camera along. Keep `TileLayer` and `WorldInset`'s map alive across rebuilds: recreating them reloads tiles and flashes.

@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qibla_go_client/qibla_go_client.dart';
 
+import '../../../core/analytics/analytics.dart';
+import '../../../core/analytics/analytics_event.dart';
 import '../domain/support_form.dart';
 import 'support_api.dart';
 
@@ -73,6 +75,7 @@ final class SupportController extends Notifier<SupportFormState> {
       );
     } catch (_) {
       if (!ref.mounted) return;
+      _trackSent('offline');
       // The challenge may or may not have been consumed; fetch a fresh one
       // so the next attempt cannot fail for that reason.
       state = state.copyWith(
@@ -83,6 +86,7 @@ final class SupportController extends Notifier<SupportFormState> {
       return;
     }
     if (!ref.mounted) return;
+    _trackSent(result.name);
     switch (result) {
       case SupportSubmitResult.accepted:
         state = state.copyWith(phase: SupportPhase.sent, clearChallenge: true);
@@ -103,6 +107,11 @@ final class SupportController extends Notifier<SupportFormState> {
         await loadChallenge();
     }
   }
+
+  /// Counts the attempt and its outcome; never the message or the contact.
+  void _trackSent(String outcome) => ref
+      .read(analyticsProvider)
+      .track(AnalyticsEventName.supportSent, outcome: outcome);
 
   /// A coarse tag for triage ("web", "android"); never a device identifier.
   static String get _platformTag => kIsWeb ? 'web' : defaultTargetPlatform.name;

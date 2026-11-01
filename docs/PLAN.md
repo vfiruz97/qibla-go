@@ -1,7 +1,8 @@
 # Qibla Go — Plan
 
 > A free, ad-free Qibla compass and prayer-times app for Android and the web
-> (iOS later). Built for the pleasure of God. No accounts, no tracking.
+> (iOS later). Built for the pleasure of God. No accounts, no ads, no
+> identifying tracking.
 
 ## 1. Principles
 
@@ -16,7 +17,8 @@
 4. **Private by design.** Location never leaves the device. The server never
    receives coordinates finer than a city when prayer times arrive (and even
    that is computed locally where possible).
-5. **Free forever.** No ads, no paywall, no analytics SDKs.
+5. **Free forever.** No ads, no paywall, no third-party analytics SDKs.
+   Usage counts are first-party and anonymous (README "Usage statistics").
 6. **Long-term code.** Feature-first structure, pure logic in testable Dart,
    platform code behind narrow seams.
 
@@ -112,6 +114,19 @@ device only. Permanent "Rate on …" link in Details. Open: the App Store id
 internal test track that the review card appears (debug installs cannot
 show it); native review of the ten new strings with the rest of M3.
 
+### M0.8 — Usage statistics ✅ (2026-11-01)
+First-party, anonymous event counting: `analytics.record` on the server
+(allowlist, bounds, hourly budget per address, 90-day purge), `Analytics`
+in the app (in-memory queue, batches after 10 s / 20 events / on
+background, deferred Serverpod sink). Events: launch with time to first
+frame, resume, background with foreground time, screen and sheet views with
+the previous screen, support submissions with outcome, rating prompt and
+answer. Context: per-launch random session id, platform, app version,
+language. Open: store privacy declarations (Play Data Safety, App Store
+privacy labels) must list "app interactions, not linked to the user"; a
+settings toggle once Settings exist (M1); a read-only summary for the
+maintainers if SQL becomes tiresome.
+
 ### M1 — Release readiness
 - App icon, splash, store listing, privacy policy page (served by the
   Serverpod web server).
@@ -134,7 +149,9 @@ show it); native review of the ten new strings with the rest of M3.
   inline loader; the location permission is requested at start-up, which
   Lighthouse flags, and a web-only "tap to use my location" start would
   change the first-run flow (decide with the UX).
-- Settings: theme (night/day/system), units, compass smoothing.
+- Settings: theme (night/day/system), units, compass smoothing, and an
+  off switch for the usage statistics.
+- Store privacy declarations for the usage statistics (see M0.8).
 
 ### M2 — Prayer times with offline sync
 - On-device calculation (astronomical algorithms; evaluate `adhan` package

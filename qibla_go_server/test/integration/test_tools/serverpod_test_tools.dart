@@ -13,6 +13,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _ida;
 import 'dart:io' as _idi;
+import 'package:qibla_go_server/src/generated/analytics/analytics_event_input.dart'
+    as _ij72q2bz;
 import 'package:qibla_go_server/src/generated/support/support_challenge.dart'
     as _ibr6havt;
 import 'package:qibla_go_server/src/generated/support/support_submit_result.dart'
@@ -152,6 +154,8 @@ void withServerpod(
 }
 
 class TestEndpoints {
+  late final _AnalyticsEndpoint analytics;
+
   late final _HealthEndpoint health;
 
   late final _SupportEndpoint support;
@@ -164,6 +168,10 @@ class _InternalTestEndpoints extends TestEndpoints
     _is.SerializationManager serializationManager,
     _is.EndpointDispatch endpoints,
   ) {
+    analytics = _AnalyticsEndpoint(
+      endpoints,
+      serializationManager,
+    );
     health = _HealthEndpoint(
       endpoints,
       serializationManager,
@@ -172,6 +180,58 @@ class _InternalTestEndpoints extends TestEndpoints
       endpoints,
       serializationManager,
     );
+  }
+}
+
+class _AnalyticsEndpoint {
+  _AnalyticsEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _is.EndpointDispatch _endpointDispatch;
+
+  final _is.SerializationManager _serializationManager;
+
+  _ida.Future<int> record(
+    _ist.TestSessionBuilder sessionBuilder, {
+    required String sessionId,
+    required String platform,
+    String? appVersion,
+    String? language,
+    required List<_ij72q2bz.AnalyticsEventInput> events,
+  }) async {
+    return _ist.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _ist.InternalTestSessionBuilder).internalBuild(
+            endpoint: 'analytics',
+            method: 'record',
+          );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'analytics',
+          methodName: 'record',
+          parameters: _ist.testObjectToJson({
+            'sessionId': sessionId,
+            'platform': platform,
+            'appVersion': appVersion,
+            'language': language,
+            'events': events,
+          }),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue =
+            await (_localCallContext.method.call(
+                  _localUniqueSession,
+                  _localCallContext.arguments,
+                )
+                as _ida.Future<int>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
   }
 }
 

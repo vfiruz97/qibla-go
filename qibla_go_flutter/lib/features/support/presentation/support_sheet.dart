@@ -15,6 +15,8 @@ class SupportSheet extends ConsumerStatefulWidget {
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
+    // Named so the analytics observer can count the view.
+    routeSettings: const RouteSettings(name: 'support'),
     builder: (_) => const SupportSheet(),
   );
 

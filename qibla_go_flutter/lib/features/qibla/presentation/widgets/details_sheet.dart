@@ -22,6 +22,8 @@ class DetailsSheet extends ConsumerWidget {
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
+    // Named so the analytics observer can count the view.
+    routeSettings: const RouteSettings(name: 'details'),
     builder: (_) => const DetailsSheet(),
   );
 

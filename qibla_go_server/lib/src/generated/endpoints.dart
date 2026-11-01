@@ -10,7 +10,10 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:qibla_go_server/src/generated/analytics/analytics_event_input.dart'
+    as _ij72q2bz;
 import 'package:serverpod/serverpod.dart' as _is;
+import '../analytics/analytics_endpoint.dart' as _iowd1mgi;
 import '../health/health_endpoint.dart' as _id9paj9q;
 import '../support/support_endpoint.dart' as _iqxms0ns;
 
@@ -18,6 +21,12 @@ class Endpoints extends _is.EndpointDispatch {
   @override
   void initializeEndpoints(_is.Server server) {
     var endpoints = <String, _is.Endpoint>{
+      'analytics': _iowd1mgi.AnalyticsEndpoint()
+        ..initialize(
+          server,
+          'analytics',
+          null,
+        ),
       'health': _id9paj9q.HealthEndpoint()
         ..initialize(
           server,
@@ -31,6 +40,55 @@ class Endpoints extends _is.EndpointDispatch {
           null,
         ),
     };
+    connectors['analytics'] = _is.EndpointConnector(
+      name: 'analytics',
+      endpoint: endpoints['analytics']!,
+      methodConnectors: {
+        'record': _is.MethodConnector(
+          name: 'record',
+          params: {
+            'sessionId': _is.ParameterDescription(
+              name: 'sessionId',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'platform': _is.ParameterDescription(
+              name: 'platform',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'appVersion': _is.ParameterDescription(
+              name: 'appVersion',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'language': _is.ParameterDescription(
+              name: 'language',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'events': _is.ParameterDescription(
+              name: 'events',
+              type: _is.getType<List<_ij72q2bz.AnalyticsEventInput>>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['analytics'] as _iowd1mgi.AnalyticsEndpoint)
+                  .record(
+                    session,
+                    sessionId: params['sessionId'],
+                    platform: params['platform'],
+                    appVersion: params['appVersion'],
+                    language: params['language'],
+                    events: params['events'],
+                  ),
+        ),
+      },
+    );
     connectors['health'] = _is.EndpointConnector(
       name: 'health',
       endpoint: endpoints['health']!,

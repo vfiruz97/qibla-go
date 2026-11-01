@@ -14,9 +14,16 @@ accuracy charter, `qibla_go_flutter/AGENTS.md` for frontend rules and
   a note in the PR on how the numbers were re-verified.
 - **Be honest on screen.** When the sensor cannot be trusted, hide the needle
   and say why. Never invent a heading; the simulated source is debug-only.
-- **No accounts, no tracking, no ads.** The server has no authentication and
-  never receives a user's precise location. Do not add auth, analytics SDKs
-  or ad SDKs.
+- **No accounts, no ads, no identifying tracking.** The server has no
+  authentication and never receives a user's precise location. Do not add
+  auth, third-party analytics SDKs or ad SDKs. The app's own anonymous usage
+  events (`qibla_go_flutter/lib/core/analytics`, `analytics.record` on the
+  server) are the one exception: short allowlisted event names, a per-launch
+  session id that is never persisted, platform, version and language, and
+  nothing else. Adding an event or a field is a change to the server
+  allowlist, the app enum, `README.md` "Usage statistics" and the store
+  privacy declarations, in one PR. Never a coordinate, free text or an
+  identifier that outlives the process.
 - **Offline first.** Fonts and models are bundled; the last location is
   persisted; the server is optional at runtime.
 
