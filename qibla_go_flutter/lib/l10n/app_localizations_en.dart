@@ -418,6 +418,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapMoon => 'Moon';
 
   @override
+  String skyMarkerLabel(String name, int azimuth) {
+    return '$name $azimuth°';
+  }
+
+  @override
   String get mapRecenter => 'Use my real location';
 
   @override

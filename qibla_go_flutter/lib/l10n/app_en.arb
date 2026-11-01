@@ -1,7 +1,13 @@
 {
   "@@locale": "en",
   "appName": "Qibla Go",
+  "@appName": {
+    "description": "Brand name; keep in Latin letters in every language."
+  },
   "qiblaLabel": "QIBLA",
+  "@qiblaLabel": {
+    "description": "Caption over the compass dial, in capitals where the script has them."
+  },
   "fromTrueNorth": "from true north",
   "fromMagneticNorth": "from magnetic north",
   "facingQibla": "You are facing the Qibla",
@@ -42,9 +48,21 @@
   },
   "accuracyUnknown": "Accuracy unknown",
   "qualityGood": "Good",
+  "@qualityGood": {
+    "description": "Sensor quality grade shown next to the accuracy."
+  },
   "qualityFair": "Fair",
+  "@qualityFair": {
+    "description": "Sensor quality grade: middling."
+  },
   "qualityPoor": "Poor",
+  "@qualityPoor": {
+    "description": "Sensor quality grade: bad."
+  },
   "headingLabel": "Heading",
+  "@headingLabel": {
+    "description": "The direction the phone is pointing (compass heading), not a title."
+  },
   "bearingSummary": "Qibla is {bearing}° from true north ({magnetic}° on a magnetic compass). Valid with any compass or map.",
   "@bearingSummary": {
     "placeholders": {
@@ -105,6 +123,9 @@
   "locationInvalidLatitude": "Latitude must be between -90 and 90",
   "locationInvalidLongitude": "Longitude must be between -180 and 180",
   "locationSave": "Use these coordinates",
+  "@locationSave": {
+    "description": "Button that applies hand-entered coordinates."
+  },
   "locationOpenSettings": "Open settings",
   "locationProblemServicesDisabled": "Location services are turned off on this device.",
   "locationProblemPermissionDenied": "Location permission was not granted.",
@@ -171,16 +192,37 @@
   "detailsKaaba": "Kaaba",
   "detailsMethod": "Great-circle initial bearing on WGS-84 coordinates; true north from the magnetic heading plus WMM2025 declination computed on this device.",
   "detailsNotAvailable": "—",
+  "@detailsNotAvailable": {
+    "description": "Shown in place of a value that is not available; keep the dash."
+  },
   "detailsSimulateToggle": "Simulate compass (debug build only)",
   "detailsSimulateHeading": "Simulated heading",
   "footerFree": "Free, forever. No ads, no accounts.",
   "footerIntention": "Made for the pleasure of God.",
+  "@footerIntention": {
+    "description": "Statement of intention: the app is made seeking God's pleasure."
+  },
   "cardinalN": "N",
+  "@cardinalN": {
+    "description": "Single-letter compass point painted on the dial: north."
+  },
   "cardinalE": "E",
+  "@cardinalE": {
+    "description": "Single-letter compass point painted on the dial: east."
+  },
   "cardinalS": "S",
+  "@cardinalS": {
+    "description": "Single-letter compass point painted on the dial: south."
+  },
   "cardinalW": "W",
+  "@cardinalW": {
+    "description": "Single-letter compass point painted on the dial: west."
+  },
   "introTagline": "Face the Kaaba, wherever you are",
   "introSkip": "Skip",
+  "@introSkip": {
+    "description": "Button that skips the opening animation."
+  },
   "desktopPromptTitle": "On the web, the map",
   "desktopPromptBody": "The live compass is in the phone app, where it can use the motion sensors. On the web, Qibla Go shows the direction on a map instead, with the sun and the moon to help you orient yourself.",
   "desktopPromptContinue": "Continue to the map",
@@ -188,13 +230,34 @@
   "navMap": "Map",
   "mapTitle": "Qibla on the map",
   "mapYourLocation": "You",
+  "@mapYourLocation": {
+    "description": "Label on the marker that stands for the user on the map."
+  },
   "mapKaaba": "Kaaba, Makkah",
   "mapQiblaLine": "Qibla line",
   "mapSun": "Sun",
   "mapMoon": "Moon",
+  "skyMarkerLabel": "{name} {azimuth}°",
+  "@skyMarkerLabel": {
+    "description": "Label beside the sun or moon marker on the map: name is mapSun or mapMoon, azimuth in degrees.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "azimuth": {
+        "type": "int"
+      }
+    }
+  },
   "mapRecenter": "Use my real location",
   "mapZoomIn": "Closer",
+  "@mapZoomIn": {
+    "description": "Tooltip of the zoom-in button."
+  },
   "mapZoomOut": "Farther",
+  "@mapZoomOut": {
+    "description": "Tooltip of the zoom-out button."
+  },
   "mapLongPressHint": "Long-press anywhere on the map to set your location there.",
   "mapHowTitle": "How to use this map",
   "mapHowStep1": "The gold line starts where you are and runs straight to the Kaaba. Prayer faces along this line.",
@@ -202,6 +265,7 @@
   "mapHowStep3": "Zoom in to check which side of a building the line passes, and zoom out to see that the line really ends in Makkah.",
   "mapHowSunAbove": "The sun is now at {azimuth}° (about {direction}). The Qibla is {offset}° to the {side} of the sun: stand facing the sun, then turn that much.",
   "@mapHowSunAbove": {
+    "description": "direction is one of the compassPoint* strings, side is sideLeft or sideRight.",
     "placeholders": {
       "azimuth": {
         "type": "int"
@@ -219,6 +283,7 @@
   },
   "mapHowMoonAbove": "The moon ({phase}) is at {azimuth}°. The Qibla is {offset}° to the {side} of it.",
   "@mapHowMoonAbove": {
+    "description": "phase is one of the moonPhase* strings, side is sideLeft or sideRight.",
     "placeholders": {
       "phase": {
         "type": "String"
@@ -236,8 +301,17 @@
   },
   "mapHowSkyNone": "Neither the sun nor the moon is up right now; use landmarks on the map.",
   "sideLeft": "left",
+  "@sideLeft": {
+    "description": "Physical left of the person, inserted into mapHowSunAbove and mapHowMoonAbove."
+  },
   "sideRight": "right",
+  "@sideRight": {
+    "description": "Physical right of the person, inserted into mapHowSunAbove and mapHowMoonAbove."
+  },
   "compassPointNorth": "north",
+  "@compassPointNorth": {
+    "description": "Lower-case compass point used inside a sentence (mapHowSunAbove)."
+  },
   "compassPointNortheast": "north-east",
   "compassPointEast": "east",
   "compassPointSoutheast": "south-east",
@@ -263,14 +337,26 @@
   "supportContactLabel": "How to reach you (optional)",
   "supportContactHint": "Email or anything you like, only if you want a reply",
   "supportChallengeLabel": "Quick check: what is {question}?",
-  "@supportChallengeLabel": {"placeholders": {"question": {"type": "String"}}},
+  "@supportChallengeLabel": {
+    "placeholders": {
+      "question": {
+        "type": "String"
+      }
+    }
+  },
   "supportChallengeLoading": "Getting a question…",
   "supportChallengeUnavailable": "No question available right now.",
   "supportAnswerHint": "=",
+  "@supportAnswerHint": {
+    "description": "Hint in the answer field of the arithmetic check; keep the equals sign."
+  },
   "supportNewQuestion": "New question",
   "supportSend": "Send",
   "supportSending": "Sending…",
   "supportSentTitle": "Received",
+  "@supportSentTitle": {
+    "description": "Title after a message was delivered."
+  },
   "supportSentBody": "Thank you for writing. JazakAllahu khairan.",
   "supportClose": "Close",
   "supportPrivacyNote": "No location or device data is sent with your message.",
