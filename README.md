@@ -107,6 +107,24 @@ project only ever uses free providers. OpenStreetMap allows light use by a
 small app but not heavy traffic, so before a public release the tile URL
 should point at a free-tier provider whose terms cover the load.
 
+## Languages
+
+The app speaks English, German, French, Italian, Swedish, Indonesian,
+Russian, Tajik, Uzbek, Azerbaijani, Turkish, Persian, Arabic, Urdu, Chinese
+(Simplified), Japanese and Korean. It follows the phone's language list, or the browser's
+on the web, taking the first language it has; when none matches it uses
+English. Persian, Arabic and Urdu lay out right to left. Digits typed on a
+Persian, Arabic, Chinese or Japanese keyboard are accepted in the
+coordinate and check fields. Compass directions in the text ("turn
+left", "to the right of the sun") are physical directions and are never
+mirrored.
+
+Fonts: Latin and Cyrillic text uses the bundled Marcellus and Manrope. For
+the six Tajik letters, Azerbaijani ə, Arabic, Persian, Urdu, Chinese,
+Japanese and Korean the phone's system fonts fill in; on the web the Flutter engine
+fetches Google's Noto fallback fonts for those scripts when they are first
+needed, which is the one case where the web version talks to Google Fonts.
+
 ## Web version
 
 One page at `/` (old `/map` links redirect there), served by the Serverpod
@@ -120,7 +138,8 @@ address, answers old `/map` links with a permanent redirect, and serves
 "Write to us" loads on first tap rather than at start-up. The Flutter
 rendering engine (CanvasKit) is loaded from Google's CDN, which is the only
 third-party request besides map tiles; build with `--no-web-resources-cdn`
-to self-host it. Fonts are bundled, so nothing is fetched from Google Fonts.
+to self-host it. The Latin and Cyrillic fonts are bundled; see Languages
+for the scripts that still fetch a fallback font.
 
 ## Licenses and credits
 

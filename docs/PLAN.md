@@ -134,9 +134,23 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
   works days-to-weeks offline; no user identifier sent.
 - Notifications (local), next-prayer card on the compass screen.
 
-### M3 — Languages and RTL
-- Russian, Tajik, Uzbek, Arabic, Turkish, Persian, Indonesian, Urdu.
-- RTL layout audit; Arabic numerals option; Hijri date.
+### M3 — Languages and RTL ✅ (2026-11-01, first pass)
+- Shipped: English, German, French, Italian, Swedish, Indonesian, Russian,
+  Tajik, Uzbek, Azerbaijani, Turkish, Persian, Arabic, Urdu, Chinese
+  (Simplified), Japanese, Korean. Resolution follows the device or browser language
+  list, English as the fallback. Right-to-left layout for Persian, Arabic
+  and Urdu; script-aware typography; Persian/Arabic/fullwidth digits
+  accepted in input fields; Tajik strings for Flutter's own widget chrome.
+- Open: Traditional Chinese (zh-TW users get
+  Simplified today); a native-speaker review pass per language (the first
+  pass was written in one sitting, see DECISIONS); bundling fallback fonts
+  for Tajik Cyrillic, Azerbaijani ə and Arabic script (Urdu would want a
+  Nastaliq face) instead of relying on
+  system fonts and the engine's Noto download on the web (Noto Sans and
+  Noto Naskh Arabic are OFL; load them with `FontLoader` per script so they
+  do not join the initial web download); Eastern Arabic-Indic digits as a
+  display option; Hijri date; `hreflang` on the web page once content is
+  served per language.
 
 ### M4 — iOS and polish
 - iOS build via the vendored plugin (CoreLocation heading), App Store.
