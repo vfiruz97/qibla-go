@@ -23,6 +23,7 @@ lib/
 │   ├── application/          Riverpod Notifiers/providers (side effects live here)
 │   └── presentation/         screen + widgets/ (no business logic)
 │   qibla/                    compass screen; map/ map screen with sky overlay; intro/ launch animation + desktop card (map opens beneath it)
+│   rating/                   store rating ask: policy (domain), counters + store seam (application), sheet
 └── l10n/                     app_<locale>.arb; app_localizations*.dart are generated
 test/                         mirrors lib/ (test/core/geo, test/features/qibla, ...)
 ```
@@ -125,6 +126,36 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Material widgets under a `Scaffold`; bottom sheets for secondary flows
   (location, details). No dialogs for routine states.
 
+## Rating prompt rules
+
+- The ask is one bottom sheet (`RatingSheet`), shown from `QiblaScreen`
+  only, when `RatingController.onAlignmentChanged` says so: the needle was
+  on the qibla for `RatingPolicy.minAlignmentHold` and has just left it,
+  and the install has ≥ 3 launches, ≥ 2 days of age and ≥ 3 sessions with
+  the qibla found. Never at launch, never on the first launch, never on
+  top of another route, never while the app is not resumed. The numbers
+  live in `RatingPolicy` and are reasoned in `docs/DECISIONS.md`; change
+  them there and in `README.md` together.
+- Every answer is final: "Rate", "Not now", swipe and tap-outside all end
+  the asking for good. `markPrompted` is saved before the sheet opens so a
+  crash cannot cause a loop; an unanswered sheet is retried once after 30
+  days, then never. Do not add a "remind me later" without a decision-log
+  entry.
+- `ReviewLauncher` is the seam over `in_app_review`; widgets and the
+  controller never import the plugin. `accept()` saves the decision
+  first, then tries the system review card, then the store listing, and
+  reports `RatingOutcome.failed` only when both fail (the user sees one
+  snackbar). The store card is quota-limited and silent about the result;
+  the permanent link in Details uses `openStoreListing()` only.
+- Nothing about rating leaves the device: counters and the decision are
+  one JSON string in `AppPreferences` (`qibla.v1.rating`), parsed
+  leniently so a corrupt record resets to "not yet" and never to "ask now".
+- The iOS listing needs `--dart-define=QIBLA_APP_STORE_ID=<numeric id>`;
+  without it the fallback on iOS fails quietly (Android needs nothing).
+- Debug builds have "Preview the rating prompt" in Details; it resets the
+  counters and opens the sheet. The real Play card cannot be seen from a
+  debug install: it needs a build from an internal test track.
+
 ## Map rules
 
 - Tiles come from `qiblaTileLayer()` only (`features/map/presentation/widgets/map_tiles.dart`), URL overridable with `--dart-define=QIBLA_TILE_URL`, optional on-device darkening with `QIBLA_TILE_INVERT` (default false: light tiles show buildings, which is the whole point of the map). Only free providers, never one that needs an API key by default. The map opens at street level (zoom 17) centred on the user and has explicit zoom buttons. Keep the attribution string in the ARB in sync with the provider.
@@ -188,6 +219,8 @@ Anything two features share moves to `core/`. Do not create `utils/` or
   the simulated source.
 - `test/l10n/locales_smoke_test.dart` builds the map screen in every
   language and checks direction and type; keep it green when adding one.
+- Goldens live in `test/goldens` (compass states, map, rating sheet night
+  and day) and share `test/support/golden_fonts.dart`.
 - Before release: the device verification protocol in `docs/PLAN.md`.
 
 ## Commands

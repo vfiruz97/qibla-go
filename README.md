@@ -22,6 +22,12 @@ is a promise to the user; keep it true.
 - **Write to us.** A short form on the compass and the map sends a message
   to the maintainers: a wrong-looking direction, a bug, an idea. One small
   sum keeps bots out; no account, no location, no device data.
+- **One ask for a rating.** After the app has been used on a few separate
+  days and the qibla has been found a few times, a sheet asks once for a
+  store rating and says why: the app is free, has no ads, and ratings are
+  how others find it. "Not now", a swipe or a tap outside means it is never
+  asked again. The answer stays on the phone. Details also has a permanent
+  "Rate on Google Play / the App Store" link for those who want it.
 - **Prayer times** with offline sync are planned; see `docs/PLAN.md`.
 
 ## How the direction is computed
@@ -125,6 +131,21 @@ Japanese and Korean the phone's system fonts fill in; on the web the Flutter eng
 fetches Google's Noto fallback fonts for those scripts when they are first
 needed, which is the one case where the web version talks to Google Fonts.
 
+## Rating prompt
+
+The phone app asks for a store rating exactly as described above and never
+on the first launch: at least three launches, two days since the first one
+and three sessions in which the qibla was found and held for a few seconds.
+The ask comes after the user turns away from the qibla, never while they
+are facing it, and never over another sheet or while the app is in the
+background. Google Play's in-app review card or Apple's StoreKit prompt is
+used where available; otherwise the store listing opens. Both stores limit
+how often their card appears and never report whether a review was written,
+so the app treats a tap on "Rate" as final too. The counters and the answer
+live in the app's preferences on the device and are not sent anywhere. The
+iOS listing needs the App Store id passed at build time as
+`--dart-define=QIBLA_APP_STORE_ID=…`.
+
 ## Web version
 
 One page at `/` (old `/map` links redirect there), served by the Serverpod
@@ -149,4 +170,5 @@ for the scripts that still fetch a fallback font.
 - `qibla_math`: MIT, Abdeldjalil Chougui. WMM2025 coefficients are public
   domain (NOAA/NCEI).
 - Fonts Marcellus (Astigmatic) and Manrope (Mikhail Sharanda): SIL OFL 1.1.
+- `in_app_review`: MIT, Britannio Jarrett. Store rating prompt.
 - Map data © OpenStreetMap contributors (ODbL).

@@ -198,3 +198,43 @@ phone-browser mode is wanted later.
   Western digits in every language for now.
 - The sky overlay's label box had a fixed height sized for English; it now
   takes the height it needs, since a translated label may need two lines.
+
+## 2026-11-01 Rating prompt: one ask, after the task, every answer final
+
+- Asked at all: the app is free with no ads, so store ratings are the only
+  way it gets found. The ask is one sheet that says exactly that, and the
+  small print says it is asked once. Honesty on screen applies here as it
+  does to the needle.
+- When: at the end of a completed task, not at launch. The user held the
+  needle on the qibla for 4 s (a direction taken, not a sweep past) and
+  then turned away. Showing anything while they face the qibla would
+  interrupt the moment the app exists for; asking at launch would stand
+  between them and the direction they opened the app for. 1.2 s after the
+  turn, so the sheet does not read as a reaction to the movement.
+- Milestones: ≥ 3 cold starts, ≥ 2 days since the first, ≥ 3 sessions in
+  which the qibla was found. The first launch can never qualify, nor a
+  single day of heavy use. These are product numbers, not measurements;
+  revisit with store data.
+- Every answer is final, including a swipe or a tap outside. The brief
+  asked for it, and a "later" state tends to become nagging. The one
+  exception is a sheet that was shown and never answered (process killed):
+  retried once after 30 days, then never. `markPrompted` is persisted
+  before the sheet opens so a crash in between cannot loop.
+- "Rate" is final too: neither Google Play nor StoreKit reports whether a
+  review was written and both ration their card, so there is nothing to
+  wait for. The decision is saved before the store is called; a failure
+  there opens the listing, and only a double failure shows a snackbar.
+- `in_app_review` (MIT) is used rather than hand-written channels: both
+  official APIs, maintained, no telemetry, no key. On the web the compass
+  screen does not exist, so the prompt is unreachable there; the plugin
+  adds under half a kilobyte to the web bundle through `url_launcher_web`
+  registration, which was accepted.
+- A permanent "Rate on Google Play / the App Store" link sits in Details
+  for the user who wants to rate without being asked; it opens the listing
+  (not quota-limited), never the card.
+- Nothing is sent anywhere: counters and the decision are one JSON string
+  in the app's preferences, parsed leniently so that corruption resets
+  towards "not yet".
+- The iOS listing needs the numeric App Store id, unknown until the app is
+  listed; it is a build-time define (`QIBLA_APP_STORE_ID`) and a release
+  gate item rather than a hard-coded placeholder.
