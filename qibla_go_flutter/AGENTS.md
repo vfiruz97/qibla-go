@@ -262,4 +262,5 @@ flutter test
 flutter gen-l10n
 flutter run -d chrome --dart-define=QIBLA_SIMULATE_COMPASS=true
 flutter build web --release && tool/check_web_bundle.sh   # no compass in the bundle
+flutter build apk --release --dart-define=SERVER_URL=https://qibla-go.api.serverpod.space/   # Android, production API
 ```
