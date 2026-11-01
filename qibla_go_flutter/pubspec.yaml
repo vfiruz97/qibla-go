@@ -44,7 +44,7 @@ dependencies:
   # Serverpod client (prayer-time sync later).
   qibla_go_client:
     path: ../qibla_go_client
-  serverpod_flutter: 4.0.4
+  serverpod_flutter: 4.1.0
 
   # Store rating prompt (Google Play In-App Review, StoreKit). Shown once,
   # after real use; see features/rating and docs/DECISIONS.md.

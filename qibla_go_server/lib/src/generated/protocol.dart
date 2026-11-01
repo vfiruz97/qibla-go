@@ -26,12 +26,40 @@ export 'support/support_challenge.dart';
 export 'support/support_message.dart';
 export 'support/support_submit_result.dart';
 
-class Protocol extends _is.DatabaseSerializationManager {
+class Protocol extends _is.DatabaseSerializationManager
+    implements _is.DatabaseProtocolDeserializationProvider {
   Protocol._();
 
   factory Protocol() => _instance;
 
   static final Protocol _instance = Protocol._();
+
+  @override
+  _is.ProtocolDeserialization get deserializationMetadata =>
+      _is.ProtocolDeserialization.cached(
+        this,
+        types: const [
+          _is.getType<_i69cfam9.AnalyticsEvent>,
+          _is.getType<_i7agsfz9.AnalyticsEventInput>,
+          _is.getType<_iti73b7j.SupportChallenge>,
+          _is.getType<_izh8ly96.SupportMessage>,
+          _is.getType<_ian8tpl6.SupportSubmitResult>,
+          _is.getType<_i69cfam9.AnalyticsEvent?>,
+          _is.getType<_i7agsfz9.AnalyticsEventInput?>,
+          _is.getType<_iti73b7j.SupportChallenge?>,
+          _is.getType<_izh8ly96.SupportMessage?>,
+          _is.getType<_ian8tpl6.SupportSubmitResult?>,
+          _is.getType<List<_ij72q2bz.AnalyticsEventInput>>,
+        ],
+        modules: const [_isp.Protocol.new],
+        classNames: const [
+          'AnalyticsEvent',
+          'AnalyticsEventInput',
+          'SupportChallenge',
+          'SupportMessage',
+          'SupportSubmitResult',
+        ],
+      );
 
   static List<_isp.TableDefinition> get targetTableDefinitions => [
     _isp.TableDefinition(
@@ -234,11 +262,8 @@ class Protocol extends _is.DatabaseSerializationManager {
     ..._isp.Protocol.targetTableDefinitions,
   ];
 
-  static String? getClassNameFromObjectJson(dynamic data) {
-    if (data is! Map) return null;
-    final className = data['__className__'] as String?;
-    return className;
-  }
+  static String? getClassNameFromObjectJson(dynamic data) =>
+      _is.ProtocolDeserialization.readClassName(data);
 
   @override
   T deserialize<T>(
@@ -246,8 +271,8 @@ class Protocol extends _is.DatabaseSerializationManager {
     Type? t,
   ]) {
     t ??= T;
-
-    final dataClassName = getClassNameFromObjectJson(data);
+    final rawDataClassName = _is.ProtocolDeserialization.readClassName(data);
+    final dataClassName = rawDataClassName;
     if (dataClassName != null && dataClassName != getClassNameForType(t)) {
       try {
         return deserializeByClassName({
@@ -306,9 +331,16 @@ class Protocol extends _is.DatabaseSerializationManager {
               .toList()
           as T;
     }
-    try {
-      return _isp.Protocol().deserialize<T>(data, t);
-    } on _is.DeserializationTypeNotFoundException catch (_) {}
+    final modules = deserializationMetadata.modulesForDeserialization(
+      t,
+      className: rawDataClassName,
+    );
+    for (final module in modules) {
+      try {
+        return module.deserialize<T>(data, t);
+      } on _is.DeserializationTypeNotFoundException catch (_) {}
+    }
+
     return super.deserialize<T>(data, t);
   }
 
@@ -373,8 +405,10 @@ class Protocol extends _is.DatabaseSerializationManager {
       return deserialize<_ian8tpl6.SupportSubmitResult>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
-      data['className'] = dataClassName.substring(10);
-      return _isp.Protocol().deserializeByClassName(data);
+      return _isp.Protocol().deserializeByClassName({
+        ...data,
+        'className': dataClassName.substring(10),
+      });
     }
     return super.deserializeByClassName(data);
   }

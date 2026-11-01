@@ -22,18 +22,37 @@ export 'support/support_challenge.dart';
 export 'support/support_submit_result.dart';
 export 'client.dart';
 
-class Protocol extends _isc.SerializationManager {
+class Protocol extends _isc.SerializationManager
+    implements _isc.ProtocolDeserializationProvider {
   Protocol._();
 
   factory Protocol() => _instance;
 
   static final Protocol _instance = Protocol._();
 
-  static String? getClassNameFromObjectJson(dynamic data) {
-    if (data is! Map) return null;
-    final className = data['__className__'] as String?;
-    return className;
-  }
+  @override
+  _isc.ProtocolDeserialization get deserializationMetadata =>
+      _isc.ProtocolDeserialization.cached(
+        this,
+        types: const [
+          _isc.getType<_i7agsfz9.AnalyticsEventInput>,
+          _isc.getType<_iti73b7j.SupportChallenge>,
+          _isc.getType<_ian8tpl6.SupportSubmitResult>,
+          _isc.getType<_i7agsfz9.AnalyticsEventInput?>,
+          _isc.getType<_iti73b7j.SupportChallenge?>,
+          _isc.getType<_ian8tpl6.SupportSubmitResult?>,
+          _isc.getType<List<_io41fdcy.AnalyticsEventInput>>,
+        ],
+        modules: const [],
+        classNames: const [
+          'AnalyticsEventInput',
+          'SupportChallenge',
+          'SupportSubmitResult',
+        ],
+      );
+
+  static String? getClassNameFromObjectJson(dynamic data) =>
+      _isc.ProtocolDeserialization.readClassName(data);
 
   @override
   T deserialize<T>(
@@ -41,8 +60,8 @@ class Protocol extends _isc.SerializationManager {
     Type? t,
   ]) {
     t ??= T;
-
-    final dataClassName = getClassNameFromObjectJson(data);
+    final rawDataClassName = _isc.ProtocolDeserialization.readClassName(data);
+    final dataClassName = rawDataClassName;
     if (dataClassName != null && dataClassName != getClassNameForType(t)) {
       try {
         return deserializeByClassName({

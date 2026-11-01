@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "0d58d1fa1fddf6588251ccf2819f3fb3b6d0452c1b2813ac7413a05592bfbefe"
+      sha256: de5ac590b8155e4e676088d714bd41ea620449a6adc0f7950c5073874b287ddb
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.2"
+    version: "4.6.0"
   args:
     dependency: transitive
     description:
@@ -157,18 +157,18 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
+      sha256: e3626ae6270383c9e3a549f34c9e4cd26c09ae6a9adaab2bf4737a00340efdc4
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.8"
   cupertino_ui:
     dependency: transitive
     description:
       name: cupertino_ui
-      sha256: a47c4e7c66fd7444a063a602597fceb238f705c3f6b1322bc0053d0a2638ee6e
+      sha256: e003b87afde18cb396ec15928c7894063d64af04462c68df9a1404c461316dd2
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.4"
+    version: "1.1.5"
   dart_earcut:
     dependency: transitive
     description:
@@ -371,10 +371,10 @@ packages:
     dependency: transitive
     description:
       name: go_router
-      sha256: "07089be6dc124eb9596a51b5e359c657f30a59929287f11b126c2cd13eaaece0"
+      sha256: f1c2d3c2b0b2096b435d7af033dd4e586fa31f51d988c5985e64495cd926d872
       url: "https://pub.dev"
     source: hosted
-    version: "18.1.1"
+    version: "18.1.2"
   gsettings:
     dependency: transitive
     description:
@@ -459,10 +459,10 @@ packages:
     dependency: transitive
     description:
       name: jni
-      sha256: "6b9ca0602fef0230e83149afbe3f9f8227e94f2bbe84a1da4f14d699742f402d"
+      sha256: d8df6dab6847855512fe44dd9032b0bbe34dda7bf7597e41d30750879779813f
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   jni_flutter:
     dependency: transitive
     description:
@@ -555,10 +555,10 @@ packages:
     dependency: transitive
     description:
       name: material_ui
-      sha256: e4031746f96c8316864d9b92bce375f1320a36ed56e166307e1e1bda9d90b4ab
+      sha256: feb289df1e5f9ed9522f9fe3d909432a7f7bc76943f16abad09f80a16cd25196
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.0"
+    version: "1.9.0"
   meta:
     dependency: transitive
     description:
@@ -731,10 +731,10 @@ packages:
     dependency: transitive
     description:
       name: posix
-      sha256: bc1bad54ad2b735816e31f8d4600cfde6c7839975085ddfbca48b6c9f7c4044e
+      sha256: "613646d076944f3acc125830af935b48d4b8a57a388691547bbfd25b434f4d63"
       url: "https://pub.dev"
     source: hosted
-    version: "6.5.2"
+    version: "6.5.4"
   postgres:
     dependency: transitive
     description:
@@ -835,66 +835,66 @@ packages:
     dependency: transitive
     description:
       name: serverpod
-      sha256: "59e5b3fc10fbe8942bbbc8363c35490e8a6e47752b8cb84b4bf5e93e6128399e"
+      sha256: "1bae57cc02b218d3f3689935a4c1f21173624643d80c25d59b02d34c1a4292c4"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_auth_core_client:
     dependency: transitive
     description:
       name: serverpod_auth_core_client
-      sha256: "2150795e2b2817749e9834add6c1610d4c2f29d5709f0216892267afe3ad9b4f"
+      sha256: af3c1a655e9516e905357345fbddca75fb985d5d2e41d66b31e42a483d9352cc
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_auth_idp_client:
     dependency: transitive
     description:
       name: serverpod_auth_idp_client
-      sha256: "045d6d49b15bf163a23dc18393c406f605e92c0c897f2244042f052435b1e176"
+      sha256: "4388222447a92a002e0cc6c4c7b9def32884dd0b16cda8d1f3dcc62b88d4f87a"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_client:
     dependency: transitive
     description:
       name: serverpod_client
-      sha256: "9c86584382bfddab72cdd4fc992ee52d0fecc6dc83da2d831d7577a28ded8a60"
+      sha256: "677c7441e60ddd1094b0422097b61fcaecfb810415cf8bc6204274e4d6774a81"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_database:
     dependency: transitive
     description:
       name: serverpod_database
-      sha256: "78603002f4cff60babea959765ce7b573c316450983b0481da6decc87ad0c702"
+      sha256: "527ec19089f286901e00289bc68d0372282ce01f826f411f94872442f7e41ad1"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_embedded_postgres:
     dependency: transitive
     description:
       name: serverpod_embedded_postgres
-      sha256: "6e23e86da825d0a18c409668e276d9c63565030662d79039a0ae03dc7b87155d"
+      sha256: fb771d6491ab676c895ec0bfd35cab813a14813756d31ed50d6168294413ac1a
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_flutter:
     dependency: transitive
     description:
       name: serverpod_flutter
-      sha256: "5acd244bb9daa51955195434d97c3cc489dbf928d98e710f5a1c0c262cc56e31"
+      sha256: "0115f0eca00792e24eac64fd4d53d9d5811530644e9d68077ae1405bfd9d3ddc"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_lints:
     dependency: transitive
     description:
       name: serverpod_lints
-      sha256: "5f6b8a2976b3b5aad0066b039fbe91148a4c023d1bd618f16c5f58eb1686aefc"
+      sha256: "0aa11909ef5ed7afb2f9e4f08dba2a68e4469e974e5679eb1e347db8e8bbd25c"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_logging:
     dependency: transitive
     description:
@@ -907,26 +907,26 @@ packages:
     dependency: transitive
     description:
       name: serverpod_serialization
-      sha256: "5f6e417c97afd7232931c5db25b078498c732f5d484262da9b1aad8d3b2bf2ca"
+      sha256: "4b317972523b3977857f8d0cb826cd9636792e9f4ae1a931272998722dd4dea7"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_shared:
     dependency: transitive
     description:
       name: serverpod_shared
-      sha256: f53f81b55bf4483cf352970da3c3fe63c6eeba9370f315d0d0720ae72c352717
+      sha256: "0f7c9fa0c0fc9fac3d14752dc1402e30a4fba41ac477bdc7107a275d1fd92fe8"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   serverpod_test:
     dependency: transitive
     description:
       name: serverpod_test
-      sha256: "8d6ac3e70edcec17a8e9f37ceadd30b2a91fdc07fa7c8b1591cba8ab7ce518cd"
+      sha256: e61a854ef2874645bf8419e29c9f1b5c28b0d1b0e55623cb63fcd7dd0700e2bf
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.1.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -939,18 +939,18 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "593034a16e82953ca31145db6c85174286262715f9c5e6a9d8c65ffd9fcdce09"
+      sha256: "33b38b07d9ac7d16aff0426c61418752fd3e7a8c7dc8be786c875d6ce673b002"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.3"
+    version: "2.5.4"
   shared_preferences_foundation:
     dependency: transitive
     description:
       name: shared_preferences_foundation
-      sha256: c2c02dd59bd7b3bb6bfb77aa7ad4a7886b24ee40e95dcaea754b83274b567ff5
+      sha256: "4e396ac6f8751ab7d2d6e27f22f32c8350b07006028d534f5221503382f1fa69"
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.6.1"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -1064,10 +1064,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3_connection_pool
-      sha256: "3cb5be5feb10933cc46fc25db8054dc5de9f90c72cdf386bd80d801e856a646a"
+      sha256: af7dbfd341f760cda2d42fadf0be75e0e5932abd40a23b3589f3ed478789ee50
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.14"
+    version: "0.2.16"
   sqlite3_web:
     dependency: transitive
     description:
@@ -1088,10 +1088,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "40bdddb306a727be9ce510bd2d2b9a6c9db6c586d846ef7b22e3990a2b24f02d"
+      sha256: "8121dae2c5de4a1e39153d95c55f7fd1816e32d1232fe270bc415a4a370d6e47"
       url: "https://pub.dev"
     source: hosted
-    version: "0.44.5"
+    version: "0.45.1"
   stack_trace:
     dependency: transitive
     description:
@@ -1272,10 +1272,10 @@ packages:
     dependency: transitive
     description:
       name: vector_math
-      sha256: "92b9910f66ed1057fd4da7b040ae7c74cafacf885bdc81be496928d5049b032d"
+      sha256: fa49e1674cb84acb900141714e6c6e1f9ae099827c24d141430ff6819db4e1bc
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   vm_service:
     dependency: transitive
     description:
@@ -1368,10 +1368,10 @@ packages:
     dependency: transitive
     description:
       name: xml
-      sha256: "67f0aff7be013d107995e9b75bf4e7f2c3ef2dfdb2c8e68024bba0a7fd5756a4"
+      sha256: "0fe8cc98946def31cbcbc8734aa4067031e6f65ea3a78a508060bfed2200bfeb"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "7.1.0"
   yaml:
     dependency: transitive
     description:
