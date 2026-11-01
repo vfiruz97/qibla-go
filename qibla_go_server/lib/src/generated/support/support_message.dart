@@ -10,6 +10,7 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _ida;
 import 'package:serverpod/serverpod.dart' as _is;
 
 /// A message a user sent through "Write to us". Server-only: the app never
@@ -90,7 +91,7 @@ abstract class SupportMessage
     String? platform,
     String? appVersion,
     DateTime? createdAt,
-    DateTime? handledAt,
+    DateTime? handledAt = const _is.$UndefinedDateTime(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -171,7 +172,7 @@ class _SupportMessageImpl extends SupportMessage {
     Object? platform = _Undefined,
     Object? appVersion = _Undefined,
     DateTime? createdAt,
-    Object? handledAt = _Undefined,
+    DateTime? handledAt = const _is.$UndefinedDateTime(),
   }) {
     return SupportMessage(
       id: id is int? ? id : this.id,
@@ -180,7 +181,9 @@ class _SupportMessageImpl extends SupportMessage {
       platform: platform is String? ? platform : this.platform,
       appVersion: appVersion is String? ? appVersion : this.appVersion,
       createdAt: createdAt ?? this.createdAt,
-      handledAt: handledAt is DateTime? ? handledAt : this.handledAt,
+      handledAt: handledAt is _is.UndefinedSentinel
+          ? this.handledAt
+          : handledAt,
     );
   }
 }
@@ -358,6 +361,69 @@ class SupportMessageRepository {
       transaction: transaction,
       lockMode: lockMode,
       lockBehavior: lockBehavior,
+    );
+  }
+
+  /// Emits [SupportMessage]s matching the given query parameters every time the
+  /// source tables are modified.
+  ///
+  /// Use [where] to specify which items to include in the return value.
+  /// If none is specified, all items will be returned.
+  ///
+  /// To specify the order of the items use [orderBy] or [orderByList]
+  /// when sorting by multiple columns.
+  ///
+  /// The maximum number of items can be set by [limit]. If no limit is set,
+  /// all items matching the query will be returned.
+  ///
+  /// [offset] defines how many items to skip, after which [limit] (or all)
+  /// items are read from the database.
+  ///
+  /// Use [throttle] to specify the minimum interval between queries. It can
+  /// also be set to `null`, in which case the stream will only be throttled
+  /// when its subscription is paused.
+  ///
+  /// Source tables are collected from the queried table, [where], [orderBy],
+  /// [orderByList], and the [include] graph. [alsoTriggerOnTables] is added
+  /// to that set. Pass [Table] instances such as `SupportMessage.t`.
+  ///
+  /// Raw [Expression] SQL is not inspected. Tables referenced only in raw
+  /// SQL must be passed via [alsoTriggerOnTables].
+  ///
+  /// The stream always reads committed state and never joins an ambient
+  /// [Transaction]. Emissions for a write fire after that write commits.
+  ///
+  /// Currently only supported on SQLite. Calling this method on PostgreSQL
+  /// throws an [UnsupportedError].
+  ///
+  /// ```dart
+  /// var subscription = Persons.db.watch(
+  ///   session,
+  ///   where: (t) => t.lastName.equals('Jones'),
+  ///   orderBy: (t) => t.firstName,
+  ///   limit: 100,
+  /// ).listen((persons) {
+  ///   // Handle the latest matching rows.
+  /// });
+  /// ```
+  _ida.Stream<List<SupportMessage>> watch(
+    _is.DatabaseSession session, {
+    _is.WhereExpressionBuilder<SupportMessageTable>? where,
+    int? limit,
+    int? offset,
+    _is.OrderByBuilder<SupportMessageTable>? orderBy,
+    _is.OrderByListBuilder<SupportMessageTable>? orderByList,
+    Duration? throttle = const Duration(milliseconds: 30),
+    Iterable<_is.Table>? alsoTriggerOnTables,
+  }) {
+    return session.db.watch<SupportMessage>(
+      where: where?.call(SupportMessage.t),
+      orderBy: orderBy?.call(SupportMessage.t),
+      orderByList: orderByList?.call(SupportMessage.t),
+      limit: limit,
+      offset: offset,
+      throttle: throttle,
+      alsoTriggerOnTables: alsoTriggerOnTables,
     );
   }
 
