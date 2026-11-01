@@ -111,7 +111,7 @@ class DetailsSheet extends ConsumerWidget {
                     flex: 6,
                     child: Text(
                       value,
-                      textAlign: TextAlign.right,
+                      textAlign: TextAlign.end,
                       style: text.bodyMedium?.copyWith(
                         color: p.ink,
                         fontFeatures: const [FontFeature.tabularFigures()],

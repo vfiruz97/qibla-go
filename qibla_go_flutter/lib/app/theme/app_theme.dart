@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'qibla_palette.dart';
+import 'script_typography.dart';
 
 /// Font families bundled in `assets/fonts`.
 abstract final class AppFonts {
@@ -11,13 +12,27 @@ abstract final class AppFonts {
   static const body = 'Manrope';
 }
 
-/// Builds the Material theme from a [QiblaPalette].
+/// Builds the Material theme from a [QiblaPalette]. Pass the UI [Locale] so
+/// the type follows its script (see [ScriptTypography]); without one the
+/// Latin set-up is used, which is what English gets.
 abstract final class AppTheme {
-  static ThemeData light() => _build(QiblaPalette.day, Brightness.light);
+  static ThemeData light({Locale? locale}) =>
+      _build(QiblaPalette.day, Brightness.light, locale);
 
-  static ThemeData dark() => _build(QiblaPalette.night, Brightness.dark);
+  static ThemeData dark({Locale? locale}) =>
+      _build(QiblaPalette.night, Brightness.dark, locale);
 
-  static ThemeData _build(QiblaPalette p, Brightness brightness) {
+  static ThemeData of({required Brightness brightness, Locale? locale}) =>
+      brightness == Brightness.dark
+      ? dark(locale: locale)
+      : light(locale: locale);
+
+  static ThemeData _build(
+    QiblaPalette p,
+    Brightness brightness,
+    Locale? locale,
+  ) {
+    final script = ScriptTypography.forLocale(locale);
     final scheme = ColorScheme(
       brightness: brightness,
       primary: p.gold,
@@ -33,7 +48,7 @@ abstract final class AppTheme {
       outline: p.inkFaint,
     );
 
-    final text = _textTheme(p);
+    final text = _textTheme(p, script);
 
     return ThemeData(
       useMaterial3: true,
@@ -106,14 +121,14 @@ abstract final class AppTheme {
     );
   }
 
-  static TextTheme _textTheme(QiblaPalette p) {
+  static TextTheme _textTheme(QiblaPalette p, ScriptTypography script) {
     TextStyle display(double size, {double? spacing, double? height}) =>
         TextStyle(
-          fontFamily: AppFonts.display,
+          fontFamily: script.displayFamily,
           fontSize: size,
           color: p.ink,
-          letterSpacing: spacing,
-          height: height ?? 1.05,
+          letterSpacing: spacing == null ? null : script.tracking(spacing),
+          height: height ?? script.displayHeight,
           fontFeatures: const [FontFeature.tabularFigures()],
         );
     TextStyle body(
@@ -127,8 +142,8 @@ abstract final class AppTheme {
       fontSize: size,
       fontWeight: weight,
       color: color ?? p.ink,
-      letterSpacing: spacing,
-      height: height ?? 1.35,
+      letterSpacing: spacing == null ? null : script.tracking(spacing),
+      height: height ?? script.bodyHeight,
     );
 
     return TextTheme(

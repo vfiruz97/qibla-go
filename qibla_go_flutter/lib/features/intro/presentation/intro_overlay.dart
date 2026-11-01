@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/app_theme.dart';
+import '../../../app/theme/script_typography.dart';
 import '../../../app/theme/qibla_palette.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -111,7 +112,13 @@ class _IntroOverlayState extends State<IntroOverlay>
                         CustomPaint(
                           painter: _IntroPainter(t: t, palette: p),
                         ),
-                        _Wordmark(t: t, palette: p, tagline: l10n.introTagline),
+                        _Wordmark(
+                          t: t,
+                          palette: p,
+                          name: l10n.appName,
+                          tagline: l10n.introTagline,
+                          script: ScriptTypography.of(context),
+                        ),
                         Positioned(
                           right: 16,
                           top: MediaQuery.paddingOf(context).top + 8,
@@ -145,12 +152,18 @@ class _Wordmark extends StatelessWidget {
   const _Wordmark({
     required this.t,
     required this.palette,
+    required this.name,
     required this.tagline,
+    required this.script,
   });
 
   final double t;
   final QiblaPalette palette;
+
+  /// The brand, always in Latin letters.
+  final String name;
   final String tagline;
+  final ScriptTypography script;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +183,7 @@ class _Wordmark extends StatelessWidget {
             child: Transform.translate(
               offset: Offset(0, (1 - title) * 14),
               child: Text(
-                'Qibla Go',
+                name,
                 style: TextStyle(
                   fontFamily: AppFonts.display,
                   fontSize: 40,
@@ -191,7 +204,7 @@ class _Wordmark extends StatelessWidget {
                   fontFamily: AppFonts.body,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: 1.8,
+                  letterSpacing: script.tracking(1.8),
                   color: palette.gold,
                 ),
               ),

@@ -256,7 +256,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       moonLabel: l10n.mapMoon,
                     ),
                   RichAttributionWidget(
-                    alignment: AttributionAlignment.bottomLeft,
+                    alignment: Directionality.of(context) == TextDirection.rtl
+                        ? AttributionAlignment.bottomRight
+                        : AttributionAlignment.bottomLeft,
                     popupBackgroundColor: p.surface,
                     attributions: [
                       TextSourceAttribution(
@@ -383,7 +385,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     ),
                     const SizedBox(height: 8),
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: AlignmentDirectional.centerStart,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,

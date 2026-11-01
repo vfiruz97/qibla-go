@@ -299,7 +299,10 @@ class _Notice extends StatelessWidget {
                 ],
                 if (action != null) ...[
                   const SizedBox(height: 6),
-                  Align(alignment: Alignment.centerLeft, child: action),
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: action,
+                  ),
                 ],
               ],
             ),

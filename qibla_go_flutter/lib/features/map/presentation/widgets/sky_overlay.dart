@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart' show LatLng;
 import '../../../../app/theme/qibla_palette.dart';
 import '../../../../core/astro/sky_position.dart';
 import '../../../../core/geo/angles.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/sky_providers.dart';
 
 /// Sun and moon drawn around the user at a fixed screen distance along
@@ -33,6 +34,7 @@ class SkyOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     final camera = MapCamera.of(context);
     final p = QiblaPalette.of(context);
+    final l10n = AppLocalizations.of(context);
     final user = camera.latLngToScreenOffset(
       origin ?? LatLng(sky.at.latitude, sky.at.longitude),
     );
@@ -50,14 +52,14 @@ class SkyOverlay extends StatelessWidget {
           at: place(sky.sun.azimuth),
           color: p.warning,
           icon: Icons.wb_sunny_rounded,
-          label: '$sunLabel ${sky.sun.azimuth.round()}°',
+          label: l10n.skyMarkerLabel(sunLabel, sky.sun.azimuth.round()),
         ),
       if (sky.showMoon)
         _Body(
           at: place(sky.moon.azimuth),
           color: p.ink,
           icon: Icons.nightlight_round,
-          label: '$moonLabel ${sky.moon.azimuth.round()}°',
+          label: l10n.skyMarkerLabel(moonLabel, sky.moon.azimuth.round()),
           moonPhase: sky.moonIllumination.phase,
         ),
     ];
@@ -74,11 +76,12 @@ class SkyOverlay extends StatelessWidget {
             ),
           ),
           for (final b in bodies)
+            // Width only: the label is translated and must be free to take
+            // a second line instead of overflowing a fixed box.
             Positioned(
-              left: b.at.dx - 56,
+              left: b.at.dx - 70,
               top: b.at.dy - 22,
-              width: 112,
-              height: 60,
+              width: 140,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
