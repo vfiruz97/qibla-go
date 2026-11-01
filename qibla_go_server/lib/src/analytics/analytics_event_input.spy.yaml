@@ -1,0 +1,16 @@
+### One event as the app sends it. The launch-wide context (session id,
+### platform, version, language) travels once per batch, not per event.
+class: AnalyticsEventInput
+fields:
+  ### When it happened on the device (UTC).
+  occurredAt: DateTime
+  ### Event name; see AnalyticsGuard.allowedNames.
+  name: String
+  ### Screen or sheet name, when the event has one.
+  screen: String?
+  ### Previous screen, for navigation events.
+  fromScreen: String?
+  ### Duration in milliseconds, when the event has one.
+  durationMs: int?
+  ### Short result tag, when the event has one.
+  outcome: String?

@@ -11,9 +11,13 @@
 // ignore_for_file: dead_code, unnecessary_type_check
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:qibla_go_client/src/protocol/analytics/analytics_event_input.dart'
+    as _io41fdcy;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'analytics/analytics_event_input.dart' as _i7agsfz9;
 import 'support/support_challenge.dart' as _iti73b7j;
 import 'support/support_submit_result.dart' as _ian8tpl6;
+export 'analytics/analytics_event_input.dart';
 export 'support/support_challenge.dart';
 export 'support/support_submit_result.dart';
 export 'client.dart';
@@ -52,11 +56,20 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
+    if (t == _i7agsfz9.AnalyticsEventInput) {
+      return _i7agsfz9.AnalyticsEventInput.fromJson(data) as T;
+    }
     if (t == _iti73b7j.SupportChallenge) {
       return _iti73b7j.SupportChallenge.fromJson(data) as T;
     }
     if (t == _ian8tpl6.SupportSubmitResult) {
       return _ian8tpl6.SupportSubmitResult.fromJson(data) as T;
+    }
+    if (t == _isc.getType<_i7agsfz9.AnalyticsEventInput?>()) {
+      return (data != null
+              ? _i7agsfz9.AnalyticsEventInput.fromJson(data)
+              : null)
+          as T;
     }
     if (t == _isc.getType<_iti73b7j.SupportChallenge?>()) {
       return (data != null ? _iti73b7j.SupportChallenge.fromJson(data) : null)
@@ -68,11 +81,18 @@ class Protocol extends _isc.SerializationManager {
               : null)
           as T;
     }
+    if (t == List<_io41fdcy.AnalyticsEventInput>) {
+      return (data as List)
+              .map((e) => deserialize<_io41fdcy.AnalyticsEventInput>(e))
+              .toList()
+          as T;
+    }
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _i7agsfz9.AnalyticsEventInput => 'AnalyticsEventInput',
       _iti73b7j.SupportChallenge => 'SupportChallenge',
       _ian8tpl6.SupportSubmitResult => 'SupportSubmitResult',
       _ => null,
@@ -89,6 +109,8 @@ class Protocol extends _isc.SerializationManager {
     }
 
     switch (data) {
+      case _i7agsfz9.AnalyticsEventInput():
+        return 'AnalyticsEventInput';
       case _iti73b7j.SupportChallenge():
         return 'SupportChallenge';
       case _ian8tpl6.SupportSubmitResult():
@@ -102,6 +124,9 @@ class Protocol extends _isc.SerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'AnalyticsEventInput') {
+      return deserialize<_i7agsfz9.AnalyticsEventInput>(data['data']);
     }
     if (dataClassName == 'SupportChallenge') {
       return deserialize<_iti73b7j.SupportChallenge>(data['data']);

@@ -1,0 +1,42 @@
+### One anonymous usage event from the app: a launch, a screen view, a
+### support message sent. Server-only; the app never reads events back.
+### Holds no identifier that outlives a launch, no location, no address,
+### no free text. Rows older than the retention period are purged.
+class: AnalyticsEvent
+table: analytics_event
+serverOnly: true
+fields:
+  ### When the server stored it (UTC).
+  receivedAt: DateTime
+  ### When it happened on the device (UTC, by the device clock, clamped to a
+  ### plausible window around receivedAt).
+  occurredAt: DateTime
+  ### Random hex id the app draws at launch and forgets at exit. Groups the
+  ### events of one launch; never persisted on the device, so two launches
+  ### cannot be linked.
+  sessionId: String
+  ### Event name from the allowlist in AnalyticsGuard (app_launch,
+  ### screen_view, ...).
+  name: String
+  ### "android", "ios", "web", "macos", "windows", "linux" or "unknown".
+  platform: String
+  ### App version string ("0.1.0+1"), if the app knew it.
+  appVersion: String?
+  ### Language the app was shown in (ISO 639 code, no region).
+  language: String?
+  ### Screen or sheet the event is about ("qibla", "map", "details").
+  screen: String?
+  ### For navigation: the screen the user came from.
+  fromScreen: String?
+  ### A duration in milliseconds, where the event has one (launch to first
+  ### frame, time in foreground).
+  durationMs: int?
+  ### A short result tag ("accepted", "offline", "rate", "notNow").
+  outcome: String?
+indexes:
+  analytics_event_name_time_idx:
+    fields: name, occurredAt
+  analytics_event_received_idx:
+    fields: receivedAt
+  analytics_event_session_idx:
+    fields: sessionId
