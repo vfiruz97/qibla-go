@@ -7,6 +7,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router.dart';
 import '../../../app/theme/qibla_palette.dart';
+import '../../../core/analytics/analytics.dart';
+import '../../../core/analytics/analytics_event.dart';
 import '../../../core/location/location_models.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../rating/application/rating_controller.dart';
@@ -118,7 +120,17 @@ class _QiblaScreenState extends ConsumerState<QiblaScreen>
     final rating = ref.read(ratingControllerProvider.notifier);
     await rating.markPrompted();
     if (!mounted) return;
+    final analytics = ref.read(analyticsProvider)
+      ..track(AnalyticsEventName.ratingPrompt);
     final answer = await RatingSheet.show(context);
+    analytics.track(
+      AnalyticsEventName.ratingAnswer,
+      outcome: switch (answer) {
+        true => 'rate',
+        false => 'notNow',
+        null => 'dismissed',
+      },
+    );
     if (answer != true) {
       await rating.decline();
       return;

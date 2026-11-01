@@ -1,5 +1,10 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/widgets.dart' show NavigatorObserver;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../core/analytics/analytics.dart';
+import '../core/analytics/analytics_navigator_observer.dart';
 
 import '../features/map/presentation/map_screen.dart';
 import 'compass_routes.dart'
@@ -27,10 +32,15 @@ String? webRedirect(String path, {required bool web}) {
 }
 
 /// Builds the app router. [web] is a parameter so tests can cover both
-/// platforms; the app passes the real value.
-GoRouter createAppRouter({bool web = kIsWeb}) => GoRouter(
+/// platforms; the app passes the real value. [observers] watch the root
+/// navigator (the analytics observer in the app).
+GoRouter createAppRouter({
+  bool web = kIsWeb,
+  List<NavigatorObserver> observers = const [],
+}) => GoRouter(
   initialLocation: AppRoutes.qibla,
   redirect: (context, state) => webRedirect(state.uri.path, web: web),
+  observers: observers,
   routes: [
     if (!web) ...compassRoutes(),
     GoRoute(
@@ -41,6 +51,13 @@ GoRouter createAppRouter({bool web = kIsWeb}) => GoRouter(
   ],
 );
 
-/// Prayer times and settings will be siblings here; keep each feature's
-/// screen under its own `features/<name>/presentation`.
-final appRouter = createAppRouter();
+/// The app's router, with the analytics observer counting screen and sheet
+/// views. Prayer times and settings will be siblings in the route table;
+/// keep each feature's screen under its own `features/<name>/presentation`.
+final appRouterProvider = Provider<GoRouter>((ref) {
+  final router = createAppRouter(
+    observers: [AnalyticsNavigatorObserver(ref.watch(analyticsProvider))],
+  );
+  ref.onDispose(router.dispose);
+  return router;
+});

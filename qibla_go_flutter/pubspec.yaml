@@ -50,6 +50,10 @@ dependencies:
   # after real use; see features/rating and docs/DECISIONS.md.
   in_app_review: ^2.0.12
 
+  # App version for the anonymous usage events (core/analytics); read once,
+  # inside the deferred part on the web.
+  package_info_plus: ^10.2.2
+
 dev_dependencies:
   # Used for agents to drive the app through the Dart MCP
   flutter_driver:

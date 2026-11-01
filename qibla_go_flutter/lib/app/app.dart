@@ -1,6 +1,11 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../core/analytics/analytics.dart';
+import '../core/analytics/analytics_event.dart';
+import '../core/analytics/analytics_lifecycle_observer.dart';
 
 import '../features/intro/presentation/intro_gate.dart';
 import '../l10n/app_localizations.dart';
@@ -11,17 +16,20 @@ import 'theme/app_theme.dart';
 import 'theme/qibla_palette.dart';
 import 'theme/script_theme.dart';
 
-class QiblaGoApp extends StatefulWidget {
+class QiblaGoApp extends ConsumerStatefulWidget {
   const QiblaGoApp({super.key, this.playIntro = true});
 
   /// Tests and the driver pass false to skip the opening animation.
   final bool playIntro;
 
   @override
-  State<QiblaGoApp> createState() => _QiblaGoAppState();
+  ConsumerState<QiblaGoApp> createState() => _QiblaGoAppState();
 }
 
-class _QiblaGoAppState extends State<QiblaGoApp> {
+class _QiblaGoAppState extends ConsumerState<QiblaGoApp> {
+  late final AnalyticsLifecycleObserver _lifecycle;
+  bool _launchTracked = false;
+
   /// On the web the browser can hand the Flutter view keyboard focus before
   /// the first layout (headless Chrome and Lighthouse always do). Flutter
   /// then looks for the first focusable widget by reading geometry that
@@ -33,6 +41,8 @@ class _QiblaGoAppState extends State<QiblaGoApp> {
   @override
   void initState() {
     super.initState();
+    _lifecycle = AnalyticsLifecycleObserver(ref.read(analyticsProvider));
+    WidgetsBinding.instance.addObserver(_lifecycle);
     if (!_ready) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) setState(() => _ready = true);
@@ -41,10 +51,31 @@ class _QiblaGoAppState extends State<QiblaGoApp> {
   }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(_lifecycle);
+    super.dispose();
+  }
+
+  /// The launch event, once, after the first frame that shows content.
+  void _trackLaunch() {
+    if (_launchTracked) return;
+    _launchTracked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(analyticsProvider)
+          .track(
+            AnalyticsEventName.appLaunch,
+            durationMs: appLaunchStopwatch.elapsedMilliseconds,
+          );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (!_ready) {
       return ColoredBox(color: QiblaPalette.night.background);
     }
+    _trackLaunch();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -64,13 +95,20 @@ class _QiblaGoAppState extends State<QiblaGoApp> {
         // The user's system or browser language list, in their order; English
         // when none of it is supported. See resolveLocale.
         localeListResolutionCallback: resolveLocale,
-        routerConfig: appRouter,
-        builder: (context, child) => ScriptTheme(
-          child: IntroGate(
-            playIntro: widget.playIntro,
-            child: child ?? const SizedBox.shrink(),
-          ),
-        ),
+        routerConfig: ref.watch(appRouterProvider),
+        builder: (context, child) {
+          // Below Localizations: the language the UI resolved to is the
+          // one context field the batches carry besides the platform.
+          ref.read(analyticsProvider).language = Localizations.localeOf(
+            context,
+          ).languageCode;
+          return ScriptTheme(
+            child: IntroGate(
+              playIntro: widget.playIntro,
+              child: child ?? const SizedBox.shrink(),
+            ),
+          );
+        },
       ),
     );
   }

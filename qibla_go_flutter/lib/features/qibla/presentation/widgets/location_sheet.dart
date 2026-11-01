@@ -19,6 +19,8 @@ class LocationSheet extends ConsumerStatefulWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      // Named so the analytics observer can count the view.
+      routeSettings: const RouteSettings(name: 'location'),
       builder: (_) => LocationSheet(startWithForm: startWithForm),
     );
   }
