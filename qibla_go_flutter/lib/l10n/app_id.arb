@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Simulasikan kompas (hanya build debug)",
   "detailsSimulateHeading": "Arah simulasi",
+  "detailsPreviewRating": "Pratinjau permintaan penilaian (hanya build debug)",
   "footerFree": "Gratis, selamanya. Tanpa iklan, tanpa akun.",
   "footerIntention": "Dibuat demi keridaan Allah.",
   "cardinalN": "U",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Server tidak dapat menerima pesan ini. Persingkat lalu coba lagi.",
   "supportErrorTooShort": "Tulis minimal 10 karakter.",
   "supportErrorTooLong": "Jaga di bawah 2000 karakter.",
-  "supportErrorAnswerMissing": "Jawab cek singkat dengan angka."
+  "supportErrorAnswerMissing": "Jawab cek singkat dengan angka.",
+  "ratingTitle": "Suka Qibla Go?",
+  "ratingBodyGooglePlay": "Qibla Go gratis dan tanpa iklan. Penilaian di Google Play membantu orang lain menemukannya dan mempercayainya.",
+  "ratingBodyAppStore": "Qibla Go gratis dan tanpa iklan. Penilaian di App Store membantu orang lain menemukannya dan mempercayainya.",
+  "ratingRate": "Beri nilai Qibla Go",
+  "ratingNotNow": "Nanti saja",
+  "ratingFootnote": "Kami hanya bertanya sekali. Jika Anda menolak, kami tidak akan bertanya lagi.",
+  "ratingOpenFailed": "Toko aplikasi tidak dapat dibuka. Silakan coba lagi nanti.",
+  "ratingStoreLinkGooglePlay": "Beri nilai di Google Play",
+  "ratingStoreLinkAppStore": "Beri nilai di App Store"
 }

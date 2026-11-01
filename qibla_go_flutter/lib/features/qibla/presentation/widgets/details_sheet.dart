@@ -9,6 +9,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/compass_controller.dart';
 import '../../application/location_controller.dart';
 import '../../application/qibla_providers.dart';
+import '../../../rating/application/rating_controller.dart';
+import '../../../rating/presentation/rating_sheet.dart';
 import 'location_sheet.dart';
 
 /// Every number behind the needle, for the user who wants to check the
@@ -121,11 +123,46 @@ class DetailsSheet extends ConsumerWidget {
                 ],
               ),
             ),
+          const Divider(height: 32),
+          const _RateLink(),
           if (kDebugMode) ...[
             const Divider(height: 32),
             const _DebugControls(),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// A standing way to rate the app, for the user who wants to without being
+/// asked. Opens the store listing (never the quota-limited review card).
+class _RateLink extends ConsumerWidget {
+  const _RateLink();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final appStore = RatingSheet.isAppStore(defaultTargetPlatform);
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: TextButton.icon(
+        onPressed: () async {
+          final opened = await ref
+              .read(ratingControllerProvider.notifier)
+              .openStore();
+          if (!opened && context.mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(l10n.ratingOpenFailed)));
+          }
+        },
+        icon: const Icon(Icons.star_outline_rounded),
+        label: Text(
+          appStore
+              ? l10n.ratingStoreLinkAppStore
+              : l10n.ratingStoreLinkGooglePlay,
+        ),
       ),
     );
   }
@@ -168,6 +205,16 @@ class _DebugControls extends ConsumerWidget {
             },
           ),
         ],
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TextButton(
+            onPressed: () {
+              ref.read(ratingControllerProvider.notifier).resetForDebug();
+              RatingSheet.show(context);
+            },
+            child: Text(l10n.detailsPreviewRating),
+          ),
+        ),
       ],
     );
   }

@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "나침반 시뮬레이션(디버그 빌드 전용)",
   "detailsSimulateHeading": "시뮬레이션 방위",
+  "detailsPreviewRating": "평가 요청 미리 보기(디버그 빌드 전용)",
   "footerFree": "영원히 무료. 광고 없음, 계정 없음.",
   "footerIntention": "하나님의 기쁨을 구하며 만들었습니다.",
   "cardinalN": "북",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "서버가 이 메시지를 받을 수 없었습니다. 줄여서 다시 시도해 주세요.",
   "supportErrorTooShort": "10자 이상 적어 주세요.",
   "supportErrorTooLong": "2000자 이내로 적어 주세요.",
-  "supportErrorAnswerMissing": "간단한 확인에 숫자로 답해 주세요."
+  "supportErrorAnswerMissing": "간단한 확인에 숫자로 답해 주세요.",
+  "ratingTitle": "Qibla Go가 마음에 드시나요?",
+  "ratingBodyGooglePlay": "Qibla Go는 무료이며 광고가 없습니다. Google Play에 남겨 주신 평점은 다른 분들이 이 앱을 찾고 신뢰하는 데 도움이 됩니다.",
+  "ratingBodyAppStore": "Qibla Go는 무료이며 광고가 없습니다. App Store에 남겨 주신 평점은 다른 분들이 이 앱을 찾고 신뢰하는 데 도움이 됩니다.",
+  "ratingRate": "Qibla Go 평가하기",
+  "ratingNotNow": "나중에",
+  "ratingFootnote": "한 번만 묻습니다. 거절하시면 다시 묻지 않습니다.",
+  "ratingOpenFailed": "스토어를 열 수 없습니다. 나중에 다시 시도해 주세요.",
+  "ratingStoreLinkGooglePlay": "Google Play에서 평가하기",
+  "ratingStoreLinkAppStore": "App Store에서 평가하기"
 }

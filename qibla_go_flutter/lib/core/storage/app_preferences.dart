@@ -27,6 +27,7 @@ final class AppPreferences {
   final SharedPreferences _prefs;
 
   static const _lastFixKey = 'qibla.v1.lastLocationFix';
+  static const _ratingKey = 'qibla.v1.rating';
 
   LocationFix? readLastFix() {
     final raw = _prefs.getString(_lastFixKey);
@@ -44,4 +45,20 @@ final class AppPreferences {
       _prefs.setString(_lastFixKey, jsonEncode(fix.toJson()));
 
   Future<void> clearLastFix() => _prefs.remove(_lastFixKey);
+
+  /// The rating prompt's counters and decision, as the feature's own JSON.
+  /// Kept opaque here so storage does not depend on a feature's types.
+  Map<String, Object?>? readRatingJson() {
+    final raw = _prefs.getString(_ratingKey);
+    if (raw == null) return null;
+    try {
+      final decoded = jsonDecode(raw);
+      return decoded is Map<String, Object?> ? decoded : null;
+    } on FormatException {
+      return null;
+    }
+  }
+
+  Future<void> writeRatingJson(Map<String, Object?> json) =>
+      _prefs.setString(_ratingKey, jsonEncode(json));
 }

@@ -364,6 +364,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get detailsSimulateHeading => 'Simulerad kurs';
 
   @override
+  String get detailsPreviewRating =>
+      'Förhandsgranska betygsfrågan (endast felsökningsbygge)';
+
+  @override
   String get footerFree => 'Gratis, för alltid. Inga annonser, inga konton.';
 
   @override
@@ -621,4 +625,35 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get supportErrorAnswerMissing =>
       'Svara på snabbkontrollen med ett tal.';
+
+  @override
+  String get ratingTitle => 'Gillar du Qibla Go?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go är gratis och utan reklam. Ett betyg på Google Play hjälper andra att hitta appen och lita på den.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go är gratis och utan reklam. Ett betyg på App Store hjälper andra att hitta appen och lita på den.';
+
+  @override
+  String get ratingRate => 'Betygsätt Qibla Go';
+
+  @override
+  String get ratingNotNow => 'Inte nu';
+
+  @override
+  String get ratingFootnote =>
+      'Vi frågar en gång. Säger du nej frågar vi inte igen.';
+
+  @override
+  String get ratingOpenFailed =>
+      'Butiken kunde inte öppnas. Försök igen senare.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Betygsätt på Google Play';
+
+  @override
+  String get ratingStoreLinkAppStore => 'Betygsätt på App Store';
 }

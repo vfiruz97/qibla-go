@@ -358,6 +358,10 @@ class AppLocalizationsTg extends AppLocalizations {
   String get detailsSimulateHeading => 'Самти тақлидӣ';
 
   @override
+  String get detailsPreviewRating =>
+      'Намоиши дархости баҳо (танҳо сохти ислоҳӣ)';
+
+  @override
   String get footerFree => 'Бепул, ҳамеша. Бе реклама, бе ҳисоб.';
 
   @override
@@ -615,4 +619,35 @@ class AppLocalizationsTg extends AppLocalizations {
   @override
   String get supportErrorAnswerMissing =>
       'Лутфан ба санҷиши зуд бо рақам ҷавоб диҳед.';
+
+  @override
+  String get ratingTitle => 'Qibla Go ба шумо маъқул аст?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go бепул ва бе реклама аст. Баҳои шумо дар Google Play ба дигарон кӯмак мекунад, ки барномаро пайдо кунанд ва ба он бовар кунанд.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go бепул ва бе реклама аст. Баҳои шумо дар App Store ба дигарон кӯмак мекунад, ки барномаро пайдо кунанд ва ба он бовар кунанд.';
+
+  @override
+  String get ratingRate => 'Ба Qibla Go баҳо додан';
+
+  @override
+  String get ratingNotNow => 'Ҳоло не';
+
+  @override
+  String get ratingFootnote =>
+      'Мо танҳо як бор мепурсем. Агар шумо рад кунед, дигар намепурсем.';
+
+  @override
+  String get ratingOpenFailed =>
+      'Мағоза кушода нашуд. Лутфан дертар бори дигар кӯшиш кунед.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Дар Google Play баҳо додан';
+
+  @override
+  String get ratingStoreLinkAppStore => 'Дар App Store баҳо додан';
 }

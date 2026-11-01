@@ -197,6 +197,10 @@
   },
   "detailsSimulateToggle": "Simulate compass (debug build only)",
   "detailsSimulateHeading": "Simulated heading",
+  "detailsPreviewRating": "Preview the rating prompt (debug build only)",
+  "@detailsPreviewRating": {
+    "description": "Debug-only button in Details that shows the rating sheet on demand."
+  },
   "footerFree": "Free, forever. No ads, no accounts.",
   "footerIntention": "Made for the pleasure of God.",
   "@footerIntention": {
@@ -367,5 +371,35 @@
   "supportErrorInvalid": "The server could not accept this message. Please shorten it and try again.",
   "supportErrorTooShort": "Please write at least 10 characters.",
   "supportErrorTooLong": "Please keep it under 2000 characters.",
-  "supportErrorAnswerMissing": "Please answer the quick check with a number."
+  "supportErrorAnswerMissing": "Please answer the quick check with a number.",
+  "ratingTitle": "Enjoying Qibla Go?",
+  "@ratingTitle": {
+    "description": "Headline of the one-time sheet asking for a store rating."
+  },
+  "ratingBodyGooglePlay": "Qibla Go is free and has no ads. A rating on Google Play helps other people find it and trust it.",
+  "@ratingBodyGooglePlay": {
+    "description": "Why a rating matters, Android wording. Keep the three facts: free, no ads, helps others find and trust the app."
+  },
+  "ratingBodyAppStore": "Qibla Go is free and has no ads. A rating on the App Store helps other people find it and trust it.",
+  "@ratingBodyAppStore": {
+    "description": "Same as ratingBodyGooglePlay for iPhone and Mac, naming the App Store."
+  },
+  "ratingRate": "Rate Qibla Go",
+  "ratingNotNow": "Not now",
+  "ratingFootnote": "We ask once. If you say no, we will not ask again.",
+  "@ratingFootnote": {
+    "description": "Small print under the buttons: the sheet is shown once and never after a no."
+  },
+  "ratingOpenFailed": "Could not open the store. Please try again later.",
+  "@ratingOpenFailed": {
+    "description": "Shown when neither the review card nor the store listing could be opened."
+  },
+  "ratingStoreLinkGooglePlay": "Rate on Google Play",
+  "@ratingStoreLinkGooglePlay": {
+    "description": "Link in Details that opens the store listing; Android wording."
+  },
+  "ratingStoreLinkAppStore": "Rate on the App Store",
+  "@ratingStoreLinkAppStore": {
+    "description": "Link in Details that opens the store listing; iPhone and Mac wording."
+  }
 }

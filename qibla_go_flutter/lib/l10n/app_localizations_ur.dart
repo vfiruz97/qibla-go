@@ -360,6 +360,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get detailsSimulateHeading => 'نقلی رخ';
 
   @override
+  String get detailsPreviewRating =>
+      'ریٹنگ کی درخواست کا پیش منظر (صرف ڈیبگ بلڈ)';
+
+  @override
   String get footerFree => 'مفت، ہمیشہ کے لیے۔ نہ اشتہار، نہ اکاؤنٹ۔';
 
   @override
@@ -617,4 +621,35 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get supportErrorAnswerMissing =>
       'براہِ کرم فوری جانچ کا جواب عدد میں دیں۔';
+
+  @override
+  String get ratingTitle => 'Qibla Go پسند آیا؟';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go مفت ہے اور اس میں اشتہار نہیں ہیں۔ Google Play پر آپ کی ریٹنگ دوسروں کو ایپ تلاش کرنے اور اس پر بھروسہ کرنے میں مدد دیتی ہے۔';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go مفت ہے اور اس میں اشتہار نہیں ہیں۔ App Store پر آپ کی ریٹنگ دوسروں کو ایپ تلاش کرنے اور اس پر بھروسہ کرنے میں مدد دیتی ہے۔';
+
+  @override
+  String get ratingRate => 'Qibla Go کو ریٹ کریں';
+
+  @override
+  String get ratingNotNow => 'ابھی نہیں';
+
+  @override
+  String get ratingFootnote =>
+      'ہم صرف ایک بار پوچھتے ہیں۔ اگر آپ نہ کہیں تو دوبارہ نہیں پوچھیں گے۔';
+
+  @override
+  String get ratingOpenFailed =>
+      'اسٹور نہیں کھل سکا۔ براہ کرم بعد میں دوبارہ کوشش کریں۔';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Google Play پر ریٹ کریں';
+
+  @override
+  String get ratingStoreLinkAppStore => 'App Store پر ریٹ کریں';
 }

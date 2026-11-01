@@ -356,6 +356,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get detailsSimulateHeading => 'Arah simulasi';
 
   @override
+  String get detailsPreviewRating =>
+      'Pratinjau permintaan penilaian (hanya build debug)';
+
+  @override
   String get footerFree => 'Gratis, selamanya. Tanpa iklan, tanpa akun.';
 
   @override
@@ -615,4 +619,35 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get supportErrorAnswerMissing => 'Jawab cek singkat dengan angka.';
+
+  @override
+  String get ratingTitle => 'Suka Qibla Go?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go gratis dan tanpa iklan. Penilaian di Google Play membantu orang lain menemukannya dan mempercayainya.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go gratis dan tanpa iklan. Penilaian di App Store membantu orang lain menemukannya dan mempercayainya.';
+
+  @override
+  String get ratingRate => 'Beri nilai Qibla Go';
+
+  @override
+  String get ratingNotNow => 'Nanti saja';
+
+  @override
+  String get ratingFootnote =>
+      'Kami hanya bertanya sekali. Jika Anda menolak, kami tidak akan bertanya lagi.';
+
+  @override
+  String get ratingOpenFailed =>
+      'Toko aplikasi tidak dapat dibuka. Silakan coba lagi nanti.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Beri nilai di Google Play';
+
+  @override
+  String get ratingStoreLinkAppStore => 'Beri nilai di App Store';
 }

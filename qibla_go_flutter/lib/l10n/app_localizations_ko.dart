@@ -346,6 +346,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get detailsSimulateHeading => '시뮬레이션 방위';
 
   @override
+  String get detailsPreviewRating => '평가 요청 미리 보기(디버그 빌드 전용)';
+
+  @override
   String get footerFree => '영원히 무료. 광고 없음, 계정 없음.';
 
   @override
@@ -594,4 +597,33 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get supportErrorAnswerMissing => '간단한 확인에 숫자로 답해 주세요.';
+
+  @override
+  String get ratingTitle => 'Qibla Go가 마음에 드시나요?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go는 무료이며 광고가 없습니다. Google Play에 남겨 주신 평점은 다른 분들이 이 앱을 찾고 신뢰하는 데 도움이 됩니다.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go는 무료이며 광고가 없습니다. App Store에 남겨 주신 평점은 다른 분들이 이 앱을 찾고 신뢰하는 데 도움이 됩니다.';
+
+  @override
+  String get ratingRate => 'Qibla Go 평가하기';
+
+  @override
+  String get ratingNotNow => '나중에';
+
+  @override
+  String get ratingFootnote => '한 번만 묻습니다. 거절하시면 다시 묻지 않습니다.';
+
+  @override
+  String get ratingOpenFailed => '스토어를 열 수 없습니다. 나중에 다시 시도해 주세요.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Google Play에서 평가하기';
+
+  @override
+  String get ratingStoreLinkAppStore => 'App Store에서 평가하기';
 }

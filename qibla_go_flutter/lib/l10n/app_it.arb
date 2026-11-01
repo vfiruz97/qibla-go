@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Simula bussola (solo build di debug)",
   "detailsSimulateHeading": "Direzione simulata",
+  "detailsPreviewRating": "Anteprima della richiesta di valutazione (solo build di debug)",
   "footerFree": "Gratis, per sempre. Senza pubblicità, senza account.",
   "footerIntention": "Fatto per il compiacimento di Dio.",
   "cardinalN": "N",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Il server non ha potuto accettare questo messaggio. Accorcialo e riprova.",
   "supportErrorTooShort": "Scrivi almeno 10 caratteri.",
   "supportErrorTooLong": "Resta sotto i 2000 caratteri.",
-  "supportErrorAnswerMissing": "Rispondi alla verifica rapida con un numero."
+  "supportErrorAnswerMissing": "Rispondi alla verifica rapida con un numero.",
+  "ratingTitle": "Ti piace Qibla Go?",
+  "ratingBodyGooglePlay": "Qibla Go è gratuita e senza pubblicità. Una valutazione su Google Play aiuta altre persone a trovarla e a fidarsi.",
+  "ratingBodyAppStore": "Qibla Go è gratuita e senza pubblicità. Una valutazione sull'App Store aiuta altre persone a trovarla e a fidarsi.",
+  "ratingRate": "Valuta Qibla Go",
+  "ratingNotNow": "Non ora",
+  "ratingFootnote": "Lo chiediamo una sola volta. Se dici no, non lo chiederemo più.",
+  "ratingOpenFailed": "Impossibile aprire lo store. Riprova più tardi.",
+  "ratingStoreLinkGooglePlay": "Valuta su Google Play",
+  "ratingStoreLinkAppStore": "Valuta sull'App Store"
 }

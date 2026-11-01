@@ -340,6 +340,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get detailsSimulateHeading => '模拟航向';
 
   @override
+  String get detailsPreviewRating => '预览评分提示（仅限调试版本）';
+
+  @override
   String get footerFree => '永久免费。无广告，无账户。';
 
   @override
@@ -583,4 +586,33 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get supportErrorAnswerMissing => '请用数字回答快速验证。';
+
+  @override
+  String get ratingTitle => '喜欢 Qibla Go 吗？';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go 免费且无广告。您在 Google Play 上的评分能帮助更多人找到并信任它。';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go 免费且无广告。您在 App Store 上的评分能帮助更多人找到并信任它。';
+
+  @override
+  String get ratingRate => '为 Qibla Go 评分';
+
+  @override
+  String get ratingNotNow => '暂不';
+
+  @override
+  String get ratingFootnote => '我们只问一次。如果您选择不评分，就不会再问。';
+
+  @override
+  String get ratingOpenFailed => '无法打开应用商店，请稍后再试。';
+
+  @override
+  String get ratingStoreLinkGooglePlay => '在 Google Play 评分';
+
+  @override
+  String get ratingStoreLinkAppStore => '在 App Store 评分';
 }

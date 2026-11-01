@@ -367,6 +367,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get detailsSimulateHeading => 'Имитируемый курс';
 
   @override
+  String get detailsPreviewRating =>
+      'Показать запрос оценки (только отладочная сборка)';
+
+  @override
   String get footerFree => 'Бесплатно, навсегда. Без рекламы и без аккаунтов.';
 
   @override
@@ -624,4 +628,35 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get supportErrorAnswerMissing =>
       'Ответьте на быструю проверку числом.';
+
+  @override
+  String get ratingTitle => 'Нравится Qibla Go?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go бесплатно и без рекламы. Оценка в Google Play помогает другим найти приложение и доверять ему.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go бесплатно и без рекламы. Оценка в App Store помогает другим найти приложение и доверять ему.';
+
+  @override
+  String get ratingRate => 'Оценить Qibla Go';
+
+  @override
+  String get ratingNotNow => 'Не сейчас';
+
+  @override
+  String get ratingFootnote =>
+      'Мы спрашиваем один раз. Если вы откажетесь, больше не спросим.';
+
+  @override
+  String get ratingOpenFailed =>
+      'Не удалось открыть магазин. Попробуйте позже.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Оценить в Google Play';
+
+  @override
+  String get ratingStoreLinkAppStore => 'Оценить в App Store';
 }

@@ -46,6 +46,10 @@ dependencies:
     path: ../qibla_go_client
   serverpod_flutter: 4.0.4
 
+  # Store rating prompt (Google Play In-App Review, StoreKit). Shown once,
+  # after real use; see features/rating and docs/DECISIONS.md.
+  in_app_review: ^2.0.12
+
 dev_dependencies:
   # Used for agents to drive the app through the Dart MCP
   flutter_driver:

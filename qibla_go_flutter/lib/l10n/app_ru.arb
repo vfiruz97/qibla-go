@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Имитировать компас (только отладочная сборка)",
   "detailsSimulateHeading": "Имитируемый курс",
+  "detailsPreviewRating": "Показать запрос оценки (только отладочная сборка)",
   "footerFree": "Бесплатно, навсегда. Без рекламы и без аккаунтов.",
   "footerIntention": "Сделано ради довольства Аллаха.",
   "cardinalN": "С",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Сервер не смог принять это сообщение. Сократите его и попробуйте снова.",
   "supportErrorTooShort": "Напишите хотя бы 10 символов.",
   "supportErrorTooLong": "Не больше 2000 символов.",
-  "supportErrorAnswerMissing": "Ответьте на быструю проверку числом."
+  "supportErrorAnswerMissing": "Ответьте на быструю проверку числом.",
+  "ratingTitle": "Нравится Qibla Go?",
+  "ratingBodyGooglePlay": "Qibla Go бесплатно и без рекламы. Оценка в Google Play помогает другим найти приложение и доверять ему.",
+  "ratingBodyAppStore": "Qibla Go бесплатно и без рекламы. Оценка в App Store помогает другим найти приложение и доверять ему.",
+  "ratingRate": "Оценить Qibla Go",
+  "ratingNotNow": "Не сейчас",
+  "ratingFootnote": "Мы спрашиваем один раз. Если вы откажетесь, больше не спросим.",
+  "ratingOpenFailed": "Не удалось открыть магазин. Попробуйте позже.",
+  "ratingStoreLinkGooglePlay": "Оценить в Google Play",
+  "ratingStoreLinkAppStore": "Оценить в App Store"
 }

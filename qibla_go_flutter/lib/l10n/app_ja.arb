@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "コンパスをシミュレート（デバッグビルドのみ）",
   "detailsSimulateHeading": "シミュレートした方位",
+  "detailsPreviewRating": "評価のお願いをプレビュー（デバッグビルドのみ）",
   "footerFree": "ずっと無料。広告なし、アカウント不要。",
   "footerIntention": "神の御喜びを求めて作りました。",
   "cardinalN": "北",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "サーバーがこのメッセージを受け付けられませんでした。短くしてもう一度お試しください。",
   "supportErrorTooShort": "10 文字以上入力してください。",
   "supportErrorTooLong": "2000 文字以内にしてください。",
-  "supportErrorAnswerMissing": "簡単な確認に数字で答えてください。"
+  "supportErrorAnswerMissing": "簡単な確認に数字で答えてください。",
+  "ratingTitle": "Qibla Go はいかがですか？",
+  "ratingBodyGooglePlay": "Qibla Go は無料で広告もありません。Google Play での評価は、ほかの人がこのアプリを見つけて信頼する助けになります。",
+  "ratingBodyAppStore": "Qibla Go は無料で広告もありません。App Store での評価は、ほかの人がこのアプリを見つけて信頼する助けになります。",
+  "ratingRate": "Qibla Go を評価する",
+  "ratingNotNow": "今はしない",
+  "ratingFootnote": "お尋ねするのは一度だけです。「今はしない」を選ぶと、二度とお尋ねしません。",
+  "ratingOpenFailed": "ストアを開けませんでした。後でもう一度お試しください。",
+  "ratingStoreLinkGooglePlay": "Google Play で評価する",
+  "ratingStoreLinkAppStore": "App Store で評価する"
 }

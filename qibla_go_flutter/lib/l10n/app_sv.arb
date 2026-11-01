@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Simulera kompass (endast felsökningsbygge)",
   "detailsSimulateHeading": "Simulerad kurs",
+  "detailsPreviewRating": "Förhandsgranska betygsfrågan (endast felsökningsbygge)",
   "footerFree": "Gratis, för alltid. Inga annonser, inga konton.",
   "footerIntention": "Gjord för Guds välbehag.",
   "cardinalN": "N",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Servern kunde inte ta emot meddelandet. Korta ned det och försök igen.",
   "supportErrorTooShort": "Skriv minst 10 tecken.",
   "supportErrorTooLong": "Håll dig under 2000 tecken.",
-  "supportErrorAnswerMissing": "Svara på snabbkontrollen med ett tal."
+  "supportErrorAnswerMissing": "Svara på snabbkontrollen med ett tal.",
+  "ratingTitle": "Gillar du Qibla Go?",
+  "ratingBodyGooglePlay": "Qibla Go är gratis och utan reklam. Ett betyg på Google Play hjälper andra att hitta appen och lita på den.",
+  "ratingBodyAppStore": "Qibla Go är gratis och utan reklam. Ett betyg på App Store hjälper andra att hitta appen och lita på den.",
+  "ratingRate": "Betygsätt Qibla Go",
+  "ratingNotNow": "Inte nu",
+  "ratingFootnote": "Vi frågar en gång. Säger du nej frågar vi inte igen.",
+  "ratingOpenFailed": "Butiken kunde inte öppnas. Försök igen senare.",
+  "ratingStoreLinkGooglePlay": "Betygsätt på Google Play",
+  "ratingStoreLinkAppStore": "Betygsätt på App Store"
 }
