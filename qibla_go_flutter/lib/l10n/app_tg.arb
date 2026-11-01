@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Қутбнаморо тақлид кардан (танҳо нусхаи ислоҳӣ)",
   "detailsSimulateHeading": "Самти тақлидӣ",
+  "detailsPreviewRating": "Намоиши дархости баҳо (танҳо сохти ислоҳӣ)",
   "footerFree": "Бепул, ҳамеша. Бе реклама, бе ҳисоб.",
   "footerIntention": "Барои ризои Худо сохта шудааст.",
   "cardinalN": "Ш",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Сервер ин паёмро қабул карда натавонист. Лутфан онро кӯтоҳ кунед ва боз кӯшиш кунед.",
   "supportErrorTooShort": "Лутфан ҳадди аққал 10 аломат нависед.",
   "supportErrorTooLong": "Лутфан аз 2000 аломат зиёд нанависед.",
-  "supportErrorAnswerMissing": "Лутфан ба санҷиши зуд бо рақам ҷавоб диҳед."
+  "supportErrorAnswerMissing": "Лутфан ба санҷиши зуд бо рақам ҷавоб диҳед.",
+  "ratingTitle": "Qibla Go ба шумо маъқул аст?",
+  "ratingBodyGooglePlay": "Qibla Go бепул ва бе реклама аст. Баҳои шумо дар Google Play ба дигарон кӯмак мекунад, ки барномаро пайдо кунанд ва ба он бовар кунанд.",
+  "ratingBodyAppStore": "Qibla Go бепул ва бе реклама аст. Баҳои шумо дар App Store ба дигарон кӯмак мекунад, ки барномаро пайдо кунанд ва ба он бовар кунанд.",
+  "ratingRate": "Ба Qibla Go баҳо додан",
+  "ratingNotNow": "Ҳоло не",
+  "ratingFootnote": "Мо танҳо як бор мепурсем. Агар шумо рад кунед, дигар намепурсем.",
+  "ratingOpenFailed": "Мағоза кушода нашуд. Лутфан дертар бори дигар кӯшиш кунед.",
+  "ratingStoreLinkGooglePlay": "Дар Google Play баҳо додан",
+  "ratingStoreLinkAppStore": "Дар App Store баҳо додан"
 }

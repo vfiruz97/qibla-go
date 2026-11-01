@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "قطب نما کی نقل (صرف ڈیبگ بلڈ)",
   "detailsSimulateHeading": "نقلی رخ",
+  "detailsPreviewRating": "ریٹنگ کی درخواست کا پیش منظر (صرف ڈیبگ بلڈ)",
   "footerFree": "مفت، ہمیشہ کے لیے۔ نہ اشتہار، نہ اکاؤنٹ۔",
   "footerIntention": "اللہ کی رضا کے لیے بنایا گیا۔",
   "cardinalN": "ش",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "سرور یہ پیغام قبول نہیں کر سکا۔ براہِ کرم اسے مختصر کریں اور دوبارہ کوشش کریں۔",
   "supportErrorTooShort": "براہِ کرم کم از کم 10 حروف لکھیں۔",
   "supportErrorTooLong": "براہِ کرم 2000 حروف سے کم رکھیں۔",
-  "supportErrorAnswerMissing": "براہِ کرم فوری جانچ کا جواب عدد میں دیں۔"
+  "supportErrorAnswerMissing": "براہِ کرم فوری جانچ کا جواب عدد میں دیں۔",
+  "ratingTitle": "Qibla Go پسند آیا؟",
+  "ratingBodyGooglePlay": "Qibla Go مفت ہے اور اس میں اشتہار نہیں ہیں۔ Google Play پر آپ کی ریٹنگ دوسروں کو ایپ تلاش کرنے اور اس پر بھروسہ کرنے میں مدد دیتی ہے۔",
+  "ratingBodyAppStore": "Qibla Go مفت ہے اور اس میں اشتہار نہیں ہیں۔ App Store پر آپ کی ریٹنگ دوسروں کو ایپ تلاش کرنے اور اس پر بھروسہ کرنے میں مدد دیتی ہے۔",
+  "ratingRate": "Qibla Go کو ریٹ کریں",
+  "ratingNotNow": "ابھی نہیں",
+  "ratingFootnote": "ہم صرف ایک بار پوچھتے ہیں۔ اگر آپ نہ کہیں تو دوبارہ نہیں پوچھیں گے۔",
+  "ratingOpenFailed": "اسٹور نہیں کھل سکا۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+  "ratingStoreLinkGooglePlay": "Google Play پر ریٹ کریں",
+  "ratingStoreLinkAppStore": "App Store پر ریٹ کریں"
 }

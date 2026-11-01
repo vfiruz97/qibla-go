@@ -710,6 +710,12 @@ abstract class AppLocalizations {
   /// **'Simulated heading'**
   String get detailsSimulateHeading;
 
+  /// Debug-only button in Details that shows the rating sheet on demand.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview the rating prompt (debug build only)'**
+  String get detailsPreviewRating;
+
   /// No description provided for @footerFree.
   ///
   /// In en, this message translates to:
@@ -1171,6 +1177,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please answer the quick check with a number.'**
   String get supportErrorAnswerMissing;
+
+  /// Headline of the one-time sheet asking for a store rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoying Qibla Go?'**
+  String get ratingTitle;
+
+  /// Why a rating matters, Android wording. Keep the three facts: free, no ads, helps others find and trust the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla Go is free and has no ads. A rating on Google Play helps other people find it and trust it.'**
+  String get ratingBodyGooglePlay;
+
+  /// Same as ratingBodyGooglePlay for iPhone and Mac, naming the App Store.
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla Go is free and has no ads. A rating on the App Store helps other people find it and trust it.'**
+  String get ratingBodyAppStore;
+
+  /// No description provided for @ratingRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Qibla Go'**
+  String get ratingRate;
+
+  /// No description provided for @ratingNotNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get ratingNotNow;
+
+  /// Small print under the buttons: the sheet is shown once and never after a no.
+  ///
+  /// In en, this message translates to:
+  /// **'We ask once. If you say no, we will not ask again.'**
+  String get ratingFootnote;
+
+  /// Shown when neither the review card nor the store listing could be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the store. Please try again later.'**
+  String get ratingOpenFailed;
+
+  /// Link in Details that opens the store listing; Android wording.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate on Google Play'**
+  String get ratingStoreLinkGooglePlay;
+
+  /// Link in Details that opens the store listing; iPhone and Mac wording.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate on the App Store'**
+  String get ratingStoreLinkAppStore;
 }
 
 class _AppLocalizationsDelegate

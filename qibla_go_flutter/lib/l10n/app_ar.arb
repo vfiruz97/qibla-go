@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "محاكاة البوصلة (إصدار التصحيح فقط)",
   "detailsSimulateHeading": "اتجاه محاكى",
+  "detailsPreviewRating": "معاينة طلب التقييم (إصدار التصحيح فقط)",
   "footerFree": "مجاني، للأبد. بلا إعلانات، بلا حسابات.",
   "footerIntention": "صُنع ابتغاءَ مرضاة الله.",
   "cardinalN": "ش",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "لم يستطع الخادم قبول هذه الرسالة. يرجى اختصارها والمحاولة مجددًا.",
   "supportErrorTooShort": "يرجى كتابة 10 أحرف على الأقل.",
   "supportErrorTooLong": "يرجى ألا تتجاوز 2000 حرف.",
-  "supportErrorAnswerMissing": "يرجى الإجابة عن التحقق السريع برقم."
+  "supportErrorAnswerMissing": "يرجى الإجابة عن التحقق السريع برقم.",
+  "ratingTitle": "هل يعجبك Qibla Go؟",
+  "ratingBodyGooglePlay": "Qibla Go مجاني وبلا إعلانات. تقييمك على Google Play يساعد الآخرين على إيجاد التطبيق والثقة به.",
+  "ratingBodyAppStore": "Qibla Go مجاني وبلا إعلانات. تقييمك على App Store يساعد الآخرين على إيجاد التطبيق والثقة به.",
+  "ratingRate": "قيّم Qibla Go",
+  "ratingNotNow": "ليس الآن",
+  "ratingFootnote": "نسأل مرة واحدة فقط. إن رفضت، فلن نسأل مرة أخرى.",
+  "ratingOpenFailed": "تعذّر فتح المتجر. يُرجى المحاولة لاحقًا.",
+  "ratingStoreLinkGooglePlay": "قيّم على Google Play",
+  "ratingStoreLinkAppStore": "قيّم على App Store"
 }

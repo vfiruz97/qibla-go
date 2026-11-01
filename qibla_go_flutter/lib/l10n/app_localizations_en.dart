@@ -360,6 +360,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detailsSimulateHeading => 'Simulated heading';
 
   @override
+  String get detailsPreviewRating =>
+      'Preview the rating prompt (debug build only)';
+
+  @override
   String get footerFree => 'Free, forever. No ads, no accounts.';
 
   @override
@@ -617,4 +621,35 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get supportErrorAnswerMissing =>
       'Please answer the quick check with a number.';
+
+  @override
+  String get ratingTitle => 'Enjoying Qibla Go?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go is free and has no ads. A rating on Google Play helps other people find it and trust it.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go is free and has no ads. A rating on the App Store helps other people find it and trust it.';
+
+  @override
+  String get ratingRate => 'Rate Qibla Go';
+
+  @override
+  String get ratingNotNow => 'Not now';
+
+  @override
+  String get ratingFootnote =>
+      'We ask once. If you say no, we will not ask again.';
+
+  @override
+  String get ratingOpenFailed =>
+      'Could not open the store. Please try again later.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Rate on Google Play';
+
+  @override
+  String get ratingStoreLinkAppStore => 'Rate on the App Store';
 }

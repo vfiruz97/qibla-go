@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "模拟罗盘（仅限调试版本）",
   "detailsSimulateHeading": "模拟航向",
+  "detailsPreviewRating": "预览评分提示（仅限调试版本）",
   "footerFree": "永久免费。无广告，无账户。",
   "footerIntention": "为求真主的喜悦而作。",
   "cardinalN": "北",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "服务器无法接受此消息。请缩短后重试。",
   "supportErrorTooShort": "请至少输入 10 个字符。",
   "supportErrorTooLong": "请控制在 2000 个字符以内。",
-  "supportErrorAnswerMissing": "请用数字回答快速验证。"
+  "supportErrorAnswerMissing": "请用数字回答快速验证。",
+  "ratingTitle": "喜欢 Qibla Go 吗？",
+  "ratingBodyGooglePlay": "Qibla Go 免费且无广告。您在 Google Play 上的评分能帮助更多人找到并信任它。",
+  "ratingBodyAppStore": "Qibla Go 免费且无广告。您在 App Store 上的评分能帮助更多人找到并信任它。",
+  "ratingRate": "为 Qibla Go 评分",
+  "ratingNotNow": "暂不",
+  "ratingFootnote": "我们只问一次。如果您选择不评分，就不会再问。",
+  "ratingOpenFailed": "无法打开应用商店，请稍后再试。",
+  "ratingStoreLinkGooglePlay": "在 Google Play 评分",
+  "ratingStoreLinkAppStore": "在 App Store 评分"
 }

@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Kompass simulieren (nur Debug-Build)",
   "detailsSimulateHeading": "Simulierte Richtung",
+  "detailsPreviewRating": "Bewertungsabfrage ansehen (nur Debug-Build)",
   "footerFree": "Kostenlos, für immer. Keine Werbung, keine Konten.",
   "footerIntention": "Gemacht um Gottes Wohlgefallen willen.",
   "cardinalN": "N",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Der Server konnte diese Nachricht nicht annehmen. Bitte kürzen Sie sie und versuchen Sie es erneut.",
   "supportErrorTooShort": "Bitte schreiben Sie mindestens 10 Zeichen.",
   "supportErrorTooLong": "Bitte bleiben Sie unter 2000 Zeichen.",
-  "supportErrorAnswerMissing": "Bitte beantworten Sie die kurze Prüfung mit einer Zahl."
+  "supportErrorAnswerMissing": "Bitte beantworten Sie die kurze Prüfung mit einer Zahl.",
+  "ratingTitle": "Gefällt Ihnen Qibla Go?",
+  "ratingBodyGooglePlay": "Qibla Go ist kostenlos und werbefrei. Eine Bewertung bei Google Play hilft anderen, die App zu finden und ihr zu vertrauen.",
+  "ratingBodyAppStore": "Qibla Go ist kostenlos und werbefrei. Eine Bewertung im App Store hilft anderen, die App zu finden und ihr zu vertrauen.",
+  "ratingRate": "Qibla Go bewerten",
+  "ratingNotNow": "Jetzt nicht",
+  "ratingFootnote": "Wir fragen nur einmal. Wenn Sie Nein sagen, fragen wir nicht noch einmal.",
+  "ratingOpenFailed": "Der Store konnte nicht geöffnet werden. Bitte versuchen Sie es später noch einmal.",
+  "ratingStoreLinkGooglePlay": "Bei Google Play bewerten",
+  "ratingStoreLinkAppStore": "Im App Store bewerten"
 }

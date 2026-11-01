@@ -346,6 +346,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get detailsSimulateHeading => 'シミュレートした方位';
 
   @override
+  String get detailsPreviewRating => '評価のお願いをプレビュー（デバッグビルドのみ）';
+
+  @override
   String get footerFree => 'ずっと無料。広告なし、アカウント不要。';
 
   @override
@@ -595,4 +598,33 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get supportErrorAnswerMissing => '簡単な確認に数字で答えてください。';
+
+  @override
+  String get ratingTitle => 'Qibla Go はいかがですか？';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go は無料で広告もありません。Google Play での評価は、ほかの人がこのアプリを見つけて信頼する助けになります。';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go は無料で広告もありません。App Store での評価は、ほかの人がこのアプリを見つけて信頼する助けになります。';
+
+  @override
+  String get ratingRate => 'Qibla Go を評価する';
+
+  @override
+  String get ratingNotNow => '今はしない';
+
+  @override
+  String get ratingFootnote => 'お尋ねするのは一度だけです。「今はしない」を選ぶと、二度とお尋ねしません。';
+
+  @override
+  String get ratingOpenFailed => 'ストアを開けませんでした。後でもう一度お試しください。';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Google Play で評価する';
+
+  @override
+  String get ratingStoreLinkAppStore => 'App Store で評価する';
 }

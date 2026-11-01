@@ -102,10 +102,23 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
   content never logged. Entry points: compass footer, map guide.
 - Later: forward new messages by email; a tiny admin page in Insights.
 
+### M0.75 — Rating prompt ✅ (2026-11-01)
+One bottom sheet asking for a store rating after real use (three launches,
+two days, three sessions with the qibla found and held), shown after the
+user turns away from the qibla; every answer is final; Google Play In-App
+Review / StoreKit with the store listing as fallback; counters on the
+device only. Permanent "Rate on …" link in Details. Open: the App Store id
+(`QIBLA_APP_STORE_ID`) once the app exists there; a check from a Play
+internal test track that the review card appears (debug installs cannot
+show it); native review of the ten new strings with the rest of M3.
+
 ### M1 — Release readiness
 - App icon, splash, store listing, privacy policy page (served by the
   Serverpod web server).
 - Decide and set `applicationId` / bundle id and the domain.
+- Set `QIBLA_APP_STORE_ID` in the iOS build once the App Store listing
+  exists; verify the rating card from a Play internal test track and from
+  TestFlight (TestFlight shows no card by design; check the fallback).
 - Physical-device verification protocol (see §5) on at least three Android
   phones (one without a gyroscope) and one iPhone via Safari.
 - Build pipelines: `flutter build appbundle`, `serverpod run flutter_build`
@@ -200,6 +213,7 @@ in the root `AGENTS.md`). The reasoning behind each choice is logged in
 | Android `applicationId` / iOS bundle id | TODO before first store build (currently `com.example.qibla_go_flutter`). |
 | Domain and hosting (Serverpod Cloud vs. own VPS) | Open; server has no state yet so either works. The domain goes into `webServer.publicHost` in `production.yaml`; every SEO link derives from it. |
 | Prayer-time engine (package vs. own) | Decide in M2 with reference tests. |
+| App Store id for the rating fallback | TODO when the iOS listing exists; passed as `--dart-define=QIBLA_APP_STORE_ID`. |
 | Fonts | Marcellus (display) + Manrope (body), both OFL, bundled. |
 | Map tiles | OpenStreetMap standard tiles in their light style (no key; buildings visible from zoom 16). CARTO was dropped on 2026-10-24 because it now requires an API key, and the inverted dark style was dropped the same day because it hid buildings. Decision: always a free provider. The OSM usage policy forbids heavy app traffic, so before release move to a free-tier provider whose terms cover the load (MapTiler/Stadia/Thunderforest/self-hosted) via `QIBLA_TILE_URL`. |
 

@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Pusulayı simüle et (yalnızca hata ayıklama derlemesi)",
   "detailsSimulateHeading": "Simüle edilen yön",
+  "detailsPreviewRating": "Puanlama isteğini önizle (yalnızca hata ayıklama derlemesi)",
   "footerFree": "Ücretsiz, sonsuza dek. Reklam yok, hesap yok.",
   "footerIntention": "Allah rızası için yapıldı.",
   "cardinalN": "K",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Sunucu bu mesajı kabul edemedi. Lütfen kısaltıp tekrar deneyin.",
   "supportErrorTooShort": "Lütfen en az 10 karakter yazın.",
   "supportErrorTooLong": "Lütfen 2000 karakterin altında kalın.",
-  "supportErrorAnswerMissing": "Lütfen hızlı kontrolü bir sayıyla yanıtlayın."
+  "supportErrorAnswerMissing": "Lütfen hızlı kontrolü bir sayıyla yanıtlayın.",
+  "ratingTitle": "Qibla Go'yu beğendiniz mi?",
+  "ratingBodyGooglePlay": "Qibla Go ücretsizdir ve reklam içermez. Google Play'de vereceğiniz puan, başkalarının uygulamayı bulmasına ve ona güvenmesine yardımcı olur.",
+  "ratingBodyAppStore": "Qibla Go ücretsizdir ve reklam içermez. App Store'da vereceğiniz puan, başkalarının uygulamayı bulmasına ve ona güvenmesine yardımcı olur.",
+  "ratingRate": "Qibla Go'yu puanla",
+  "ratingNotNow": "Şimdi değil",
+  "ratingFootnote": "Yalnızca bir kez soruyoruz. Hayır derseniz bir daha sormayız.",
+  "ratingOpenFailed": "Mağaza açılamadı. Lütfen daha sonra tekrar deneyin.",
+  "ratingStoreLinkGooglePlay": "Google Play'de puanla",
+  "ratingStoreLinkAppStore": "App Store'da puanla"
 }

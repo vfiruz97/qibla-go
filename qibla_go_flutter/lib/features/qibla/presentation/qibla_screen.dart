@@ -9,6 +9,9 @@ import '../../../app/router.dart';
 import '../../../app/theme/qibla_palette.dart';
 import '../../../core/location/location_models.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../rating/application/rating_controller.dart';
+import '../../rating/domain/rating_policy.dart';
+import '../../rating/presentation/rating_sheet.dart';
 import '../application/compass_controller.dart';
 import '../application/location_controller.dart';
 import '../application/qibla_providers.dart';
@@ -44,6 +47,10 @@ class _QiblaScreenState extends ConsumerState<QiblaScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // After the first frame: a provider may not change while the tree builds.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) ref.read(ratingControllerProvider.notifier).recordLaunch();
+    });
   }
 
   @override
@@ -87,6 +94,43 @@ class _QiblaScreenState extends ConsumerState<QiblaScreen>
       HapticFeedback.mediumImpact();
     } else {
       HapticFeedback.selectionClick();
+    }
+    _maybeAskForRating(aligned: aligned);
+  }
+
+  /// The rating ask comes at the end of a completed task: the user held the
+  /// qibla, then turned away. The controller decides whether this is the
+  /// moment; this only checks that the screen is in a state to show a sheet.
+  void _maybeAskForRating({required bool aligned}) {
+    final rating = ref.read(ratingControllerProvider.notifier);
+    if (!rating.onAlignmentChanged(aligned: aligned)) return;
+    Future<void>.delayed(RatingPolicy.promptDelay, () {
+      if (!mounted) return;
+      final route = ModalRoute.of(context);
+      if (route != null && !route.isCurrent) return;
+      final lifecycle = WidgetsBinding.instance.lifecycleState;
+      if (lifecycle != null && lifecycle != AppLifecycleState.resumed) return;
+      _askForRating();
+    });
+  }
+
+  Future<void> _askForRating() async {
+    final rating = ref.read(ratingControllerProvider.notifier);
+    await rating.markPrompted();
+    if (!mounted) return;
+    final answer = await RatingSheet.show(context);
+    if (answer != true) {
+      await rating.decline();
+      return;
+    }
+    // Let the sheet finish closing before the system's review card appears
+    // over the dial rather than over our sheet.
+    await Future<void>.delayed(const Duration(milliseconds: 350));
+    final outcome = await rating.accept();
+    if (outcome == RatingOutcome.failed && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).ratingOpenFailed)),
+      );
     }
   }
 

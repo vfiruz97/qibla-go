@@ -356,6 +356,10 @@ class AppLocalizationsAz extends AppLocalizations {
   String get detailsSimulateHeading => 'Simulyasiya edilən istiqamət';
 
   @override
+  String get detailsPreviewRating =>
+      'Qiymət sorğusuna önbaxış (yalnız sazlama qurulması)';
+
+  @override
   String get footerFree => 'Pulsuz, həmişəlik. Reklamsız, hesabsız.';
 
   @override
@@ -615,4 +619,35 @@ class AppLocalizationsAz extends AppLocalizations {
   @override
   String get supportErrorAnswerMissing =>
       'Zəhmət olmasa, qısa yoxlamaya rəqəmlə cavab verin.';
+
+  @override
+  String get ratingTitle => 'Qibla Go xoşunuza gəlir?';
+
+  @override
+  String get ratingBodyGooglePlay =>
+      'Qibla Go pulsuzdur və reklamsızdır. Google Play-də verdiyiniz qiymət başqalarına tətbiqi tapmağa və ona güvənməyə kömək edir.';
+
+  @override
+  String get ratingBodyAppStore =>
+      'Qibla Go pulsuzdur və reklamsızdır. App Store-da verdiyiniz qiymət başqalarına tətbiqi tapmağa və ona güvənməyə kömək edir.';
+
+  @override
+  String get ratingRate => 'Qibla Go-nu qiymətləndirin';
+
+  @override
+  String get ratingNotNow => 'İndi yox';
+
+  @override
+  String get ratingFootnote =>
+      'Yalnız bir dəfə soruşuruq. Yox desəniz, bir daha soruşmayacağıq.';
+
+  @override
+  String get ratingOpenFailed =>
+      'Mağazanı açmaq mümkün olmadı. Zəhmət olmasa, sonra yenidən cəhd edin.';
+
+  @override
+  String get ratingStoreLinkGooglePlay => 'Google Play-də qiymətləndirin';
+
+  @override
+  String get ratingStoreLinkAppStore => 'App Store-da qiymətləndirin';
 }

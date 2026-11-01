@@ -97,6 +97,7 @@
   "detailsNotAvailable": "—",
   "detailsSimulateToggle": "Kompası simulyasiya et (yalnız sazlama quruluşu)",
   "detailsSimulateHeading": "Simulyasiya edilən istiqamət",
+  "detailsPreviewRating": "Qiymət sorğusuna önbaxış (yalnız sazlama qurulması)",
   "footerFree": "Pulsuz, həmişəlik. Reklamsız, hesabsız.",
   "footerIntention": "Allah rizası üçün hazırlanıb.",
   "cardinalN": "Ş",
@@ -173,5 +174,14 @@
   "supportErrorInvalid": "Server bu mesajı qəbul edə bilmədi. Zəhmət olmasa, qısaldıb yenidən cəhd edin.",
   "supportErrorTooShort": "Zəhmət olmasa, ən azı 10 simvol yazın.",
   "supportErrorTooLong": "Zəhmət olmasa, 2000 simvoldan az yazın.",
-  "supportErrorAnswerMissing": "Zəhmət olmasa, qısa yoxlamaya rəqəmlə cavab verin."
+  "supportErrorAnswerMissing": "Zəhmət olmasa, qısa yoxlamaya rəqəmlə cavab verin.",
+  "ratingTitle": "Qibla Go xoşunuza gəlir?",
+  "ratingBodyGooglePlay": "Qibla Go pulsuzdur və reklamsızdır. Google Play-də verdiyiniz qiymət başqalarına tətbiqi tapmağa və ona güvənməyə kömək edir.",
+  "ratingBodyAppStore": "Qibla Go pulsuzdur və reklamsızdır. App Store-da verdiyiniz qiymət başqalarına tətbiqi tapmağa və ona güvənməyə kömək edir.",
+  "ratingRate": "Qibla Go-nu qiymətləndirin",
+  "ratingNotNow": "İndi yox",
+  "ratingFootnote": "Yalnız bir dəfə soruşuruq. Yox desəniz, bir daha soruşmayacağıq.",
+  "ratingOpenFailed": "Mağazanı açmaq mümkün olmadı. Zəhmət olmasa, sonra yenidən cəhd edin.",
+  "ratingStoreLinkGooglePlay": "Google Play-də qiymətləndirin",
+  "ratingStoreLinkAppStore": "App Store-da qiymətləndirin"
 }
