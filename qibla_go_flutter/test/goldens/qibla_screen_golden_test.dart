@@ -7,7 +7,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qibla_go_flutter/app/theme/app_theme.dart';
@@ -29,32 +28,9 @@ import 'package:qibla_go_flutter/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../support/fake_location_service.dart';
+import '../support/golden_fonts.dart';
 
 final _dushanbe = GeoPoint(latitude: 38.5598, longitude: 68.787);
-
-Future<void> _loadFonts() async {
-  Future<void> load(String family, String file) async {
-    final bytes = File('assets/fonts/$file').readAsBytesSync();
-    final loader = FontLoader(family)
-      ..addFont(Future.value(ByteData.view(bytes.buffer)));
-    await loader.load();
-  }
-
-  await load(AppFonts.display, 'Marcellus-Regular.ttf');
-  await load(AppFonts.body, 'Manrope-Variable.ttf');
-
-  // Material icons otherwise render as boxes in goldens.
-  final flutterRoot = Platform.environment['FLUTTER_ROOT'];
-  final icons = File(
-    '$flutterRoot/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
-  );
-  if (flutterRoot != null && icons.existsSync()) {
-    final bytes = icons.readAsBytesSync();
-    final loader = FontLoader('MaterialIcons')
-      ..addFont(Future.value(ByteData.view(bytes.buffer)));
-    await loader.load();
-  }
-}
 
 /// A spring evening in Dushanbe with the sun low in the west.
 final _frozenNow = DateTime.utc(2026, 3, 20, 12, 30);
@@ -108,7 +84,7 @@ void main() {
 
   setUpAll(() async {
     tileCachingEnabled = false;
-    await _loadFonts();
+    await loadGoldenFonts();
   });
 
   setUp(() => SharedPreferences.setMockInitialValues({}));
