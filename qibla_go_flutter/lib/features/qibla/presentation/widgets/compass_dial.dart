@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import '../../../../app/theme/app_theme.dart';
 import '../../../../app/theme/qibla_palette.dart';
 import '../../../../core/geo/angles.dart';
 import '../../domain/qibla_state.dart';
@@ -119,8 +118,9 @@ class _CompassDialState extends State<CompassDial>
           trust: widget.trust,
           isAligned: widget.isAligned,
           palette: palette,
+          // headlineSmall carries the script's display face (Marcellus for
+          // Latin, Manrope for Cyrillic), so the cardinal letters follow it.
           cardinalStyle: text.headlineSmall!.copyWith(
-            fontFamily: AppFonts.display,
             fontSize: widget.size * 0.075,
           ),
           numeralStyle: text.labelSmall!.copyWith(

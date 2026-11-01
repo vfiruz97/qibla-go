@@ -88,7 +88,7 @@ class HowToPanel extends StatelessWidget {
                         _SkySentence(sky: sky),
                         const SizedBox(height: 4),
                         Align(
-                          alignment: Alignment.centerRight,
+                          alignment: AlignmentDirectional.centerEnd,
                           child: TextButton.icon(
                             onPressed: () => _openSupport(context),
                             icon: const Icon(Icons.mail_outline, size: 16),

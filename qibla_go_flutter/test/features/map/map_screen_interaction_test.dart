@@ -11,6 +11,7 @@ import 'package:qibla_go_flutter/features/map/presentation/widgets/kaaba_marker.
 import 'package:qibla_go_flutter/features/map/presentation/widgets/map_tiles.dart';
 import 'package:qibla_go_flutter/features/qibla/application/location_controller.dart';
 import 'package:qibla_go_flutter/l10n/app_localizations.dart';
+import 'package:qibla_go_flutter/l10n/locale_resolution.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../support/fake_location_service.dart';
@@ -60,6 +61,8 @@ void main() {
           theme: AppTheme.dark(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          // As in the app: English unless the test platform asks otherwise.
+          localeListResolutionCallback: resolveLocale,
           home: const MapScreen(),
         ),
       ),

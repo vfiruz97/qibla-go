@@ -1,3 +1,5 @@
+import '../../../core/text/digits.dart';
+
 /// Pure state of the "Write to us" form. No I/O here; the controller in
 /// `application/` drives it.
 enum SupportPhase {
@@ -86,7 +88,7 @@ SupportInputProblem? checkMessage(String raw) {
 
 /// Parses what the user typed as the answer; null when not a whole number.
 int? parseAnswer(String raw) {
-  final text = raw.trim().replaceAll(RegExp(r'\s+'), '');
+  final text = toAsciiDigits(raw).trim().replaceAll(RegExp(r'\s+'), '');
   if (text.isEmpty) return null;
   return int.tryParse(text);
 }

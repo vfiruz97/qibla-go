@@ -84,7 +84,37 @@ Anything two features share moves to `core/`. Do not create `utils/` or
   assets; do not add `google_fonts` or any runtime font download.
 - Every user-visible string lives in `lib/l10n/app_en.arb` and is read via
   `AppLocalizations.of(context)`. Run `flutter gen-l10n` (or any build) after
-  editing ARB files. New locales: add `app_<code>.arb`, nothing else.
+  editing ARB files and commit the generated `app_localizations*.dart`.
+- Seventeen languages ship (en de fr it sv id ru tg uz az tr fa ar ur zh ja
+  ko). A
+  new key goes into `app_en.arb` with a `description` when its meaning is
+  not obvious from the English, and into every other `app_<code>.arb` in
+  the same change; `test/l10n/arb_consistency_test.dart` fails on a missing
+  key, a changed placeholder, a plural without `other`, or a translation
+  that is still the English text. Plurals use each language's CLDR
+  categories (`one/few/many/other` for Russian, six forms for Arabic,
+  `other` only for Tajik, Turkish, Uzbek, Azerbaijani, Persian, Indonesian
+  and East Asian languages). The brand "Qibla Go" stays in Latin letters everywhere.
+- Language resolution is `resolveLocale` in `lib/l10n/locale_resolution.dart`
+  (the user's list in their order, exact then country then language, English
+  when nothing matches). The generator sorts `supportedLocales`
+  alphabetically, so Flutter's default fallback would be Arabic; never drop
+  the callback. Tajik has no Material strings in Flutter; the ones a user can
+  meet are in `tajik_material_localizations.dart`.
+- Never compose a sentence from fragments in Dart; the word order differs
+  between languages. Add a key with placeholders instead (`skyMarkerLabel`).
+- Right-to-left: use `AlignmentDirectional`, `EdgeInsetsDirectional`,
+  `TextAlign.start/end` and `Directionality.of(context)` for layout. The
+  compass and the sun/moon sentences describe the physical left and right
+  of the person; those must never be mirrored.
+- Script-aware type lives in `ScriptTypography` (`app/theme`): headlines
+  use Manrope outside Latin script (Marcellus has Latin glyphs only), Arabic
+  script gets no letter-spacing, Arabic and East Asian text get more line
+  height. `ScriptTheme` in `MaterialApp.builder` applies it below
+  `Localizations`. Use `ScriptTypography.of(context).tracking(x)` for any
+  letter-spacing set directly in a widget.
+- Parse numbers typed by the user through `toAsciiDigits` (`core/text`) so
+  Persian, Arabic and fullwidth digits are accepted.
 - Numbers use tabular figures and are rounded for display only; keep full
   precision in state.
 - Custom painting goes in `CustomPainter`s with a correct `shouldRepaint`.
@@ -156,6 +186,8 @@ Anything two features share moves to `core/`. Do not create `utils/` or
 - Controller tests with fake seams (`LocationService`, `CompassSource`).
 - Widget tests for the dial states (no location, blocked, aligned) with
   the simulated source.
+- `test/l10n/locales_smoke_test.dart` builds the map screen in every
+  language and checks direction and type; keep it green when adding one.
 - Before release: the device verification protocol in `docs/PLAN.md`.
 
 ## Commands

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/theme/qibla_palette.dart';
+import '../../../../core/text/digits.dart';
 import '../../../../core/geo/geo_point.dart';
 import '../../../../core/location/location_models.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -194,7 +195,9 @@ class _LocationSheetState extends ConsumerState<LocationSheet> {
 
   static double? _validate(String? raw, double limit) {
     if (raw == null) return null;
-    final value = double.tryParse(raw.trim().replaceAll(',', '.'));
+    final value = double.tryParse(
+      toAsciiDigits(raw).trim().replaceAll(',', '.'),
+    );
     if (value == null || value.isNaN || value.abs() > limit) return null;
     return value;
   }

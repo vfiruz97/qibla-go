@@ -5,7 +5,23 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
+import 'app_localizations_az.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fa.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_sv.dart';
+import 'app_localizations_tg.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_ur.dart';
+import 'app_localizations_uz.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,15 +108,33 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('az'),
+    Locale('de'),
+    Locale('en'),
+    Locale('fa'),
+    Locale('fr'),
+    Locale('id'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('ru'),
+    Locale('sv'),
+    Locale('tg'),
+    Locale('tr'),
+    Locale('ur'),
+    Locale('uz'),
+    Locale('zh'),
+  ];
 
-  /// No description provided for @appName.
+  /// Brand name; keep in Latin letters in every language.
   ///
   /// In en, this message translates to:
   /// **'Qibla Go'**
   String get appName;
 
-  /// No description provided for @qiblaLabel.
+  /// Caption over the compass dial, in capitals where the script has them.
   ///
   /// In en, this message translates to:
   /// **'QIBLA'**
@@ -172,25 +206,25 @@ abstract class AppLocalizations {
   /// **'Accuracy unknown'**
   String get accuracyUnknown;
 
-  /// No description provided for @qualityGood.
+  /// Sensor quality grade shown next to the accuracy.
   ///
   /// In en, this message translates to:
   /// **'Good'**
   String get qualityGood;
 
-  /// No description provided for @qualityFair.
+  /// Sensor quality grade: middling.
   ///
   /// In en, this message translates to:
   /// **'Fair'**
   String get qualityFair;
 
-  /// No description provided for @qualityPoor.
+  /// Sensor quality grade: bad.
   ///
   /// In en, this message translates to:
   /// **'Poor'**
   String get qualityPoor;
 
-  /// No description provided for @headingLabel.
+  /// The direction the phone is pointing (compass heading), not a title.
   ///
   /// In en, this message translates to:
   /// **'Heading'**
@@ -322,7 +356,7 @@ abstract class AppLocalizations {
   /// **'Longitude must be between -180 and 180'**
   String get locationInvalidLongitude;
 
-  /// No description provided for @locationSave.
+  /// Button that applies hand-entered coordinates.
   ///
   /// In en, this message translates to:
   /// **'Use these coordinates'**
@@ -658,7 +692,7 @@ abstract class AppLocalizations {
   /// **'Great-circle initial bearing on WGS-84 coordinates; true north from the magnetic heading plus WMM2025 declination computed on this device.'**
   String get detailsMethod;
 
-  /// No description provided for @detailsNotAvailable.
+  /// Shown in place of a value that is not available; keep the dash.
   ///
   /// In en, this message translates to:
   /// **'—'**
@@ -682,31 +716,31 @@ abstract class AppLocalizations {
   /// **'Free, forever. No ads, no accounts.'**
   String get footerFree;
 
-  /// No description provided for @footerIntention.
+  /// Statement of intention: the app is made seeking God's pleasure.
   ///
   /// In en, this message translates to:
   /// **'Made for the pleasure of God.'**
   String get footerIntention;
 
-  /// No description provided for @cardinalN.
+  /// Single-letter compass point painted on the dial: north.
   ///
   /// In en, this message translates to:
   /// **'N'**
   String get cardinalN;
 
-  /// No description provided for @cardinalE.
+  /// Single-letter compass point painted on the dial: east.
   ///
   /// In en, this message translates to:
   /// **'E'**
   String get cardinalE;
 
-  /// No description provided for @cardinalS.
+  /// Single-letter compass point painted on the dial: south.
   ///
   /// In en, this message translates to:
   /// **'S'**
   String get cardinalS;
 
-  /// No description provided for @cardinalW.
+  /// Single-letter compass point painted on the dial: west.
   ///
   /// In en, this message translates to:
   /// **'W'**
@@ -718,7 +752,7 @@ abstract class AppLocalizations {
   /// **'Face the Kaaba, wherever you are'**
   String get introTagline;
 
-  /// No description provided for @introSkip.
+  /// Button that skips the opening animation.
   ///
   /// In en, this message translates to:
   /// **'Skip'**
@@ -760,7 +794,7 @@ abstract class AppLocalizations {
   /// **'Qibla on the map'**
   String get mapTitle;
 
-  /// No description provided for @mapYourLocation.
+  /// Label on the marker that stands for the user on the map.
   ///
   /// In en, this message translates to:
   /// **'You'**
@@ -790,19 +824,25 @@ abstract class AppLocalizations {
   /// **'Moon'**
   String get mapMoon;
 
+  /// Label beside the sun or moon marker on the map: name is mapSun or mapMoon, azimuth in degrees.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} {azimuth}°'**
+  String skyMarkerLabel(String name, int azimuth);
+
   /// No description provided for @mapRecenter.
   ///
   /// In en, this message translates to:
   /// **'Use my real location'**
   String get mapRecenter;
 
-  /// No description provided for @mapZoomIn.
+  /// Tooltip of the zoom-in button.
   ///
   /// In en, this message translates to:
   /// **'Closer'**
   String get mapZoomIn;
 
-  /// No description provided for @mapZoomOut.
+  /// Tooltip of the zoom-out button.
   ///
   /// In en, this message translates to:
   /// **'Farther'**
@@ -838,13 +878,13 @@ abstract class AppLocalizations {
   /// **'Zoom in to check which side of a building the line passes, and zoom out to see that the line really ends in Makkah.'**
   String get mapHowStep3;
 
-  /// No description provided for @mapHowSunAbove.
+  /// direction is one of the compassPoint* strings, side is sideLeft or sideRight.
   ///
   /// In en, this message translates to:
   /// **'The sun is now at {azimuth}° (about {direction}). The Qibla is {offset}° to the {side} of the sun: stand facing the sun, then turn that much.'**
   String mapHowSunAbove(int azimuth, String direction, int offset, String side);
 
-  /// No description provided for @mapHowMoonAbove.
+  /// phase is one of the moonPhase* strings, side is sideLeft or sideRight.
   ///
   /// In en, this message translates to:
   /// **'The moon ({phase}) is at {azimuth}°. The Qibla is {offset}° to the {side} of it.'**
@@ -856,19 +896,19 @@ abstract class AppLocalizations {
   /// **'Neither the sun nor the moon is up right now; use landmarks on the map.'**
   String get mapHowSkyNone;
 
-  /// No description provided for @sideLeft.
+  /// Physical left of the person, inserted into mapHowSunAbove and mapHowMoonAbove.
   ///
   /// In en, this message translates to:
   /// **'left'**
   String get sideLeft;
 
-  /// No description provided for @sideRight.
+  /// Physical right of the person, inserted into mapHowSunAbove and mapHowMoonAbove.
   ///
   /// In en, this message translates to:
   /// **'right'**
   String get sideRight;
 
-  /// No description provided for @compassPointNorth.
+  /// Lower-case compass point used inside a sentence (mapHowSunAbove).
   ///
   /// In en, this message translates to:
   /// **'north'**
@@ -1036,7 +1076,7 @@ abstract class AppLocalizations {
   /// **'No question available right now.'**
   String get supportChallengeUnavailable;
 
-  /// No description provided for @supportAnswerHint.
+  /// Hint in the answer field of the arithmetic check; keep the equals sign.
   ///
   /// In en, this message translates to:
   /// **'='**
@@ -1060,7 +1100,7 @@ abstract class AppLocalizations {
   /// **'Sending…'**
   String get supportSending;
 
-  /// No description provided for @supportSentTitle.
+  /// Title after a message was delivered.
   ///
   /// In en, this message translates to:
   /// **'Received'**
@@ -1143,8 +1183,25 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'az',
+    'de',
+    'en',
+    'fa',
+    'fr',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'ru',
+    'sv',
+    'tg',
+    'tr',
+    'ur',
+    'uz',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1153,8 +1210,40 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'az':
+      return AppLocalizationsAz();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'fa':
+      return AppLocalizationsFa();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'id':
+      return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'sv':
+      return AppLocalizationsSv();
+    case 'tg':
+      return AppLocalizationsTg();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'ur':
+      return AppLocalizationsUr();
+    case 'uz':
+      return AppLocalizationsUz();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

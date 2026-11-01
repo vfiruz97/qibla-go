@@ -153,3 +153,48 @@ phone-browser mode is wanted later.
   did not help, since the request comes from the view, not the route.
 - HTML is gzipped in every run mode except development, where the dev
   watcher's reload injection reads HTML bodies as text.
+
+## 2026-11-01 Seventeen languages: resolution, fallback, type and chrome
+
+- Language comes from the device or browser language list, in the user's
+  order, with English as the fallback. Flutter's default fallback is the
+  first entry of `supportedLocales`, which the code generator sorts
+  alphabetically, so without `resolveLocale` an unsupported language would
+  have landed on Arabic. The callback is tested, including the generator's
+  ordering, so the assumption is checked rather than remembered.
+- Translations were written in one pass by the maintainer with the
+  assistant, not by native speakers per language. The ARB test enforces
+  completeness and placeholders, not quality. A native review pass is an
+  open item in the plan; "Write to us" is the channel for wrong wording.
+- Terminology: Qibla / Kaaba / Makkah transliterated as each language's
+  established form (Kıble, Kâbe, Mekke; Кибла, Кааба, Мекка; Қибла, Каъба,
+  Макка; 朝向, 克尔白, 麦加; キブラ, カアバ, マッカ; 키블라, 카바, 메카;
+  La Mecque, Mecca, Mekka; Kiblat, Ka'bah, Makkah; قبلہ, کعبہ, مکہ). The brand "Qibla Go" stays in Latin letters.
+  Chinese is Simplified only; Traditional readers get it by language match.
+- Tajik has no strings in Flutter's own localizations. Rather than the
+  English the framework falls back to, the strings a user of this app can
+  meet (back tooltip, text-selection menu, sheet and scrim labels) are
+  provided in `tajik_material_localizations.dart` over the English
+  defaults. Date and time pickers, licence pages and keyboard key names
+  stay English until the app uses them.
+- Fonts: Marcellus has Latin glyphs only and Manrope lacks the six Tajik
+  letters, ə and every non-Latin, non-Cyrillic script. Headlines switch to
+  Manrope outside Latin script; missing glyphs fall back to system fonts
+  on phones and to the engine's Noto download on the web. Bundling script
+  fonts was deferred because Flutter web loads every font in the manifest
+  at start-up, which would undo the load-time work for everyone; the plan
+  records the `FontLoader` route for a later pass.
+- Urdu shares the Arabic-script rules (right to left, no tracking, taller
+  lines) and renders in the Naskh fallback until a Nastaliq face is bundled.
+- The dial's cardinal letters inherit the theme's display face instead of
+  pinning Marcellus, so С В Ю З and ش ق ج غ render in a bundled font.
+- Arabic script gets no letter-spacing anywhere: tracking pulls the joined
+  letters apart. Arabic and East Asian text get taller lines. Both live in
+  `ScriptTypography` so the rule is in one place.
+- The sun and moon labels were composed in Dart as name plus number; they
+  are now one template, because word order is the translator's call.
+- Digits from Persian, Arabic, Chinese and Japanese keyboards are mapped to
+  ASCII before parsing coordinates and the arithmetic check. Output keeps
+  Western digits in every language for now.
+- The sky overlay's label box had a fixed height sized for English; it now
+  takes the height it needs, since a translated label may need two lines.
