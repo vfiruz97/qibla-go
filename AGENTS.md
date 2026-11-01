@@ -113,15 +113,24 @@ This project is a Flutter app (frontend) backed by a Serverpod server
 (backend). Always build the app's backend with Serverpod. There is no user
 authentication by design; every endpoint is public and read-mostly.
 
-The user starts the server and Flutter app with `serverpod start`. There is
+Since Serverpod 4.1 the server and the Flutter app run under the Serverpod
+runner, a background process per server package. The user attaches to it
+with `serverpod start` (the interactive UI) or keeps it in the background
+with `serverpod runner start`; `serverpod runner status` prints its state and
+the real addresses, which can differ from the configured ports when another
+runner on the machine holds them; `serverpod runner stop` stops it. There is
 no need to check if the server is running: make the changes and call the
 `serverpod` MCP tools as needed. If the server is not running, an informative
-error message will be received from the MCP server. Then STOP and ask the user
-to start it. NEVER start the server yourself. The Flutter app is started along
-with it, or can be launched from the MCP tool `spawn_flutter_app`.
+error message will be received from the MCP server. Then call
+`tail_runner_logs` (or read `qibla_go_server/.dart_tool/serverpod/runner.log`)
+to learn whether it is still starting or why it stopped, and STOP and ask the
+user to start it. NEVER start or stop the runner yourself, even though the
+stock template now allows agents to; in this project that is the user's call.
+The Flutter app declared with `auto_launch` starts once the user attaches, or
+can be launched from the MCP tool `spawn_flutter_app`.
 
-While running, `serverpod start` watches for file changes to run incremental
-code generation and hot reload both the server and the Flutter app.
+While running, the runner watches for file changes to run incremental code
+generation and hot reload both the server and the Flutter app.
 
 Calling `serverpod generate` directly is not needed, but might be useful to
 troubleshoot when an incremental generation fails. If the generator reports
@@ -133,6 +142,9 @@ ALWAYS use the MCP server instead of the command line. Use the MCP server to:
 - `create_migration` and `apply_migrations` for database (after you change data models).
 - `create_repair_migration` if the database has drifted out of sync with the migrations.
 - `tail_server_logs` to read logs from the server.
+- `tail_runner_logs` to read the runner's own output (code generation,
+  compilation, raw server output); the one tool that also works while the
+  server is starting or after it stopped.
 - `tail_flutter_logs` to read the raw stdout/stderr of the Flutter app.
 - `hot_reload` / `hot_restart` to reload or restart the server and the Flutter app. ALWAYS call `hot_restart` after doing changes in the Flutter app that may not work with normal hot reload (which is automatically applied).
 - `spawn_flutter_app` to start a Flutter app declared under `serverpod: flutter_apps:` in the server `pubspec.yaml`.
@@ -151,11 +163,19 @@ non-destructive steps. Never touch the other files in the migration directory,
 and keep the schema the SQL ends up with identical to `definition.sql` — new
 databases are created from that file and never run `migration.sql`.
 
-Only when the server cannot be started at all, fall back to the CLI in the
-server package:
+Only when the MCP is not available or the runner is down and the user cannot
+start it, fall back to the CLI in the server package:
 
 - `serverpod generate` to regenerate the client and the generated server code.
-- `serverpod create-migration` after changing a model with a `table` (add `--force` for destructive changes). It only writes the migration; `serverpod start` applies pending migrations when it boots the server.
+- `serverpod create-migration` after changing a model with a `table` (add `--force` for destructive changes). It only writes the migration; the runner applies pending migrations when it boots the server.
+
+Upgrading Serverpod: the user upgrades the CLI (`dart pub global activate
+serverpod_cli`), then every Serverpod package is pinned to the same version
+in the three pubspecs, `dart pub upgrade` runs once at the workspace root,
+`serverpod generate` and `serverpod create-migration` follow, and the local
+agent skills under `.claude/skills` (git-ignored, written by `serverpod
+create`) are replaced from a throwaway project made with the new CLI. The
+CLI version in `.github/workflows/tests.yml` must match.
 
 Tests need no Docker. `config/test.yaml` sets `database.dataPath`, so
 Serverpod starts and manages the test database (an embedded PostgreSQL)
